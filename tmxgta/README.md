@@ -5,6 +5,11 @@ tmxgta is a guide to installing archlinux, that covers the complete archwiki pag
 Instead of showing a wall-of-text information is split up into sections only showing information relevant to the current command. This guide gives explanations to the commands and shows helpful information about your setup on the same screen as the terminal. There is no need to switch virtual consoles and remember long commands or print out the installation guide.
 This is achieved by splitting up a virtual console into two panes using tmux. If you are familiar with tiling window managers you will feel right at home.
 
+## Download
+Download the latest iso file from Sourceforge:
+
+https://sourceforge.net/projects/tmxgta/files/?source=navbar
+
 ## Architecture
 Currently tmxgta.iso is only available for the x86_64 architecture, however the script will work on i686 as well.
 
@@ -24,12 +29,18 @@ https://wiki.archlinux.org/index.php/Beginners%27_Guide#Burn_or_write_the_latest
 https://wiki.archlinux.org/index.php/USB_Installation_Media
 
 * script: Boot the archiso or any other archlinux system.
+	  
 	  Install the packages listed in 'Requirements'.
+	  
 	  Download the following files to roots home directory:
-		* tmxgta
-		* tmxgta_0.x
-		* keymaps
-	  Make tmxgta and tmxgta_0.x executable, and run ./tmxgta as root.
+
+	* tmxgta
+	
+	* tmxgta_0.x
+	
+	* keymaps
+	
+	Make tmxgta and tmxgta_0.x executable, and run ./tmxgta as root.
 
 ## Keyboard shortcuts
 There are only two keyboard shortcuts you need to know:
