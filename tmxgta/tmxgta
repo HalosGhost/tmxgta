@@ -1,6 +1,14 @@
 VERSION=0.4.1
 if pacman -Qq tmux > /dev/null;then
 	if pacman -Qq reflector > /dev/null; then
+		echo 'Welcome to tmxgta .'
+		echo -e "\nVersion: $VERSION"
+		echo -n 'Based on archiso: '
+		cat /proc/cmdline | cut -d\  -f 2 | cut -d\= -f 2
+		echo -n 'Kernel: '
+		uname -r
+		sleep 3
+		clear
 		tmux new-session -d -s tmxgta "~/tmxgta_$VERSION $1 $2"
 		tmux set-option -g prefix C-a
 		tmux bind-key C-a select-pane -L

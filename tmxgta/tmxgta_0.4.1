@@ -123,7 +123,7 @@ fi
 tput civis
 
 ##Check Columns for readability##
-if (( "$COLUMNS" <= "75" )); then
+if (( "$COLUMNS" <= "85" )); then
 	if (( "$COLUMNS" <= "60" )); then
 		fail "Terminal has not enough Columns for $NAME to display correctly."
 	else
@@ -139,14 +139,7 @@ fi
 
 ##Intro##
 if (( "$#" == 0 )); then
-	clear
-	fe "Welcome to $NAME .\n"
-	fe "Version: $VERSION"
-	echo -n "Based on archiso: "
-	cat /proc/cmdline | cut -d\  -f 2 | cut -d\= -f 2
-	echo -n "Kernel: "
-	uname -r
-	sleep 3
+	echo 'Welcome to tmxgta .'
 	fe '\nHit \033[33m[enter]\033[0m / \033[33m[space]\033[0m if you want to read a short tutorial about using this guide, or press \033[33m[s]\033[0m to skip the tutorial and begin with the installation.'
 	key=z
 	while [[ "$key" != 's'  && "$key" != '' ]]; do
