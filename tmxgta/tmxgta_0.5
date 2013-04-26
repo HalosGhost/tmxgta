@@ -55,15 +55,15 @@ interfacenamefunction
 }
 
 interface_eth() {
-fe "\nHint: Your wired interface is named \033[31m$ETH_NAME\033[0m ."
+fe "\nHint: Your wired interface is named \033[31m$ETH_NAME\033[0m."
 }
 
 interface_wlan() {
-fe "\nHint: Your wireless interface is named \033[31m$WLAN_NAME\033[0m ."
+fe "\nHint: Your wireless interface is named \033[31m$WLAN_NAME\033[0m."
 }
 
 partition_final_message() {
-fe '\nDouble check and make sure that you are happy with the partition sizes as well as the partition table layout before continuing. If you would like to start over, you can simply select Quit (or press \033[33m[Q]\033[0m) to exit without saving changes and then restart cgdisk. If you are satisfied, choose Write (or press \033[33m[Shift+W]\033[0m) to finalize and to write the partition table to the drive. Type \033[33m[yes]\033[0m and choose Quit (or press \033[33m[Q]\033[0m) to exit without making any more changes.'
+fe '\nDouble check and make sure that you are happy with the partition sizes as well as the partition table layout before continuing. If you would like to start over, you can simply select Quit (or press \033[33m[Q]\033[0m) to exit without saving changes and then restart cfdisk (or cgdisk). If you are satisfied, choose Write (or press \033[33m[Shift+W]\033[0m) to finalize and to write the partition table to the drive. Type \033[33m[yes]\033[0m and choose Quit (or press \033[33m[Q]\033[0m) to exit without making any more changes.'
 }
 
 getenter() {
@@ -112,7 +112,7 @@ tmux select-pane -t 0 > /dev/null 2>&1
 touch /tmp/tmxgta_lock
 
 ## Arguments ##
-# Accept numbers as first argument to go to the step you want .
+# Accept numbers as first argument to go to the step you want.
 (( "$#" > 2)) && fail 'Too many arguments.'
 if (( "$#" > 0 ));then
 	[[ "$1" =~ ^[0-9]+$ ]] && (( "$1" > 0 && "$1" <= "$TOTALSTEPS" )) && STEP="$1"
@@ -139,7 +139,7 @@ fi
 
 ##Intro##
 if (( "$#" == 0 )); then
-	echo 'Welcome to tmxgta .'
+	echo 'Welcome to tmxgta.'
 	fe '\nHit \033[33m[enter]\033[0m / \033[33m[space]\033[0m if you want to read a short tutorial about using this guide, or press \033[33m[s]\033[0m to skip the tutorial and begin with the installation.'
 	key=z
 	while [[ "$key" != 's'  && "$key" != '' ]]; do
@@ -159,7 +159,7 @@ if (( "$#" == 0 )); then
 		clear
 		echo -e 'Step 0 - Tutorial\n'
 		fe "$NAME will not install archlinux, or change your data or partition layout. Instead you are in full control, as changes are done via terminal commands. The goal of $NAME is to provide an interactive guide, that shows helpful information about your system on the screen where the terminal is found. There is no need to switch virtual consoles and remember what you have read, print out the installation guide or read the guide on another computer."
-		fe 'This is achieved by splitting up a virtual console into two panes using tmux. You can still use the other ttys as usual with the key combination ctrl+alt+f2. All commands are marked \e[1;37;40m# like so\033[0m in the guide. Frequently changing the command is necessary for your individual installation. In that case the part that needs to be changed is marked in \033[31mred\033[0m . Whenever you enter the pager "less" displaying a file in the guide, you can exit from it by pressing \033[33m[q]\033[0m . The same key is used to exit the browser elinks while viewing a web page. For editing text files "nano" is suggested in the guide, but feel free to use another editor instead of nano. On the bottom there is a status line that shows the current time and date. Check if the time is set correctly now, to avoid problems with package signing. Refer to the "Time" wikipage for information on correcting system time. The statusline also shows a progressbar on the left side.'
+		fe 'This is achieved by splitting up a virtual console into two panes using tmux. You can still use the other ttys as usual with the key combination ctrl+alt+f2. All commands are marked \e[1;37;40m# like so\033[0m in the guide. Frequently changing the command is necessary for your individual installation. In that case the part that needs to be changed is marked in \033[31mred\033[0m. Whenever you enter the pager "less" displaying a file in the guide, you can exit from it by pressing \033[33m[q]\033[0m. The same key is used to exit the browser elinks while viewing a web page. For editing text files "nano" is suggested in the guide, but feel free to use another editor instead of nano. On the bottom there is a status line that shows the current time and date. Check if the time is set correctly now, to avoid problems with package signing. Refer to the "Time" wikipage for information on correcting system time. The statusline also shows a progressbar on the left side.'
 		fe "It is recommended to read the beginner's guide provided in the ArchWiki."
 		fe 'https://wiki.archlinux.org/'
 		fe 'The steps in this guide use the same numbering as the beginners guide, that means you can easily look up each topic in the wiki.'
@@ -187,31 +187,7 @@ tmux set-option -g status-left "$(echo "$NAME"; progressbar)"  > /dev/null 2>&1
 case "$STEP" in
 
 ##1##
-1) if (( "$UEFI" == 2 )); then
-	echo -e 'Step 1.2.1 - Test if you are booted into UEFI mode\n'
-	fe 'In case you have a UEFI motherboard and UEFI Boot mode is enabled (and is preferred over BIOS/Legacy mode), the CD/USB will automatically launch archlinux kernel (EFISTUB via Gummiboot Boot Manager). To check whether you have booted into UEFI mode, load the efivars kernel module and then check whether there are files in /sys/firmware/efi/vars/:'
-	echo -e '\e[1;37;40m# modprobe efivars\033[0m'
-	echo -e '\033[30;41mWarning: Loading the efivars kernel module now is crucial'
-	echo -e '         for the successful setup of UEFI boot.          \033[0m'
-	echo -e '\e[1;37;40m# ls -1 /sys/firmware/efi/vars/\033[0m'
-	goleft
-	echo -e '\nAre you booted in UEFI mode? \033[33m[y/n]\033[0m'
-	key='z'
-	while [[ "$key" != 'y'  && "$key" != 'n' ]]; do
-		read -s -n 1 key
-	done
-	if [[ "$key" = 'y' ]]; then
-		UEFI=1
-		echo 'Using UEFI.'
-	else
-		UEFI=0
-		echo 'Ignoring UEFI.'
-	fi
-	sleep 2
-fi;;
-
-##2##
-2) echo -e 'Step 2.1 - Change the language\n'
+1) echo -e 'Step 2.1 - Change the language\n'
 fe 'This is optional for the majority of users. Useful only if you plan on writing in your own language in any of the configuration files, if you use diacritical marks in the Wi-Fi password, or if you would like to receive system messages (e.g. possible errors) in your own language.'
 echo -e '\nPress \033[33m[s]\033[0m to skip this step.\n'
 key='z'
@@ -246,6 +222,30 @@ else
 	echo 'Skipping.'
 fi;;
 
+##2##
+2) if (( "$UEFI" == 2 )); then
+	echo -e 'Step 1.2.1 - Test if you are booted into UEFI mode\n'
+	fe 'In case you have a UEFI motherboard and UEFI Boot mode is enabled (and is preferred over BIOS/Legacy mode), the CD/USB will automatically launch archlinux kernel (EFISTUB via Gummiboot Boot Manager). To check whether you have booted into UEFI mode, load the efivars kernel module and then check whether there are files in /sys/firmware/efi/vars/:'
+	echo -e '\e[1;37;40m# modprobe efivars\033[0m'
+	echo -e '\033[30;41mWarning: Loading the efivars kernel module now is crucial'
+	echo -e '         for the successful setup of UEFI boot.          \033[0m'
+	echo -e '\e[1;37;40m# ls -1 /sys/firmware/efi/vars/\033[0m'
+	goleft
+	echo -e '\nAre you booted in UEFI mode? \033[33m[y/n]\033[0m'
+	key='z'
+	while [[ "$key" != 'y'  && "$key" != 'n' ]]; do
+		read -s -n 1 key
+	done
+	if [[ "$key" = 'y' ]]; then
+		UEFI=1
+		echo 'Using UEFI.'
+	else
+		UEFI=0
+		echo 'Ignoring UEFI.'
+	fi
+	sleep 2
+fi;;
+
 ##3##
 3) echo -e 'Step 2.2 - Establish an internet connection\n'
 fe 'The dhcpcd network daemon is started automatically at boot and it will attempt to start a wired connection, if available. Try pinging a website to see if it was successful. And since Google is always on...\n'
@@ -264,23 +264,29 @@ if [[ "$key" = 'y' ]]; then
 	echo -e '\nPress \033[33m[w]\033[0m for wired'
 	fe '(Follow this procedure if you need to set up a wired connection via a static IP address.)'
 	echo -e '\nPress \033[33m[l]\033[0m for wireless'
-	fe '(Follow this procedure if you need wireless connectivity (Wi-Fi) during the installation process. Note that these steps are optional if wireless connectivity is unnecessary at this point in the installation; wireless functionality may always be established later.)'
-	echo -e '\nPress \033[33m[p]\033[0m for xDSL (PPPoE), analog modem or ISDN'
+	fe '(Follow this procedure if you need wireless connectivity (Wi-Fi) during the installation process.)'
 	echo -e '\nPress \033[33m[h]\033[0m to read the wiki page about this topic'
-	fe '\nIf you have a dial-up or ISDN connection, see wikipage "Direct Modem Connection".'
+	fe '\nFor xDSL, dial-up and ISDN connections, see wikipage "Direct Modem Connection".'
 	fe '\nIf you are behind a proxy server see wikipage "Proxy settings".'
 	key='z'
-	while [[ "$key" != 'w' && "$key" != 'l' && "$key" != 'h' && "$key" != 'p' ]]; do
+	while [[ "$key" != 'w' && "$key" != 'l' && "$key" != 'h' ]]; do
 		read -s -n 1 key
 	done
 	if [[ "$key" = 'w' ]]; then
 		clear
 		echo -e 'Step 2.2.1 - Establish an internet connection: Wired: Static IP\n'
+		fe 'First, disable the dhcpcd service which was started automatically at boot:'
+		echo -e '\e[1;37;40m# systemctl stop dhcpcd.service\033[0m'
+		clear
+		echo -e 'Step 2.2.1 - Establish an internet connection: Wired: Static IP\n'
 		interfacewarning
 		interface_eth
-		fe '\nAlternatively identify the name of your ethernet interface manually:'
+		getenter
+		clear
+		echo -e 'Step 2.2.1 - Establish an internet connection: Wired: Static IP\n'
+		fe 'Alternatively identify the name of your ethernet interface manually:'
 		echo -e '\e[1;37;40m# ip link\033[0m'
-		fe '\nIf you are unsure, your ethernet interface is likely to start with the letter "e", and unlikely to be "lo" or start with the letter "w". You can also use iwconfig and see which interfaces are not wireless, those are devices that do not have wireless extensions.'
+		fe '\nIf you are unsure, your Ethernet interface is likely to start with the letter "e", and unlikely to be "lo" or start with the letter "w". You can also use iwconfig and see which interfaces are not wireless:'
 		echo -e '\e[1;37;40m# iwconfig\033[0m'
 		getenter
 		clear
@@ -327,26 +333,15 @@ if [[ "$key" = 'y' ]]; then
 		clear
 		echo -e 'Step 2.2.2 - Establish an internet connection: Wireless\n'
 		interfacewarning
-		interface_wlan	
-		fe '\nAlternatively you can use iwconfig and check for interfaces, that have wireless extensions manually:'
-		echo -e '\e[1;37;40m# iwconfig\033[0m'
+		interface_wlan
 		getenter
 		clear
 		echo -e 'Step 2.2.2 - Establish an internet connection: Wireless\n'
-		fe 'The wireless drivers and utilities are now available to you in the live environment of the installation media. A good knowledge of your wireless hardware will be of key importance to successful configuration. Note that the following quick-start procedure executed at this point in the installation will initialize your wireless hardware for use in the live environment of the installation media. These steps (or some other form of wireless management) must be repeated from the actual installed system after booting into it.'
-		getenter
-		clear
-		echo -e 'Step 2.2.2 - Establish an internet connection: Wireless\n'
-		fe 'Identify the wireless interface:'
-		echo -e '\e[1;37;40m# lspci | grep -i net\033[0m'
-		fe '\nOr, if using a USB adapter:'
-		echo -e '\e[1;37;40m# lsusb\033[0m'
-		fe '\nEnsure udev has loaded the driver, and that the driver has created a usable wireless kernel interface with iwconfig:'
+		fe 'Alternatively you can use iwconfig and check for interfaces, that have wireless extensions manually:'
 		echo -e '\e[1;37;40m# iwconfig\033[0m'
 		echo "$IWCONFIG_OUTPUT"
 		fe '\nIn this example, wlp3s0 is the available wireless interface.'
 		fe '\nNote: If you do not see output similar to this, then your wireless driver has not been loaded. If this is the case, you must load the driver yourself. Please see wikipage "Wireless Setup" for more detailed information.'
-		goleft
 		getenter
 		clear
 		echo -e 'Step 2.2.2 - Establish an internet connection: Wireless\n'
@@ -368,7 +363,6 @@ if [[ "$key" = 'y' ]]; then
 		fe "Next, use netcfg's wifi-menu to connect to a network."
 		echo -e '\e[1;37;40m# wifi-menu \033[31m<interface>\033[0m'
 		interface_wlan
-		fe "\nWarning: At the moment, netcfg's wifi-menu, when executed without arguments, will look for \"wlan0\"."
 		goleft
 		getenter
 		clear
@@ -376,31 +370,6 @@ if [[ "$key" = 'y' ]]; then
 		fe 'You should now have a working network connection.'
 		echo -e '(again:\e[1;37;40m# ping -c 3 www.google.com\033[0m)'
 		fe 'If you do not, check the detailed wikipage "Wireless Setup".'
-		goleft
-		getenter
-	elif [[ "$key" = 'p' ]];then
-		clear
-		echo -e 'Step 2.2.3 - Establish an internet connection: pppoe\n'
-		fe 'If you have a router in bridge mode, run:'
-		echo -e '\e[1;37;40m# pppoe-setup\033[0m'
-		echo -e '\n> Type in the username that the ISP provided you with.'
-		echo -e '> Press \033[33m[Enter]\033[0m for "eth0"'
-		echo -e '> Press \033[33m[Enter]\033[0m for "no", so that it stays up continuously.'
-		echo -e '> Type \033[33m[server]\033[0m (since this is usually the case).'
-		echo -e '> Press \033[33m[1]\033[0m for a firewall.'
-		echo '> Type in the password that the ISP provided you with.'
-		echo -e '> Press \033[33m[y]\033[0m at the end.'
-		fe '\nTo use these settings and connect to your ISP, run:'
-		echo -e '\e[1;37;40m# pppoe-start\033[0m'
-		fe '\nYou may also need to adjust your resolv.conf:'
-		echo -e '\e[1;37;40m# echo nameserver 8.8.8.8 > /etc/resolv.conf\033[0m'
-		goleft
-		getenter
-		clear
-		echo -e 'Step 2.2.3 - Establish an internet connection: pppoe\n'
-		fe 'You should now have a working network connection.'
-		echo -e '(again:\e[1;37;40m# ping -c 3 www.google.com\033[0m)'
-		fe 'If you do not, check the detailed wikipage "Network Configuration".'
 		goleft
 		getenter
 	else
@@ -415,9 +384,9 @@ echo -e '         cautioned and advised to backup any critical   '
 echo -e '         data before proceeding.                        \033[0m'
 fe '\nThe Arch Linux install media includes the following partitioning tools:'
 fe 'fdisk, gdisk, cfdisk, cgdisk, parted.'
-fe '\nAbsolute beginners are encouraged to use a graphical partitioning tool. GParted is a good example, and is provided as a "live" CD. It is also included on live CDs of most Linux distributions such as Ubuntu. A drive should first be partitioned and the partitions should be formatted with a file system before rebooting. See wikipage "Swap" for details if you wish to set up a swap partition or file now.'
+fe '\nAbsolute beginners are encouraged to use a graphical partitioning tool. GParted is a good example, and is provided as a "live" CD. It is also included on live CDs of most Linux distributions such as Ubuntu. A drive should first be partitioned and the partitions should be formatted with a file system before rebooting. See wikipage "Swap" for details if you wish to set up a swap partition or swap file.'
 fe '\nNote: If you are installing to a USB flash key, see wikipage "Installing Arch Linux on a USB key".'
-fe '\nIf you have already created the partitions and filesystems for archlinux, proceed to Mount the partitions by pressing \033[33m[s]\033[0m .'
+fe '\nIf you have already created the partitions and filesystems for archlinux, proceed to Mount the partitions by pressing \033[33m[s]\033[0m.'
 key='z'
 while [[ "$key" != 's'  && "$key" != '' ]]; do
 	read -s -n 1 key
@@ -470,7 +439,7 @@ if [[ "$key" = '' ]]; then
 	 	echo -e '> Choose New (or press \033[33m[N]\033[0m)'
 		echo -e '> \033[33m[Enter]\033[0m for Primary'
 		echo -e '> \033[33m[Enter]\033[0m to use the rest of the drive (or you could type in the desired size).'
-		fe "\nHere's how it should look like:"
+		fe "\nHere's what it should look like:"
 		echo 'Name   Flags     Part Type  FS Type Size (MB)'
 		echo '---------------------------------------------'
 		echo 'sdx1   Boot      Primary    Linux       15360'
@@ -525,7 +494,7 @@ if [[ "$key" = '' ]]; then
 			echo -e '> (or you could type in the desired size; for example "30G").' | fmt -u -w "$FMTCOL" -p '> '
 			echo -e '> \033[33m[Enter]\033[0m for the default hex code (8300)' | fmt -u -w "$FMTCOL" -p '> '
 			echo -e '> \033[33m[Enter]\033[0m for a blank partition name.' | fmt -u -w "$FMTCOL" -p '> '
-			echo -e "\nHere's how it should look like:\n"
+			echo -e "\nHere's what it should look like:\n"
 
 echo 'Part. #     Size        Partition Type
 ----------------------------------------
@@ -575,7 +544,7 @@ echo 'Part. #     Size        Partition Type
 	echo -e 'List of partitions:'
 	lsblk -e 7 -o NAME,TYPE,MOUNTPOINT,MODEL,RM,SIZE,FSTYPE
 	fe '\nSimply partitioning is not enough; the partitions also need a filesystem.'
-	fe 'Format the root partition and home partition with an ext4 filesystem:'
+	fe 'To format the root partition and home partition with an ext4 filesystem:'
 	echo -e "\033[30;41mWarning: Double check and triple check that it's actually"
 	echo -e '         /dev/sdxY and /dev/sdxZ that you want to format.\033[0m'
 	echo -e '\e[1;37;40m# mkfs.ext4 /dev/sd\033[31mxY\033[0m'	
@@ -614,9 +583,9 @@ echo -e 'Step 2.4 - Mount the partitions\n'
 fe 'Partition and Filesystem Layout:'
 lsblk -e 7 -o NAME,TYPE,MOUNTPOINT,MODEL,RM,SIZE,FSTYPE
 fe '\nNote: Do not mount more than one partition to the same directory. And pay attention, because the mounting order is important.'
-fe '\nMount the root partition on /mnt.'
+fe '\nFirst, mount the root partition on /mnt.'
 echo -e '\e[1;37;40m# mount /dev/sd\033[31mxX\033[0m\e[1;37;40m /mnt\033[0m'
-fe '\nMount the home partition and any other separate partition (/boot, /var, etc).'
+fe '\nThen mount the home partition and any other separate partition (/boot, /var, etc), if you have any:'
 echo -e '\e[1;37;40m# mkdir /mnt/home'
 echo -e '\e[1;37;40m# mount /dev/sd\033[31mxY\033[0m\e[1;37;40m /mnt/home\033[0m'
 if (( "$UEFI" == 1 )); then
@@ -653,10 +622,9 @@ getenter;;
 
 ##6##
 6) echo -e 'Step 2.5 - Select a mirror\n'
-
-
-fe 'Edit the mirrorlist file and place your preferred mirror first. A copy of this file will be installed on your new system as well.'
+fe 'Before installing, you may want to edit the mirrorlist file and place your preferred mirror first. A copy of this file will be installed on your new system by pacstrap as well, so it is worth getting it right.'
 echo -e '\e[1;37;40m# nano /etc/pacman.d/mirrorlist\033[0m'
+fe 'If you want, you can make it the only mirror available by getting rid of everything else, but it is usually a good idea to have a few more, in case the first one goes offline.'
 fe '\nAlternatively press \033[33m[r]\033[0m to look for the best mirrors using reflector.'
 key='z'
 while [[ "$key" != '' ]]; do
@@ -669,7 +637,7 @@ while [[ "$key" != '' ]]; do
 		clear
 		echo -e 'Step 2.5 - Select a mirror\n'
 		tail -n 5 /tmp/mirrorlist
-		fe '\nThe generated mirrorlist has been saved to /tmp/mirrorlist . To keep the mirrorlist copy it to /etc/pacman.d/mirrorlist .'
+		fe '\nThe generated mirrorlist has been saved to /tmp/mirrorlist. To keep the mirrorlist copy it to /etc/pacman.d/mirrorlist.'
 		echo -e '\e[1;37;40m# cp /tmp/mirrorlist /etc/pacman.d/mirrorlist\033[0m'
 		goleft
 		getenter	
@@ -678,22 +646,23 @@ done;;
 
 ##7##
 7) echo -e 'Step 2.6 - Install the base system\n'
-fe 'The base system is installed using the pacstrap script. The -i switch can be omitted if you wish to install every package from the base and base-devel groups without prompting.'
-echo -e '\e[1;37;40m# pacstrap -i /mnt base base-devel\033[0m'
+fe 'The base system is installed using the pacstrap script. The -i switch can be omitted if you wish to install every package from the base group without prompting.'
+echo -e '\e[1;37;40m# pacstrap -i /mnt base \033[0m'
 fe '\nNote: If pacman fails to verify your packages, check the system time with cal. If the system date is invalid (e.g. it shows the year 2010), signing keys will be considered expired (or invalid), signature checks on packages will fail and installation will be interrupted. Make sure to correct the system time, either by doing so manually or with the ntp client, and retry running the pacstrap command. Refer to the "Time" wikipage for more information on correcting system time.'
 fe '\nNote: If pacman complains that error: failed to commit transaction (invalid or corrupted package), run the following command:'
 echo '# pacman-key --init && pacman-key --populate archlinux'
+fe 'This will give you a basic Arch system. Other packages can be installed later using pacman.'
 goleft
 getenter;;
 
 ##8##
 8) echo -e 'Step 2.7 - Generate an fstab\n'
-fe 'Generate an fstab file with the following command. UUIDs will be used because they have certain advantages. (See wikipage "fstab#Identifying filesystems" .) If you would prefer to use labels instead, replace the -U option with -L.'
+fe 'Generate an fstab file with the following command. UUIDs will be used because they have certain advantages. (See wikipage "fstab#Identifying filesystems".) If you would prefer to use labels instead, replace the -U option with -L.'
 echo -e '\e[1;37;40m# genfstab -U -p /mnt >> /mnt/etc/fstab\033[0m'
 echo -e '\e[1;37;40m# nano /mnt/etc/fstab\033[0m'
-fe '\nNote: If you encounter errors running genfstab or later in the install process, do not run genfstab again; just edit the fstab file.'
+fe '\nNote: The fstab file should always be checked after generating it. If you encounter errors running genfstab or later in the install process, do not run genfstab again; just edit the fstab file.'
 fe '\nA few considerations:'
-fe 'Only the root (/) partition needs 1 for the last field. Everything else should have either 2 or 0 (See wikipage "fstab#Field definitions" .)'
+fe 'Only the root (/) partition needs 1 for the last field. Everything else should have either 2 or 0 (See wikipage "fstab#Field definitions".)'
 goleft
 getenter;;
 
@@ -707,7 +676,8 @@ getenter
 clear
 echo 'Step 2.8 - Chroot and configure the base system'
 echo -e 'Configuration [0/6]\n'
-fe 'At this stage of the installation, you will configure the primary configuration files of your Arch Linux base system. These can either be created if they do not exist, or edited if you wish to change the defaults. Closely following and understanding these steps is of key importance to ensure a properly configured system.'
+fe 'At this stage of the installation, you will configure the primary configuration files of your Arch Linux base system. These can either be created if they do not exist, or edited if you wish to change the defaults.'
+fe 'Closely following and understanding these steps is of key importance to ensure a properly configured system.'
 getenter
 clear
 echo 'Step 2.8 - Chroot and configure the base system'
@@ -719,7 +689,7 @@ echo -ne '\033[0;44m'
 echo '-----------------'
 echo -e '\033[31men_US.UTF-8 UTF-8'
 echo -e 'de_DE.UTF-8 UTF-8\033[0m'
-fe '\nGenerate the locales specified in /etc/locale.gen .'
+fe '\nGenerate the locales specified in /etc/locale.gen.'
 echo -e '\e[1;37;40m# locale-gen\033[0m'
 fe '\nSet the LANG variable in /etc/locale.conf ,it will act as the default value for all other variables. (The locale.conf file does not exist by default.)'
 echo -e '\e[1;37;40m# echo LANG=\033[31men_US.UTF-8\033[0m\e[1;37;40m > /etc/locale.conf'
@@ -727,6 +697,7 @@ echo -e '# export LANG=\033[31men_US.UTF-8\033[0m'
 fe '\nNote: If you set some other language than English at the beginning of the install, the above commands would be something like:'
 echo -e '\e[1;37;40m# echo LANG=\033[31mde_DE.UTF-8\033[0m\e[1;37;40m > /etc/locale.conf'
 echo -e '# export LANG=\033[31mde_DE.UTF-8\033[0m'
+fe 'To use other locales for other LC_* variables, run "locale" to see the available options and add them to locale.conf. It is not recommended to set the LC_ALL variable.'
 goleft
 getenter
 clear
@@ -738,7 +709,7 @@ echo -e '\e[1;37;40m# loadkeys \033[31mlayout\033[0m'
 echo -e '\nPress \033[33m[l]\033[0m for a list of common layouts.'
 echo -e '\nChange the font.'
 echo -e '\e[1;37;40m# setfont Lat2-Terminus16\033[0m'
-fe '\nTo make them available after reboot, edit /etc/vconsole.conf .'
+fe '\nTo make them available after reboot, edit /etc/vconsole.conf.'
 echo -e '\e[1;37;40m# nano /etc/vconsole.conf\033[0m'
 echo -ne '\033[0;44m'
 echo '--------------------'
@@ -746,7 +717,8 @@ echo -e 'KEYMAP=\033[31mlayout\033[0;44m       '
 echo -e 'FONT=Lat2-Terminus16\033[0m'
 fe '\nKEYMAP – Please note that this setting is only valid for your TTYs, not any graphical window managers or Xorg.'
 fe '\nFONT – Available alternate console fonts reside in /usr/share/kbd/consolefonts/. The default (blank) is safe, but some foreign characters may show up as white squares or as other symbols. It is recommended that you change it to Lat2-Terminus16, because it claims to support "about 110 language sets".'
-fe '\nPossible option FONT_MAP – Defines the console map to load at boot. Read man setfont. Removing it or leaving it blank is safe. See wikipage "Console fonts" and man vconsole.conf for more information.'
+fe '\nPossible option FONT_MAP – Defines the console map to load at boot. Read man setfont. Removing it or leaving it blank is safe.'
+fe '\nSee wikipage "Console fonts" and man vconsole.conf for more information.'
 key='z'
 while [[ "$key" != '' ]]; do
 	read -s -n 1 key
@@ -786,7 +758,7 @@ if [[ "$key" = 'd' ]]; then
 	echo 'Recommended:'
 	fe 'Set both Arch Linux and Windows to use UTC. A quick registry fix is needed. Also, be sure to prevent Windows from synchronizing the time on-line, because the hardware clock will default back to localtime.'
 	echo -e '\nNot recommended:'
-	fe 'Set Arch Linux to localtime and disable any time-related services, like NTPd . This will let Windows take care of hardware clock corrections and you will need to remember to boot into Windows at least two times a year (in Spring and Autumn) when DST kicks in. So please do not ask on the forums why the clock is one hour behind or ahead if you usually go for days or weeks without booting into Windows.'
+	fe 'Set Arch Linux to localtime and disable any time-related services, like NTPd. This will let Windows take care of hardware clock corrections and you will need to remember to boot into Windows at least two times a year (in Spring and Autumn) when DST kicks in. So please do not ask on the forums why the clock is one hour behind or ahead if you usually go for days or weeks without booting into Windows.'
 	goleft
 	getenter
 fi
@@ -794,7 +766,7 @@ clear
 
 echo -e 'Step 2.8 - Chroot and configure the base system'
 echo -e 'Configuration [5/6]: Kernel modules\n'
-fe 'All needed modules are automatically loaded by udev, so you will rarely need to add something here. Only add modules that you know are missing, otherwise skip this section.'
+fe 'This is just an example, you do not need to set it. All needed modules are automatically loaded by udev, so you will rarely need to add something here. Only add modules that you know are missing.'
 fe '\nPress \033[33m[s]\033[0m to skip this step.\n'
 key='z'
 while [[ "$key" != 's' && "$key" != '' ]]; do
@@ -804,6 +776,7 @@ if [[ "$key" = '' ]]; then
 	clear
 	echo -e 'Step 2.8 - Chroot and configure the base system'
 	echo -e 'Configuration [5/6]: Kernel modules\n'
+	fe 'For kernel modules to load during boot, place a *.conf file in /etc/modules-load.d/, with a name based on the program that uses them.'
 	echo -e '\e[1;37;40m# nano /etc/modules-load.d/\033[31mmymodule\033[0m\e[1;37;40m.conf\033[0m'
 	echo -ne '\033[0;44m'
 	echo '--------'
@@ -818,7 +791,7 @@ echo -e 'Step 2.8 - Chroot and configure the base system'
 echo -e 'Configuration [6/6]: Hostname\n'
 fe 'Set the hostname to your liking (e.g. \033[31march\033[0m):'
 echo -e '\e[1;37;40m# echo \033[31mmyhostname\033[0m\e[1;37;40m > /etc/hostname\033[0m'
-fe '\nNote: There is no need to edit /etc/hosts .'
+fe '\nNote: There is no need to edit /etc/hosts.'
 goleft
 getenter;;
 
@@ -829,6 +802,8 @@ fe '\nDo you want to configure wired or wireless networks?'
 echo -e '\nPress \033[33m[w]\033[0m for wired,'
 echo -e '\nPress \033[33m[l]\033[0m for wireless,'
 echo -e '\nPress \033[33m[s]\033[0m to skip - not recommended.'
+fe '\nFor xDSL, dial-up and ISDN connections, see wikipage "Direct Modem Connection".'
+fe '\nIf you are behind a proxy server see wikipage "Proxy settings".'
 fe '\nNote: For more in-depth information on network configuration, visit wikipages "Network Configuration" and "Wireless Setup".'
 key='z'
 while [[ "$key" != 'w' && "$key" != 's' && "$key" != 'l' ]]; do
@@ -840,7 +815,7 @@ if [[ "$key" = 'w' ]]; then
 	echo -e 'Wired:\n'
 	fe 'Do you want to you use dynamic or static ip adresses?'
 	echo -e '\nPress \033[33m[d]\033[0m for dynamic (dhcp),'
-	echo -e '\nPress \033[33m[s]\033[0m for static .'
+	echo -e '\nPress \033[33m[s]\033[0m for static.'
 	while [[ "$key" != 'd' && "$key" != 's' ]]; do
 		read -s -n 1 key
 	done
@@ -854,9 +829,9 @@ if [[ "$key" = 'w' ]]; then
 		clear
 		echo 'Step 2.9.1 - Configure the network'
 		echo -e 'Wired: Dynamic IP\n'
-		fe "Do you want to use a single fixed wired network connection (systemd dhcpcd.service), or do you need a network management service (netcfg's net-auto-wired), which gracefully handles dynamic connections to new networks?"
+		fe "Do you want to use a single fixed wired network connection (systemd dhcpcd.service), or do you need a network management service (netctl-ifplugd), which gracefully handles dynamic connections to new networks?"
 		fe "\nPress \033[33m[d]\033[0m for systemd's dhcpcd service,"
-		fe "\nPress \033[33m[n]\033[0m for netcfg's net-auto-wired ."
+		fe "\nPress \033[33m[n]\033[0m for netctl-ifplugd."
 		while [[ "$key" != 'd' && "$key" != 'n' ]]; do
 		read -s -n 1 key
 		done
@@ -864,7 +839,7 @@ if [[ "$key" = 'w' ]]; then
 			clear
 			echo 'Step 2.9.1 - Configure the network'
 			echo -e 'Wired: Dynamic IP: Dhcpcd service\n'
-			fe 'Enable the dhcpcd service .'
+			fe 'Enable the dhcpcd service.'
 			echo -e '\e[1;37;40m# systemctl enable dhcpcd@\033[31minterface\e[1;37;40m.service\033[0m'
 			interface_eth
 			goleft
@@ -872,22 +847,12 @@ if [[ "$key" = 'w' ]]; then
 		elif [[ "$key" = 'n' ]]; then
 			clear
 			echo 'Step 2.9.1 - Configure the network'
-			echo -e 'Wired: Dynamic IP: net-auto-wired\n'
-			fe 'Install ifplugd, which is required for net-auto-wired:'
+			echo -e 'Wired: Dynamic IP: netctl-ifplugd\n'
+			fe 'Install ifplugd, which is required for netctl-ifplugd:'
 			echo -e '\e[1;37;40m# pacman -S ifplugd\033[0m'
-			fe '\nEdit /etc/conf.d/netcfg and change the WIRED_INTERFACE variable .'
-			echo -e '\e[1;37;40mnano /etc/conf.d/netcfg\033[0m'
-			echo -ne '\033[0;44m'
-			echo '---------------------------'
-			echo -e 'WIRED_INTERFACE="\033[31minterface\033[0;44m"\033[0m'
+			fe '\nThen enable netctl with your interface as argument:'
+			echo -e '\e[1;37;40m# systemctl enable netctl-ifplugd@\033[31minterface\e[1;37;40m.service\033[0m'
 			interface_eth
-			fe '\nCopy a sample profile from /etc/network.d/examples to /etc/network.d:'
-			echo -e '\e[1;37;40m# cd /etc/network.d'
-			echo -e '# cp examples/ethernet-dhcp .\033[0m'
-			fe '\nEdit the profile as needed and change the INTERFACE variable .'
-			echo -e '\e[1;37;40m# nano ethernet-dhcp\033[0m'
-			fe '\nEnable the net-auto-wired service.'
-			echo -e '\e[1;37;40m# systemctl enable net-auto-wired.service\033[0m'
 			goleft
 			getenter
 		fi
@@ -901,19 +866,14 @@ if [[ "$key" = 'w' ]]; then
 		clear
 		echo 'Step 2.9.1 - Configure the network'
 		echo -e 'Wired: Static IP\n'
-		fe 'Copy a sample profile from /etc/network.d/examples to /etc/network.d:'
-		echo -e '\e[1;37;40m# cd /etc/network.d'
+		fe 'Copy a sample profile from /etc/netctl/examples to /etc/netctl:'
+		echo -e '\e[1;37;40m# cd /etc/netctl'
 		echo -e '# cp examples/ethernet-static .\033[0m'
-		fe '\nEdit the profile as needed, modify \033[31mINTERFACE\033[0m, \033[31mADDR\033[0m, \033[31mGATEWAY\033[0m and \033[31mDNS\033[0m .'
+		fe '\nEdit the profile as needed, modify \033[31mInterface\033[0m, \033[31mAddress\033[0m, \033[31mGateway\033[0m and \033[31mDNS\033[0m.'
 		echo -e '\e[1;37;40m# nano ethernet-static\033[0m'
 		interface_eth
-		fe '\nEdit /etc/conf.d/netcfg and add the new network profile to the NETWORKS array:'
-		echo -e '\e[1;37;40m# nano /etc/conf.d/netcfg\033[0m'
-		echo -ne '\033[0;44m'
-		echo '--------------------------'
-		echo -e 'NETWORKS=(ethernet-static)\033[0m'
-		fe '\nEnable the netcfg service:'
-		echo -e '\e[1;37;40m# systemctl enable netcfg.service\033[0m'
+		fe 'Then enable above created profile:'
+		echo -e '\e[1;37;40m# netctl enable ethernet-static\033[0m'
 		goleft
 		getenter
 	fi
@@ -948,9 +908,9 @@ elif [[ "$key" = 'l' ]]; then
 	echo -e '\e[1;37;40m# nano /etc/conf.d/netcfg\033[0m'
 	echo -ne '\033[0;44m'
 	echo '--------------------------------'
-	echo -e 'WIRELESS_INTERFACE="\033[31m<interface>"\033[0m'
+	echo -e 'WIRELESS_INTERFACE="\033[31m<interface>\033[0;44m"\033[0m'
 	interface_wlan
-	fe '\nIt is also possible to define a list of network profiles that should be automatically connected, using the AUTO_PROFILES variable in /etc/conf.d/netcfg . If AUTO_PROFILES is not set, all known wireless networks will be tried.'
+	fe '\nIt is also possible to define a list of network profiles that should be automatically connected, using the AUTO_PROFILES variable in /etc/conf.d/netcfg. If AUTO_PROFILES is not set, all known wireless networks will be tried.'
 	goleft
 	getenter
 else
@@ -960,8 +920,8 @@ fi;;
 
 ##11##
 11) echo -e 'Step 2.10 - Create an initial ramdisk environment\n'
+fe 'Tip: Most users can skip this step and use the defaults provided in mkinitcpio.conf. The initramfs image (from the /boot folder) has already been generated based on this file when the linux package (the Linux kernel) was installed earlier with pacstrap.'
 fe 'Here you need to set the right hooks if the root is on a USB drive, if you use RAID, LVM, or if /usr is on a separate partition.'
-fe '\nTip: Most users can skip this step and use the defaults provided in mkinitcpio.conf.'
 fe '\nPress \033[33m[s]\033[0m to skip this step.\n'
 key='z'
 while [[ "$key" != 's' && "$key" != '' ]]; do
@@ -970,9 +930,8 @@ done
 if [[ "$key" = '' ]]; then
 	clear
 	echo -e 'Step 2.10 - Create an initial ramdisk environment\n'
-	fe 'Here you need to set the right hooks if the root is on a USB drive, if you use RAID, LVM, or if /usr is on a separate partition.'
-	fe '\nPress \033[33m[l]\033[0m for a list of hooks and their usage.'
-	fe '\nEdit /etc/mkinitcpio.conf .'
+	fe 'Press \033[33m[l]\033[0m for a list of hooks and their usage.'
+	fe '\nEdit /etc/mkinitcpio.conf as needed.'
 	echo -e '\e[1;37;40m# nano /etc/mkinitcpio.conf\033[0m'
 	fe '\nRe-generate the initramfs image.'
 	echo -e '\e[1;37;40m# mkinitcpio -p linux\033[0m'
@@ -999,9 +958,9 @@ if (( "$UEFI" == 1 )); then
 	if (( "$EFISTUB" == 2 )); then
 		fe 'You can choose from GRUB and EFISTUB for your bootloader, EFISTUB is recommended.'
 		fe '\nPress \033[33m[g]\033[0m for GRUB,'
-		fe '(The ESP must be mounted at /boot/efi .)'
+		fe '(The ESP must be mounted at /boot/efi.)'
 		fe '\nPress \033[33m[e]\033[0m for EFISTUB (recommended).'
-		fe '(The ESP must be mounted at /boot .)'
+		fe '(The ESP must be mounted at /boot.)'
 		while [[ "$key" != 'g' && "$key" != 'e' ]]; do
 			read -s -n 1 key
 		done
@@ -1018,10 +977,10 @@ if (( "$UEFI" == 1 )); then
 		echo -e 'UEFI: GRUB\n'
 		fe 'Install the grub-package and efibootmgr with pacman.'
 		echo -e '\e[1;37;40m# pacman -S grub-efi-x86_64 efibootmgr\033[0m'
-		fe '\nNote: In case you have a system with 32-bit EFI, like pre-2008 Macs, install grub-efi-i386 instead.'
+		fe '\nNote: In case you have a system with 32-bit EFI, like pre-2008 Macs, install grub-efi-i386 instead of grub-efi-x86_64.'
 		fe '\nInstall grub to the ESP.'
-		echo -e '\e[1;37;40m# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck\033[0m'
-		fe '\nNote: Again, for 32-bit EFI use --target=i386-efi .'
+		echo -e '\e[1;37;40m# grub-install --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck\033[0m'
+		fe '\nNote: Again, for 32-bit EFI add the option --target=i386-efi.'
 		fe '\nCopy the locale file for your language.'
 		echo -e '\e[1;37;40m# cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo\033[0m'
 		goleft
@@ -1029,27 +988,9 @@ if (( "$UEFI" == 1 )); then
 		clear
 		echo -n 'Step 2.12.2.2 - Install and configure a bootloader: '
 		echo -e 'UEFI: GRUB\n'
-		fe 'The next command creates a menu entry for GRUB in the UEFI boot menu. However, as of grub-efi-x86_64 version 2.00, grub-install tries to create a menu entry, so running efibootmgr may not be necessary. See wikipage "UEFI#efibootmgr" for more info.\n'
-		echo -en '\e[1;37;40m# efibootmgr -c -g -d /dev/sd\033[31mX\e[1;37;40m -p \033[31mY\e[1;37;40m -w -L "Arch Linux (GRUB)" -l '
-		echo -n "'\EFI\arch_grub\grubx64.efi'"
-		echo -e '\033[0m'
-		fe '\nNote: In the above command, X and Y denote the drive and partition of the ESP.'
-		FINDMNT=$(findmnt -n -o SOURCE /mnt/boot/efi)
-		if [[ "$FINDMNT" = '' ]]; then
-			echo -e '\nList of partitions:'
-			lsblk -e 7 -o NAME,TYPE,MOUNTPOINT,MODEL,RM,SIZE,FSTYPE
-		else
-			fe '\nHint: Your ESP is found at the following drive and partition:'
-			echo -e "\033[31m$FINDMNT\033[0m"
-		fi
-		goleft
-		getenter
-		clear
-		echo -n 'Step 2.12.2.2 - Install and configure a bootloader: '
-		echo -e 'UEFI: GRUB\n'
 		fe "Next, while using a manually created grub.cfg is absolutely fine, it's recommended that beginners automatically generate one:"
-		echo -e '\e[1;37;40m# grub-mkconfig -o /boot/grub/grub.cfg\033[0m'
 		fe '\nTip: To automatically search for other operating systems on your computer, install os-prober (pacman -S os-prober) before running the command.'
+		echo -e '\e[1;37;40m# grub-mkconfig -o /boot/grub/grub.cfg\033[0m'
 		goleft
 		getenter
 	elif (( "$EFISTUB" == 1 )); then
@@ -1074,13 +1015,13 @@ if (( "$UEFI" == 1 )); then
 		clear
 		echo -n 'Step 2.12.2.1 - Install and configure a bootloader: '
 		echo -e 'UEFI: EFISTUB\n'
-		fe 'Create and edit the kernel configuration file refind_linux.conf :'
+		fe 'Create and edit the kernel configuration file refind_linux.conf:'
 		echo -e '\e[1;37;40m# nano /boot/refind_linux.conf\033[0m'
 		echo -ne '\033[0;44m'
 		echo '-----------------------------------------------------------------------'
 		echo -e '"Boot archlinux" "root=PARTUUID=\e[1;31m1234\e[0;44m ro rootfstype=ext4 add_efi_memmap"\033[0m'
-		fe '\nNote: Please notice the difference between the standard UUID and the PARTUUID .'
-		fe '\nNote: "root=PARTUUID=" refers to your root partition, not your ESP .'
+		fe '\nNote: Please notice the difference between the standard UUID and the PARTUUID.'
+		fe '\nNote: "root=PARTUUID=" refers to your root partition, not your ESP.'
 		FINDMNT=$(findmnt -n -o PARTUUID /mnt)
 		if [[ "$FINDMNT" = '' ]]; then
 			fe '\nList of partitions including PARTUUID:'
@@ -1113,6 +1054,7 @@ if (( "$UEFI" == 1 )); then
 			fe '\nHint: Your ESP is found at the following drive and partition:'
 			echo -e "\033[31m$FINDMNT\033[0m"
 		fi
+		fe '\nNote: On some systems, the above command will not work properly. It will execute without any visible error, but the UEFI boot menu will not have been correctly updated with a new entry. To determine whether the command executed properly, run efibootmgr without any arguments and see if a new entry has appeared in the list displayed. If there is no new entry, then it will not be possible to enter rEFInd upon reboot, as the UEFI boot menu has been left unchanged. In this case, you will instead have to enter the UEFI shell and manually add an entry to the UEFI boot menu with the bcfg command, as described on wikipage Unified_Extensible_Firmware_Interface#bcfg.'
 		goleft
 		getenter
 	else
@@ -1124,8 +1066,8 @@ elif (( "$UEFI" == 0 )); then
 	echo -e 'Step 2.12.1 - Install and configure a bootloader: BIOS\n'
 	fe 'For BIOS systems, there are three bootloaders - Syslinux, GRUB, and LILO. Choose the bootloader as per your convenience. Below only Syslinux and GRUB are explained.'
 	fe '\nPress \033[33m[s]\033[0m for Syslinux,'
-	fe '\nPress \033[33m[g]\033[0m for GRUB .'
-	fe '\nSyslinux is (currently) limited to loading only files from the partition where it was installed. Its configuration file is considered to be easier to understand. GRUB is more feature-rich and supports more complex scenarios. Its configuration file(s) is more similar to a scripting language, which may be difficult for beginners to manually write. It is recommended that beginners automatically generate the configuration file.'
+	fe '\nPress \033[33m[g]\033[0m for GRUB.'
+	fe '\nSyslinux is (currently) limited to loading only files from the partition where it was installed. Its configuration file is considered to be easier to understand. GRUB is more feature-rich and supports more complex scenarios. Its configuration file(s) is more similar to a scripting language, which may be difficult for beginners to manually write. It is recommended that they automatically generate one.'
 	if (( "$GPT" == 1 )); then
 			fe '\nNote: Your drive is GPT-partitioned, therefore GRUB needs a "BIOS Boot Partition". If the partition is not present choose Syslinux instead!'
 	elif (( "$GPT" == 2 )); then
@@ -1179,14 +1121,14 @@ elif (( "$UEFI" == 0 )); then
 			echo -e '\nList of partitions:'
 			lsblk -e 7 -o NAME,TYPE,MOUNTPOINT
 		else
-			fe "\nHint: Your root partition is on the device /dev/sd\033[31m$FINDMNT\033[0m ."
+			fe "\nHint: Your root partition is on the device /dev/sd\033[31m$FINDMNT\033[0m."
 		fi
 		echo -e '\n\e[1;37;40m# grub-install --recheck /dev/sd\033[31mx\033[0m'
 		fe '\nCopy the locale file for your language.'
 		echo -e '\e[1;37;40m# cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo\033[0m'
 		fe '\nWhile using a manually created grub.cfg is absolutely fine, it is recommended that beginners automatically generate one:'
-		echo -e '\e[1;37;40m# grub-mkconfig -o /boot/grub/grub.cfg\033[0m'
 		fe '\nTip: To automatically search for other operating systems on your computer, install os-prober (pacman -S os-prober) before running grub-mkconfig.'
+		echo -e '\e[1;37;40m# grub-mkconfig -o /boot/grub/grub.cfg\033[0m'
 		fe '\nFor more information on configuring and using GRUB, see wikipage "GRUB2".'
 		goleft
 		getenter
@@ -1208,7 +1150,7 @@ echo 'List of partitions:'
 lsblk -e 7 -o NAME,TYPE,MOUNTPOINT
 fe '\nSince the partitions are mounted under /mnt, we use the following command to unmount them:'
 echo -e '\e[1;37;40m# umount /mnt/{boot,home,}\033[0m'
-fe '\nNote: There is no need to unmount /run/archiso .'
+fe '\nNote: There is no need to unmount /run/archiso.'
 goleft
 getenter
 clear
@@ -1217,7 +1159,7 @@ echo 'List of partitions:'
 lsblk -e 7 -o NAME,TYPE,MOUNTPOINT
 fe '\nSince the partitions are mounted under /mnt, we use the following command to unmount them:'
 echo -e '\e[1;37;40m# umount /mnt/{boot,home,}\033[0m'
-fe '\nNote: There is no need to unmount /run/archiso .'
+fe '\nNote: There is no need to unmount /run/archiso.'
 getenter
 clear
 echo -e 'Step 2.13 - Unmount the partitions and reboot\n'
@@ -1225,7 +1167,7 @@ tmux set-option -g status-left 'COMPLETE' > /dev/null 2>&1
 echo -e 'Reboot the computer:'
 echo -e '\e[1;37;40m# reboot\033[0m'
 fe '\nTip: Be sure to remove the installation media, otherwise you will boot back into it.'
-fe "\n\n\tThank you for following $NAME ."
+fe "\n\n\tThank you for following $NAME."
 goleft
 sleep 20
 tmux set-option -g status-left 'reboot' > /dev/null 2>&1

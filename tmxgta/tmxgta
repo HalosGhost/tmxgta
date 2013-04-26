@@ -1,4 +1,4 @@
-VERSION=0.4.1
+VERSION=0.5
 if pacman -Qq tmux > /dev/null;then
 	if pacman -Qq reflector > /dev/null; then
 		echo 'Welcome to tmxgta .'
