@@ -36,6 +36,7 @@ lo        no wireless extensions.'
 
 ## Functions ##
 
+# Formatted Echo
 fe () {
 echo -e "$1" | fmt -u -w "$FMTCOL"
 }
@@ -160,10 +161,10 @@ if (( "$#" == 0 )); then
 		echo -e 'Step 0 - Tutorial\n'
 		fe "$NAME will not install archlinux, or change your data or partition layout. Instead you are in full control, as changes are done via terminal commands. The goal of $NAME is to provide an interactive guide, that shows helpful information about your system on the screen where the terminal is found. There is no need to switch virtual consoles and remember what you have read, print out the installation guide or read the guide on another computer."
 		fe 'This is achieved by splitting up a virtual console into two panes using tmux. You can still use the other ttys as usual with the key combination ctrl+alt+f2. All commands are marked \e[1;37;40m# like so\033[0m in the guide. Frequently changing the command is necessary for your individual installation. In that case the part that needs to be changed is marked in \033[31mred\033[0m. Whenever you enter the pager "less" displaying a file in the guide, you can exit from it by pressing \033[33m[q]\033[0m. The same key is used to exit the browser elinks while viewing a web page. For editing text files "nano" is suggested in the guide, but feel free to use another editor instead of nano. On the bottom there is a status line that shows the current time and date. Check if the time is set correctly now, to avoid problems with package signing. Refer to the "Time" wikipage for information on correcting system time. The statusline also shows a progressbar on the left side.'
-		fe "It is recommended to read the beginner's guide provided in the ArchWiki."
+		fe "It is recommended to read the beginners' guide provided in the ArchWiki."
 		fe 'https://wiki.archlinux.org/'
-		fe 'The steps in this guide use the same numbering as the beginners guide, that means you can easily look up each topic in the wiki.'
-		fe "\nPress \033[33m[w]\033[0m to read the beginner's guide now."
+		fe "The steps in this guide use the same numbering as the beginners' guide, that means you can easily look up each topic in the wiki."
+		fe "\nPress \033[33m[w]\033[0m to read the beginners' guide now."
 		fe '\nAt any step hit \033[33m[enter]\033[0m or \033[33m[space]\033[0m to go to the next page.'
 		key='z'
 		while [[ "$key" != '' ]]; do
@@ -216,6 +217,7 @@ if [[ "$key" != 's' && "$key" = '' ]]; then
 	fe 'By default, the language is set to English (US). If you would like to change the language for the install process (German, in this example), remove the # in front of the locale you want from /etc/locale.gen, along with English (US). Please choose the UTF-8 entry.\n'
 	echo -e '\e[1;37;40m# nano /etc/locale.gen'
 	echo -e '# locale-gen\n# export LANG=\033[31mde_DE.UTF-8\033[0m'
+	fe 'Remember, LAlt+LShift activates and deactivates the keymap.'
 	goleft
 	getenter
 else
@@ -224,12 +226,10 @@ fi;;
 
 ##2##
 2) if (( "$UEFI" == 2 )); then
-	echo -e 'Step 1.2.1 - Test if you are booted into UEFI mode\n'
-	fe 'In case you have a UEFI motherboard and UEFI Boot mode is enabled (and is preferred over BIOS/Legacy mode), the CD/USB will automatically launch archlinux kernel (EFISTUB via Gummiboot Boot Manager). To check whether you have booted into UEFI mode, load the efivars kernel module and then check whether there are files in /sys/firmware/efi/vars/:'
-	echo -e '\e[1;37;40m# modprobe efivars\033[0m'
-	echo -e '\033[30;41mWarning: Loading the efivars kernel module now is crucial'
-	echo -e '         for the successful setup of UEFI boot.          \033[0m'
+	echo -e 'Step 1.2.1 - Testing if you are booted into UEFI mode\n'
+	fe 'In case you have a UEFI motherboard and UEFI Boot mode is enabled (and is preferred over BIOS/Legacy mode), the CD/USB will automatically launch Arch Linux kernel (EFISTUB via Gummiboot Boot Manager). To check whether you have booted into UEFI mode, before chrooting check whether there are files in /sys/firmware/efi/vars/:'
 	echo -e '\e[1;37;40m# ls -1 /sys/firmware/efi/vars/\033[0m'
+	fe '\nNote: For several kernels now, CONFIG_EFI_VARS has been compiled into the kernel. Thus efivars no longer exists as a module and does not need to be loaded manually.'
 	goleft
 	echo -e '\nAre you booted in UEFI mode? \033[33m[y/n]\033[0m'
 	key='z'
@@ -1042,10 +1042,10 @@ if (( "$UEFI" == 1 )); then
 		echo -e '         firmware and may need reflash of the        '
 		echo -e '         motherboard ROM. For Macs, use mactel-boot  '
 		echo -e '         or "bless" from within Mac OS X.            \033[0m'
-		echo -en '\n\e[1;37;40m# efibootmgr -c -g -d /dev/sd\e[1;31mX\e[1;37;40m -p \e[1;31mY\e[1;37;40m -w -L "rEFInd" -l'
+		echo -en '\n\e[1;37;40m# efibootmgr -c -d /dev/sd\e[1;31mX\e[1;37;40m -p \e[1;31mY\e[1;37;40m -w -L "rEFInd" -l'
 		echo -n " '\\EFI\\refind\\refind_x64.efi'"
 		echo -e '\033[0m'
-		fe '\nNote: In the above command, X and Y denote the drive and partition of the ESP.'
+		fe '\nNote: Replace X and Y with the drive and partition of the ESP.'
 		FINDMNT=$(findmnt -n -o SOURCE /mnt/boot)
 		if [[ "$FINDMNT" = '' ]]; then
 			echo -e '\nList of partitions:'
