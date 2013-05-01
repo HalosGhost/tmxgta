@@ -227,8 +227,8 @@ fi;;
 ##2##
 2) if (( "$UEFI" == 2 )); then
 	echo -e 'Step 1.2.1 - Testing if you are booted into UEFI mode\n'
-	fe 'In case you have a UEFI motherboard and UEFI Boot mode is enabled (and is preferred over BIOS/Legacy mode), the CD/USB will automatically launch Arch Linux kernel (EFISTUB via Gummiboot Boot Manager). To check whether you have booted into UEFI mode, before chrooting check whether there are files in /sys/firmware/efi/vars/:'
-	echo -e '\e[1;37;40m# ls -1 /sys/firmware/efi/vars/\033[0m'
+	fe 'In case you have a UEFI motherboard and UEFI Boot mode is enabled (and is preferred over BIOS/Legacy mode), the CD/USB will automatically launch Arch Linux kernel (EFISTUB via Gummiboot Boot Manager). To test if you have booted into UEFI mode check if directory /sys/firmware/efi has been created:'
+	echo -e '\e[1;37;40m# ls -1 /sys/firmware/efi\033[0m'
 	fe '\nNote: For several kernels now, CONFIG_EFI_VARS has been compiled into the kernel. Thus efivars no longer exists as a module and does not need to be loaded manually.'
 	goleft
 	echo -e '\nAre you booted in UEFI mode? \033[33m[y/n]\033[0m'
