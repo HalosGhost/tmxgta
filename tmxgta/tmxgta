@@ -10,7 +10,7 @@ if pacman -Qq tmux > /dev/null;then
 		sleep 4
 		tput cols > /tmp/tputout
 		clear
-		tmux new-session -d -s tmxgta "tmxgta_$VERSION $1 $2"
+		tmux new-session -d -s tmxgta "~/tmxgta_$VERSION $1 $2"
 		tmux set-option -g prefix C-a
 		tmux bind-key C-a select-pane -L
 		tmux set-option -g pane-active-border-bg black
