@@ -11,16 +11,16 @@ tiling window managers you will feel right at home, although there is only one k
 Features:
 * non-destructive, does not write anything
 * complete content of Beginners' Guide/Installation
+* dialog for displaying text
 * progressbar
-* optimal text formatting
 * colorful markup of commands
 * reflector for sorting mirrors with one keypress
 * shows network interface names
 * shows partition layout and mountpoints
-* searchable list of timezones and keymaps
+* list of timezones and keymaps
 * guide for UEFI autodetection of kernels
 * ~2000 lines for scrolling saved in terminal
-* all features the archiso has
+* all archiso features
 
 ## Screenshots
 https://sourceforge.net/projects/tmxgta/ 
