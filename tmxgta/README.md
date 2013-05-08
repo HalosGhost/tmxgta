@@ -50,15 +50,14 @@ https://wiki.archlinux.org/index.php/USB_Installation_Media
 	
 	* tmxgta_0.x
 	
-	* keymaps
-	
 	Make tmxgta and tmxgta_0.x executable, and run ./tmxgta as root.
 
 ## Requirements for running scripts without iso.
 Archlinux packages:
  * tmux
- * reflector
+ * dialog
  * arch-install-scripts
+ * reflector (optional)
 
 ## Keyboard shortcuts
 There are only two keyboard shortcuts you need to know:
@@ -70,3 +69,6 @@ control-a : go to copy mode for scrolling up and down with the arrowkeys
 
 ## Known limitations
 Looks bad on very small screens as in 600x800 pixels. The script is set to run only if 120 columns or more are available. Check 'tput cols' in the kernel console.
+
+## License
+See COPYING.fdl-1.3

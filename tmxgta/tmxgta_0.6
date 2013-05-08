@@ -47,15 +47,15 @@ lo        no wireless extensions.'
 
 # Dialog Echo
 de () {
-dialog --cr-wrap --colors --title "$TITLE" --msgbox "$1" $FMTLINE $FMTCOL
+dialog --no-shadow --cr-wrap --colors --title "$TITLE" --msgbox "$1" $FMTLINE $FMTCOL
 }
 
 ## Dialog Question
 dq () {
 if (( "$#" == 2 ));then
-	dialog "$2" --cr-wrap --colors --title "$TITLE" --yesno "$1" $FMTLINE $FMTCOL
+	dialog "$2" --no-shadow --cr-wrap --colors --title "$TITLE" --yesno "$1" $FMTLINE $FMTCOL
 else
-	dialog --cr-wrap --colors --title "$TITLE" --yesno "$1" $FMTLINE $FMTCOL
+	dialog --no-shadow --cr-wrap --colors --title "$TITLE" --yesno "$1" $FMTLINE $FMTCOL
 fi
 }
 
@@ -68,16 +68,16 @@ done 2>/dev/null
 }
 
 interfacewarning() {
- echo -e 'Warning: udev no longer assigns network interface names according to the wlanX and ethX naming scheme. If you are coming from a different distribution or are reinstalling Arch and not aware of the new interface naming style, please do not assume that your wireless interface is named wlan0, or that your wired interface is named eth0.\nThe names of your interfaces are as followed:\n'
+echo -e 'Warning: udev no longer assigns network interface names according to the wlanX and ethX naming scheme. If you are coming from a different distribution or are reinstalling Arch and not aware of the new interface naming style, please do not assume that your wireless interface is named wlan0, or that your wired interface is named eth0.\nThe names of your interfaces are as followed:\n'
 interfacenamefunction
 }
 
 interface_eth() {
-echo "\nHint: Your wired interface is named \Z1$ETH_NAME\Zn."
+[[ "$ETH_NAME" != '' ]] && echo "\nHint: Your wired interface is named \Z1$ETH_NAME\Zn."
 }
 
 interface_wlan() {
-echo "\nHint: Your wireless interface is named \Z1$WLAN_NAME\Zn."
+[[ "$WLAN_NAME" != '' ]] && echo "\nHint: Your wireless interface is named \Z1$WLAN_NAME\Zn."
 }
 
 partition_final_message() {
@@ -139,15 +139,15 @@ maps=($(printf '%s\n\010\n' "${maps[@]}"))
 rows=$(tput lines)
 let rows-=5
 if [[ "$1" = "--select" ]]; then
-	dialog --default-item 'us' --title 'Select Keyboard Layout' --ok-label 'Load keymap' --menu '' $rows 0 $rows ${maps[@]} 2> $KEYMAP_FILE
+	dialog --no-shadow --default-item 'us' --title 'Select Keyboard Layout' --ok-label 'Load keymap' --menu '' $rows 0 $rows ${maps[@]} 2> $KEYMAP_FILE
 	if [[ $? -eq 0 ]]; then
 		loadkeys $(<$KEYMAP_FILE)
 	fi
 else
 	if [ -e $KEYMAP_FILE ]; then
-		dialog --default-item '$(<$KEYMAP_FILE)' --title 'Keyboard Layouts:' --cancel-label 'Go back' --nook --menu '' $rows 0 $rows ${maps[@]}
+		dialog --no-shadow --default-item '$(<$KEYMAP_FILE)' --title 'Keyboard Layouts:' --cancel-label 'Go back' --nook --menu '' $rows 0 $rows ${maps[@]}
 	else
-		dialog --default-item 'us' --title 'Keyboard Layouts:' --cancel-label 'Go back' --nook --menu '' $rows 0 $rows ${maps[@]}
+		dialog --no-shadow --default-item 'us' --title 'Keyboard Layouts:' --cancel-label 'Go back' --nook --menu '' $rows 0 $rows ${maps[@]}
 	fi
 fi
 tput civis
@@ -159,7 +159,7 @@ timezones=($(find /usr/share/zoneinfo/{Africa,America,Antarctica,Arctic,Asia,Atl
 timezones=($(printf '%s\n\010\n' "${timezones[@]}"))
 rows=$(tput lines)
 let rows-=5
-dialog --title 'Timezones:' --default-item 'Europe/Berlin' --cancel-label 'Go back' --nook --menu '' $rows 0 $rows ${timezones[@]}
+dialog --no-shadow --title 'Timezones:' --default-item 'Europe/Berlin' --cancel-label 'Go back' --nook --menu '' $rows 0 $rows ${timezones[@]}
 tput civis
 }
 
@@ -229,7 +229,6 @@ case "$STEP" in
 dq 'This is optional for the majority of users. Useful only if you plan on writing in your own language in any of the configuration files, if you use diacritical marks in the Wi-Fi password, or if you would like to receive system messages (e.g. possible errors) in your own language.\nDo you want to skip this step.?' --defaultno
 if (( ! $? == 0 )); then
 	lkmenu --select
-	clear
 	goleft
 	de 'The font should also be changed, because most languages use more glyphs than the 26 letter English alphabet. Otherwise some foreign characters may show up as white squares or as other symbols. Note that the name is case-sensitive, so please type it exactly as you see it. \n\Z1# setfont Lat2-Terminus16\Zn'
 	goleft
@@ -240,7 +239,7 @@ fi;;
 2) if (( "$UEFI" == 2 )); then
 	TITLE='Step 1.2.1 - Testing if you are booted into UEFI mode'
 	goleft
-	dq 'In case you have a UEFI motherboard and UEFI Boot mode is enabled (and is preferred over BIOS/Legacy mode), the CD/USB will automatically launch Arch Linux kernel (EFISTUB via Gummiboot Boot Manager). To test if you have booted into UEFI mode check if directory /sys/firmware/efi has been created: \n\Z1# ls -1 /sys/firmware/efi\Zn \n\nNote: For several kernels now, CONFIG_EFI_VARS has been compiled into the kernel. Thus efivars no longer exists as a module and does not need to be loaded manually.\nAre you booted in UEFI mode?'
+	dq 'In case you have a UEFI motherboard and UEFI Boot mode is enabled (and is preferred over BIOS/Legacy mode), the CD/USB will automatically launch Arch Linux kernel (EFISTUB via Gummiboot Boot Manager). To test if you have booted into UEFI mode check if directory /sys/firmware/efi has been created: \n\Z1# ls -1 /sys/firmware/efi\Zn \n\nNote: For several kernels now, CONFIG_EFI_VARS has been compiled into the kernel. Thus efivars no longer exists as a module and does not need to be loaded manually.\nAre you booted in UEFI mode?' --defaultno
 	(( $? == 0 )) && UEFI=1 || UEFI=0
 fi;;
 
@@ -251,7 +250,7 @@ dq 'The dhcpcd network daemon is started automatically at boot and it will attem
 if (( $? == 0 )); then
 	while : ;do
 		TITLE='Step 2.2 - Establish an internet connection'
-		dialog --nocancel --cr-wrap --colors --title "$TITLE" --menu 'Do you want to configure wired or wireless networks?\nFor xDSL, dial-up and ISDN connections, see wikipage "Direct Modem Connection".\nIf you are behind a proxy server see wikipage "Proxy settings".' $FMTLINE $FMTCOL $FMTLINE 'Wired' 'wired connection via a static IP address' 'Wireless' 'wireless connectivity (Wi-Fi) for the installation process' 'View Wikipage' 'https://wiki.archlinux.org/index.php/Network' 'SKIP' 'Not recommended' 2> /tmp/selection
+		dialog --no-shadow --nocancel --cr-wrap --colors --title "$TITLE" --menu 'Do you want to configure wired or wireless networks?\nFor xDSL, dial-up and ISDN connections, see wikipage "Direct Modem Connection".\nIf you are behind a proxy server see wikipage "Proxy settings".' $FMTLINE $FMTCOL $FMTLINE 'Wired' 'wired connection via a static IP address' 'Wireless' 'wireless connectivity (Wi-Fi) for the installation process' 'View Wikipage' 'https://wiki.archlinux.org/index.php/Network' 'SKIP' 'Not recommended' 2> /tmp/selection
 		if [[ "$(</tmp/selection)" = 'Wired' ]]; then
 			TITLE='Step 2.2.1 - Establish an internet connection: Wired: Static IP'
 			goleft
@@ -292,7 +291,7 @@ if (( ! $? == 0 )); then
 		de 'Note regarding UEFI boot: \nYou have booted in UEFI mode and need to create an extra UEFI System Partition. It is recommended to always use GPT for UEFI boot, as some UEFI firmwares do not allow UEFI-MBR boot. \n"UEFI System Partition" has been shortened to "ESP" in this guide.'
 		GPT=1
 	elif (( "$UEFI" == 0 ));then
-		dialog --cr-wrap --colors --title "$TITLE" --yes-label 'MBR' --no-label 'GPT' --defaultno --yesno 'Note regarding GPT partitioning: \nIf you are not dual booting with Windows, then it is advisable to use GPT instead of MBR. Read wikipage "GPT" for a list of advantages. If you have a BIOS motherboard (or plan on booting in BIOS compatibility mode) and you want to setup GRUB on a GPT-partitioned drive, you will need to create an extra BIOS Boot Partition. Syslinux does not need one. Some BIOS systems may have issues with GPT. See wikipage "GPT#BIOS_Systems" for more info and possible workarounds. \n\nChoose either MBR or GPT. Do not choose both!' $FMTLINE $FMTCOL
+		dialog --no-shadow --cr-wrap --colors --title "$TITLE" --yes-label 'MBR' --no-label 'GPT' --defaultno --yesno 'Note regarding GPT partitioning: \nIf you are not dual booting with Windows, then it is advisable to use GPT instead of MBR. Read wikipage "GPT" for a list of advantages. If you have a BIOS motherboard (or plan on booting in BIOS compatibility mode) and you want to setup GRUB on a GPT-partitioned drive, you will need to create an extra BIOS Boot Partition. Syslinux does not need one. Some BIOS systems may have issues with GPT. See wikipage "GPT#BIOS_Systems" for more info and possible workarounds. \n\nChoose either MBR or GPT. Do not choose both!' $FMTLINE $FMTCOL
 		(( $? == 0 )) && GPT=0 || GPT=1
 	else
 		fail 'Please set the UEFI variable correctly.'
@@ -323,7 +322,6 @@ if (( ! $? == 0 )); then
 			de "Here's how it should look like: \nPart. #     Size        Partition Type \n---------------------------------------- \n            1007.0 KiB  free space \n   1        15.0 GiB    Linux filesystem \n   2        283.1 GiB   Linux filesystem \n$(partition_final_message)"
 		fi
 	fi
-	clear
 	TITLE='Step 2.3 - Prepare the storage drive: Create filesystems'
 	if (( "$UEFI" == 1 ));then
 		goleft
@@ -344,7 +342,7 @@ de "Partition and Filesystem Layout: \n$(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT,MODE
 goleft
 de "Partition and Filesystem Layout: \n$(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT,MODEL,RM,SIZE,FSTYPE) \n\nNote: Do not mount more than one partition to the same directory. And pay attention, because the mounting order is important. \n\nFirst, mount the root partition on /mnt. \n\Z1# mount /dev/sd\ZrxX\ZR /mnt\Zn \n\nThen mount the home partition and any other separate partition (/boot, /var, etc), if you have any: \n\Z1# mkdir /mnt/home \n# mount /dev/sd\ZrxY\ZR /mnt/home\Zn"
 if (( "$UEFI" == 1 )); then
-	dialog --cr-wrap --colors --title "$TITLE" --yes-label 'EFISTUB' --no-label 'GRUB' --defaultno --yesno 'The ESP needs to be mounted to different locations depending on which bootloader is used. You can choose from GRUB and EFISTUB for your bootloader, EFISTUB is the UEFI boot method recommended by developers and simpler than grub. Your choice will be remembered until you install the bootloader in the end.' $FMTLINE $FMTCOL
+	dialog --no-shadow --cr-wrap --colors --title "$TITLE" --yes-label 'EFISTUB' --no-label 'GRUB' --defaultno --yesno 'The ESP needs to be mounted to different locations depending on which bootloader is used. You can choose from GRUB and EFISTUB for your bootloader, EFISTUB is the UEFI boot method recommended by developers and simpler than grub. Your choice will be remembered until you install the bootloader in the end.' $FMTLINE $FMTCOL
 	if (( $? == 0 )); then
 		EFISTUB=1
 		goleft
@@ -361,7 +359,7 @@ de "Final Mountpoints: \n$(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT,MODEL,RM,SIZE,FSTY
 6) TITLE='Step 2.5 - Select a mirror'
 dq 'Before installing, you may want to edit the mirrorlist file and place your preferred mirror first. A copy of this file will be installed on your new system by pacstrap as well, so it is worth getting it right. \n\Z1# nano /etc/pacman.d/mirrorlist\Zn \n\nIf you want, you can make it the only mirror available by getting rid of everything else, but it is usually a good idea to have a few more, in case the first one goes offline. \n\nLook for the best mirrors using reflector?'
 if (( $? == 0 )); then
-	dialog --cr-wrap --colors --infobox 'Looking for mirrors. Please wait...' 3 40
+	dialog --no-shadow --cr-wrap --colors --infobox 'Looking for mirrors. Please wait...' 3 40
 	if reflector -f 5 -l 5 -a 5 --sort score -p http --save /tmp/mirrorlist; then
 		goleft
 		de "$(tail -n 5 /tmp/mirrorlist) \n\nThe generated mirrorlist has been saved to /tmp/mirrorlist. To keep the mirrorlist copy it to /etc/pacman.d/mirrorlist. \n\Z1# cp /tmp/mirrorlist /etc/pacman.d/mirrorlist\Zn"
@@ -390,7 +388,7 @@ de 'Locales are used by glibc and other locale-aware programs or libraries for r
 
 TITLE='Step 2.8 - Configuration [2/6]: Console font and keymap'
 while : ;do
-	dialog --cr-wrap --colors --yes-label '"OK"' --defaultno --no-label '"LAYOUTS"' --title "$TITLE" --yesno 'If you set a keymap at the beginning of the install process, load it now, as well, because the environment has changed. \n\Z1# loadkeys \Zrlayout\Zn \nFor a list of available layouts select "LAYOUTS". \n\nChange the font. \n\Z1# setfont Lat2-Terminus16\Zn \n\nTo make them available after reboot, edit /etc/vconsole.conf. \n\Z1# nano /etc/vconsole.conf\Zn \n\Z4-------------------- \nKEYMAP=\Zrlayout\ZR \nFONT=Lat2-Terminus16\Zn \n\nKEYMAP – Please note that this setting is only valid for your TTYs, not any graphical window managers or Xorg. \n\nFONT – Available alternate console fonts reside in /usr/share/kbd/consolefonts/. The default (blank) is safe, but some foreign characters may show up as white squares or as other symbols. It is recommended that you change it to Lat2-Terminus16, because it claims to support "about 110 language sets". \n\nPossible option FONT_MAP – Defines the console map to load at boot. Read man setfont. Removing it or leaving it blank is safe. \n\nSee wikipage "Console fonts" and man vconsole.conf for more information.' $FMTLINE $FMTCOL
+	dialog --no-shadow --cr-wrap --colors --yes-label '"OK"' --defaultno --no-label '"LAYOUTS"' --title "$TITLE" --yesno 'If you set a keymap at the beginning of the install process, load it now, as well, because the environment has changed. \n\Z1# loadkeys \Zrlayout\Zn \nFor a list of available layouts select "LAYOUTS". \n\nChange the font. \n\Z1# setfont Lat2-Terminus16\Zn \n\nTo make them available after reboot, edit /etc/vconsole.conf. \n\Z1# nano /etc/vconsole.conf\Zn \n\Z4-------------------- \nKEYMAP=\Zrlayout\ZR \nFONT=Lat2-Terminus16\Zn \n\nKEYMAP – Please note that this setting is only valid for your TTYs, not any graphical window managers or Xorg. \n\nFONT – Available alternate console fonts reside in /usr/share/kbd/consolefonts/. The default (blank) is safe, but some foreign characters may show up as white squares or as other symbols. It is recommended that you change it to Lat2-Terminus16, because it claims to support "about 110 language sets". \n\nPossible option FONT_MAP – Defines the console map to load at boot. Read man setfont. Removing it or leaving it blank is safe. \n\nSee wikipage "Console fonts" and man vconsole.conf for more information.' $FMTLINE $FMTCOL
 	if (( ! $? == 0 )); then
 		lkmenu
 	else
@@ -400,7 +398,7 @@ done
 
 TITLE='Step 2.8 - Configuration [3/6]: Timezone'
 while : ;do
-	dialog --cr-wrap --colors --yes-label '"OK"' --defaultno --no-label '"ZONES"' --title "$TITLE" --yesno 'Create a symbolic link /etc/localtime to your zone file /usr/share/zoneinfo/<Zone>/<SubZone> using this command: \n\Z1# ln -s /usr/share/zoneinfo/\Zr<Zone>\ZR/\Zr<SubZone>\ZR /etc/localtime\Zn \n\nExample: \n\Z1# ln -s /usr/share/zoneinfo/\ZrEurope\ZR/\ZrMinsk\ZR /etc/localtime\Zn \n\nFor a list of zones and subzones select "ZONES".' $FMTLINE $FMTCOL
+	dialog --no-shadow --cr-wrap --colors --yes-label '"OK"' --defaultno --no-label '"ZONES"' --title "$TITLE" --yesno 'Create a symbolic link /etc/localtime to your zone file /usr/share/zoneinfo/<Zone>/<SubZone> using this command: \n\Z1# ln -s /usr/share/zoneinfo/\Zr<Zone>\ZR/\Zr<SubZone>\ZR /etc/localtime\Zn \n\nExample: \n\Z1# ln -s /usr/share/zoneinfo/\ZrEurope\ZR/\ZrMinsk\ZR /etc/localtime\Zn \n\nFor a list of zones and subzones select "ZONES".' $FMTLINE $FMTCOL
 	if (( ! $? == 0 )); then
 		showtimezones
 	else
@@ -410,7 +408,7 @@ done
 
 TITLE='Step 2.8 - Configuration [4/6]: Hardware clock'
 while : ;do
-	dialog --cr-wrap --colors --no-label 'NEXT' --title "$TITLE" --yesno 'Set the hardware clock mode uniformly between your operating systems. Otherwise, they may overwrite the hardware clock and cause time shifts. You can generate /etc/adjtime automatically by using one of the following commands: \n\n*First option: UTC (recommended) \n\Z1# hwclock --systohc --utc\Zn \n\nNote: Using UTC for the hardware clock does not mean that software will display time in UTC. \n\n*Second option: localtime (discouraged; used by default in Windows) \n\Z1# hwclock --systohc --localtime\Zn \n\nWarning: Using localtime may lead to several known and unfixable bugs. However, there are no plans to drop support for localtime. \n\nDo you want to view information about dual boot setup with Windows?' $FMTLINE $FMTCOL --ok-label 'Go back' --msgbox 'Recommended: \nSet both Arch Linux and Windows to use UTC. A quick registry fix is needed. Also, be sure to prevent Windows from synchronizing the time on-line, because the hardware clock will default back to localtime. \n\nNot recommended: \nSet Arch Linux to localtime and disable any time-related services, like NTPd. This will let Windows take care of hardware clock corrections and you will need to remember to boot into Windows at least two times a year (in Spring and Autumn) when DST kicks in. So please do not ask on the forums why the clock is one hour behind or ahead if you usually go for days or weeks without booting into Windows.' 0 0 || break
+	dialog --no-shadow --cr-wrap --colors --no-label 'NEXT' --title "$TITLE" --yesno 'Set the hardware clock mode uniformly between your operating systems. Otherwise, they may overwrite the hardware clock and cause time shifts. You can generate /etc/adjtime automatically by using one of the following commands: \n\n*First option: UTC (recommended) \n\Z1# hwclock --systohc --utc\Zn \n\nNote: Using UTC for the hardware clock does not mean that software will display time in UTC. \n\n*Second option: localtime (discouraged; used by default in Windows) \n\Z1# hwclock --systohc --localtime\Zn \n\nWarning: Using localtime may lead to several known and unfixable bugs. However, there are no plans to drop support for localtime. \n\nDo you want to view information about dual boot setup with Windows?' $FMTLINE $FMTCOL --ok-label 'Go back' --msgbox 'Recommended: \nSet both Arch Linux and Windows to use UTC. A quick registry fix is needed. Also, be sure to prevent Windows from synchronizing the time on-line, because the hardware clock will default back to localtime. \n\nNot recommended: \nSet Arch Linux to localtime and disable any time-related services, like NTPd. This will let Windows take care of hardware clock corrections and you will need to remember to boot into Windows at least two times a year (in Spring and Autumn) when DST kicks in. So please do not ask on the forums why the clock is one hour behind or ahead if you usually go for days or weeks without booting into Windows.' 0 0 || break
 done
 
 TITLE='Step 2.8 - Configuration [5/6]: Kernel modules'
@@ -426,16 +424,16 @@ de 'Set the hostname to your liking (e.g. \Z1\Zrarch\Zn): \n\Z1# echo \Zrmyhostn
 
 ##10##
 10) TITLE='Step 2.9 - Configure the network'
-dialog --nocancel --cr-wrap --colors --title "$TITLE" --menu 'You need to configure the network again, but this time for your newly installed environment. The procedure and prerequisites are very similar to the one described before, except we are going to make it persistent and automatically run at boot. \n\nFor xDSL, dial-up and ISDN connections, see wikipage "Direct Modem Connection". \n\nIf you are behind a proxy server see wikipage "Proxy settings". \n\nNote: For more in-depth information on network configuration, visit wikipages "Network Configuration" and "Wireless Setup".' $FMTLINE $FMTCOL $FMTLINE 'Wired' 'Static or Dynamic' 'Wireless' 'WIFI' 'SKIP' 'Not recommended' 2> /tmp/selection
+dialog --no-shadow --nocancel --cr-wrap --colors --title "$TITLE" --menu 'You need to configure the network again, but this time for your newly installed environment. The procedure and prerequisites are very similar to the one described before, except we are going to make it persistent and automatically run at boot. \n\nFor xDSL, dial-up and ISDN connections, see wikipage "Direct Modem Connection". \n\nIf you are behind a proxy server see wikipage "Proxy settings". \n\nNote: For more in-depth information on network configuration, visit wikipages "Network Configuration" and "Wireless Setup".' $FMTLINE $FMTCOL $FMTLINE 'Wired' 'Static or Dynamic' 'Wireless' 'WIFI' 'SKIP' 'Not recommended' 2> /tmp/selection
 
  
 if [[ "$(</tmp/selection)" = 'Wired' ]]; then
 	TITLE='Step 2.9.1 - Configure the network: Wired'
-	dialog --cr-wrap --colors --yes-label '"DYNAMIC"' --no-label '"STATIC"' --title "$TITLE" --yesno 'Do you want to you use dynamic (dhcp) or static ip adresses?' $FMTLINE $FMTCOL
+	dialog --no-shadow --cr-wrap --colors --yes-label '"DYNAMIC"' --no-label '"STATIC"' --title "$TITLE" --yesno 'Do you want to you use dynamic (dhcp) or static ip adresses?' $FMTLINE $FMTCOL
 	if (( $? == 0 )); then
 		TITLE='Step 2.9.1 - Configure the network: Wired: Dynamic IP'
 		de "$(interfacewarning; interface_eth)"
-		dialog --cr-wrap --colors --yes-label '"SYSTEMD"' --no-label '"NETCTL"' --title "$TITLE" --yesno 'Do you want to use a single fixed wired network connection (systemd dhcpcd.service), or do you need a network management service (netctl-ifplugd), which gracefully handles dynamic connections to new networks?' $FMTLINE $FMTCOL
+		dialog --no-shadow --cr-wrap --colors --yes-label '"SYSTEMD"' --no-label '"NETCTL"' --title "$TITLE" --yesno 'Do you want to use a single fixed wired network connection (systemd dhcpcd.service), or do you need a network management service (netctl-ifplugd), which gracefully handles dynamic connections to new networks?' $FMTLINE $FMTCOL
 		if (( $? == 0 )); then
 			TITLE='Step 2.9.1 - Configure the network: Wired: Dynamic IP: Dhcpcd service'
 			goleft
@@ -465,7 +463,7 @@ fi;;
 dq 'Tip: Most users can skip this step and use the defaults provided in mkinitcpio.conf. The initramfs image (from the /boot folder) has already been generated based on this file when the linux package (the Linux kernel) was installed earlier with pacstrap. \nHere you need to set the right hooks if the root is on a USB drive, if you use RAID, LVM, or if /usr is on a separate partition. \n\nDo you want to skip this step?'
 if (( ! $? == 0 )); then
 	while : ;do
-		dialog --cr-wrap --colors --yes-label '"OK"' --defaultno --no-label '"HOOKS"' --title "$TITLE" --yesno 'Select "HOOKS" for a list of hooks and their usage. \nEdit /etc/mkinitcpio.conf as needed. \n\Z1# nano /etc/mkinitcpio.conf\Zn \n\nRe-generate the initramfs image. \n\Z1# mkinitcpio -p linux\Zn \n\nNote: Arch VPS installations on QEMU (e.g. when using virt-manager) may need virtio modules in mkinitcpio.conf to be able to boot. MODULES="virtio virtio_blk virtio_pci virtio_net"' $FMTLINE $FMTCOL
+		dialog --no-shadow --cr-wrap --colors --yes-label '"OK"' --defaultno --no-label '"HOOKS"' --title "$TITLE" --yesno 'Select "HOOKS" for a list of hooks and their usage. \nEdit /etc/mkinitcpio.conf as needed. \n\Z1# nano /etc/mkinitcpio.conf\Zn \n\nRe-generate the initramfs image. \n\Z1# mkinitcpio -p linux\Zn \n\nNote: Arch VPS installations on QEMU (e.g. when using virt-manager) may need virtio modules in mkinitcpio.conf to be able to boot. MODULES="virtio virtio_blk virtio_pci virtio_net"' $FMTLINE $FMTCOL
 		if (( ! $? == 0 )); then
 			tmux new-window 'elinks https://wiki.archlinux.org/index.php/Mkinitcpio#Common_hooks'; tput civis
 		else
@@ -483,7 +481,7 @@ de 'Set the root password with: \n\Z1# passwd\Zn';;
 13)if (( "$UEFI" == 1 )); then
 	TITLE='Step 2.12 - Install and configure a bootloader: UEFI'
 	if (( "$EFISTUB" == 2 )); then
-		dialog --cr-wrap --colors --yes-label '"EFISTUB"' --no-label '"GRUB"' --title "$TITLE" --yesno "For UEFI boot, the drive needs to be GPT-partitioned, and a ESP must be present and mounted. If you have followed this guide from the beginning, you've already done all of these. \nYou can choose from GRUB and EFISTUB for your bootloader, EFISTUB is recommended. \nIf you select GRUB, the ESP must be mounted at /boot/efi, whilst for EFISTUB the ESP must be mounted at /boot." $FMTLINE $FMTCOL
+		dialog --no-shadow --cr-wrap --colors --yes-label '"EFISTUB"' --no-label '"GRUB"' --title "$TITLE" --yesno "For UEFI boot, the drive needs to be GPT-partitioned, and a ESP must be present and mounted. If you have followed this guide from the beginning, you've already done all of these. \nYou can choose from GRUB and EFISTUB for your bootloader, EFISTUB is recommended. \nIf you select GRUB, the ESP must be mounted at /boot/efi, whilst for EFISTUB the ESP must be mounted at /boot." $FMTLINE $FMTCOL
 		(( $? == 0 )) && EFISTUB=1 || EFISTUB=0
 	else
 		if (( "$EFISTUB" == 1 )); then
@@ -497,7 +495,7 @@ de 'Set the root password with: \n\Z1# passwd\Zn';;
 		goleft
 		de 'Install the grub-package and efibootmgr with pacman. \n\Z1# pacman -S grub-efi-x86_64 efibootmgr\Zn \n\nNote: In case you have a system with 32-bit EFI, like pre-2008 Macs, install grub-efi-i386 instead of grub-efi-x86_64. \n\nInstall grub to the ESP. \n\Z1# grub-install --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck\Zn \n\nNote: Again, for 32-bit EFI add the option --target=i386-efi. \n\nCopy the locale file for your language. \n\Z1# cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo\Zn'
 		goleft
-		de "Next, while using a manually created grub.cfg is absolutely fine, it's recommended that beginners automatically generate one: \n\Z1# grub-mkconfig -o /boot/grub/grub.cfg\Zn \n\nTip: To automatically search for other operating systems on your computer, install os-prober (pacman -S os-prober) before running the command."
+		de "Next, while using a manually created grub.cfg is absolutely fine, it's recommended that beginners automatically generate one: \n\Z1# grub-mkconfig -o /boot/grub/grub.cfg\Zn \n\nTip: To automatically search for other operating systems on your computer, install os-prober (pacman -S os-prober) before running the command. \n\nNote: grub-install should create a new entry in the UEFI boot menu. If it does not, you will instead have to enter the UEFI shell and manually add an entry to the UEFI boot menu with the bcfg command, as described on wikipage \"Unified_Extensible_Firmware_Interface#bcfg\""
 	elif (( "$EFISTUB" == 1 )); then
 		TITLE='Step 2.12.2.1 - Install and configure a bootloader: UEFI: EFISTUB'
 		goleft
@@ -521,13 +519,11 @@ de 'Set the root password with: \n\Z1# passwd\Zn';;
 	fi
 
 elif (( "$UEFI" == 0 )); then
-	clear
 	TITLE='Step 2.12.1 - Install and configure a bootloader: BIOS'
-	goleft 
 	if (( "$GPT" == 1 )); then
-		dialog --cr-wrap --colors --yes-label '"Syslinux"' --no-label '"GRUB"' --title "$TITLE" --yesno 'For BIOS systems, there are three bootloaders - Syslinux, GRUB, and LILO. Choose the bootloader as per your convenience. Below only Syslinux and GRUB are explained. \n\nSyslinux is (currently) limited to loading only files from the partition where it was installed. Its configuration file is considered to be easier to understand. GRUB is more feature-rich and supports more complex scenarios. Its configuration file(s) is more similar to a scripting language, which may be difficult for beginners to manually write. It is recommended that they automatically generate one. \n\nNote: Your drive is GPT-partitioned, therefore GRUB needs a "BIOS Boot Partition". If the partition is not present choose Syslinux instead!' $FMTLINE $FMTCOL
+		dialog --no-shadow --cr-wrap --colors --yes-label '"Syslinux"' --no-label '"GRUB"' --title "$TITLE" --yesno 'For BIOS systems, there are three bootloaders - Syslinux, GRUB, and LILO. Choose the bootloader as per your convenience. Below only Syslinux and GRUB are explained. \n\nSyslinux is (currently) limited to loading only files from the partition where it was installed. Its configuration file is considered to be easier to understand. GRUB is more feature-rich and supports more complex scenarios. Its configuration file(s) is more similar to a scripting language, which may be difficult for beginners to manually write. It is recommended that they automatically generate one. \n\nNote: Your drive is GPT-partitioned, therefore GRUB needs a "BIOS Boot Partition". If the partition is not present choose Syslinux instead!' $FMTLINE $FMTCOL
 	elif (( "$GPT" == 2 )); then
-		dialog --cr-wrap --colors --yes-label '"Syslinux"' --no-label '"GRUB"' --title "$TITLE" --yesno 'For BIOS systems, there are three bootloaders - Syslinux, GRUB, and LILO. Choose the bootloader as per your convenience. Below only Syslinux and GRUB are explained. \n\nSyslinux is (currently) limited to loading only files from the partition where it was installed. Its configuration file is considered to be easier to understand. GRUB is more feature-rich and supports more complex scenarios. Its configuration file(s) is more similar to a scripting language, which may be difficult for beginners to manually write. It is recommended that they automatically generate one. \n\nNote: If you have a GPT-partitioned drive GRUB needs a "BIOS Boot Partition". If the partition is not present and your drive is GPT-partitioned choose Syslinux instead!' $FMTLINE $FMTCOL
+		dialog --no-shadow --cr-wrap --colors --yes-label '"Syslinux"' --no-label '"GRUB"' --title "$TITLE" --yesno 'For BIOS systems, there are three bootloaders - Syslinux, GRUB, and LILO. Choose the bootloader as per your convenience. Below only Syslinux and GRUB are explained. \n\nSyslinux is (currently) limited to loading only files from the partition where it was installed. Its configuration file is considered to be easier to understand. GRUB is more feature-rich and supports more complex scenarios. Its configuration file(s) is more similar to a scripting language, which may be difficult for beginners to manually write. It is recommended that they automatically generate one. \n\nNote: If you have a GPT-partitioned drive GRUB needs a "BIOS Boot Partition". If the partition is not present and your drive is GPT-partitioned choose Syslinux instead!' $FMTLINE $FMTCOL
 	fi
 	if (( $? == 0 )); then
 		TITLE='Step 2.12.1.1 - Install and configure a bootloader: BIOS: Syslinux'
@@ -539,9 +535,9 @@ elif (( "$UEFI" == 0 )); then
 		goleft
 		FINDMNT=$(findmnt -o SOURCE -n /mnt | cut -c8-9)
 		if [[ "$FINDMNT" = '' ]]; then
-			de "Configure syslinux.cfg to point to the right root partition. This step is vital. If it points to the wrong partition, Arch Linux will not boot. Change /dev/sd\Z1xY\Zn to reflect your root partition. Do the same for the fallback entry. \n\nList of partitions: \n$(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT) \n\n\Z1# nano /boot/syslinux/syslinux.cfg\Zn \n\Z4----------------------------- \n... \nLABEL arch \n   \n... \n   APPEND root=/dev/sd\rxY\ZR ro \n   ...\Zn \n\nFor more information on configuring and using Syslinux, see wikipage \"Syslinux\"."
+			de "Configure syslinux.cfg to point to the right root partition. This step is vital. If it points to the wrong partition, Arch Linux will not boot. Change /dev/sd\Z1xY\Zn to reflect your root partition. Do the same for the fallback entry. \n\nList of partitions: \n$(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT) \n\n\Z1# nano /boot/syslinux/syslinux.cfg\Zn \n\Z4----------------------------- \n... \nLABEL arch \n   \n... \n   APPEND root=/dev/sd\ZrxY\ZR ro \n   ...\Zn \n\nFor more information on configuring and using Syslinux, see wikipage \"Syslinux\"."
 		else
-			de "Configure syslinux.cfg to point to the right root partition. This step is vital. If it points to the wrong partition, Arch Linux will not boot. Change /dev/sd\Z1xY\Zn to reflect your root partition. Do the same for the fallback entry. \n\nHint: You are using /dev/sd\Z1$FINDMNT\Zn as root partition. \n\n\Z1# nano /boot/syslinux/syslinux.cfg\Zn \n\Z4----------------------------- \n... \nLABEL arch \n   \n... \n   APPEND root=/dev/sd\rxY\ZR ro \n   ...\Zn \n\nFor more information on configuring and using Syslinux, see wikipage \"Syslinux\"."
+			de "Configure syslinux.cfg to point to the right root partition. This step is vital. If it points to the wrong partition, Arch Linux will not boot. Change /dev/sd\Z1xY\Zn to reflect your root partition. Do the same for the fallback entry. \n\nHint: You are using /dev/sd\Z1$FINDMNT\Zn as root partition. \n\n\Z1# nano /boot/syslinux/syslinux.cfg\Zn \n\Z4----------------------------- \n... \nLABEL arch \n   \n... \n   APPEND root=/dev/sd\ZrxY\ZR ro \n   ...\Zn \n\nFor more information on configuring and using Syslinux, see wikipage \"Syslinux\"."
 		fi
 	else
 		TITLE='Step 2.12.2.2 - Install and configure a bootloader: BIOS: GRUB'
@@ -565,14 +561,13 @@ de "List of partitions: \n$(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT) \n\nSince the pa
 goleft
 de "List of partitions: \n$(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT) \n\nSince the partitions are mounted under /mnt, we use the following command to unmount them: \n\Z1# umount /mnt/{boot,home,}\Zn \n\nNote: There is no need to unmount /run/archiso."
 tmux set-option -g status-left 'COMPLETE' > /dev/null 2>&1
-dialog --cr-wrap --colors --title "$TITLE" --infobox "Reboot the computer: \Z1# reboot\Zn \n\nTip: Be sure to remove the installation media, otherwise you will boot back into it." $FMTLINE $FMTCOL --and-widget --ok-label 'EXIT' --msgbox "Thank you for following $NAME." 5 35
+dialog --sleep 5 --no-shadow --cr-wrap --colors --title "$TITLE" --infobox "Reboot the computer: \Z1# reboot\Zn \n\nTip: Be sure to remove the installation media, otherwise you will boot back into it." $FMTLINE $FMTCOL --and-widget --ok-label 'EXIT' --msgbox "Thank you for following $NAME." 5 35
 tmux set-option -g status-left 'reboot' > /dev/null 2>&1
 ;;
 
 ## Closing step selection
 esac
 	let STEP+=1
-	clear
 ## Closing main loop
 done
 
