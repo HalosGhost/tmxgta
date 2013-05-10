@@ -164,11 +164,11 @@ tput civis
 }
 
 ##Root check##
-(( "$EUID" != 0 )) && echo "$NAME must be run as root" 1>&2 && exit 1
+(( "$EUID" != 0 )) && echo "$NAME must be run as root" 1>&2 && getenter && exit 1
 
 ## Arguments ##
 # Accept numbers as first argument to go to the step you want.
-(( "$#" > 2)) && echo 'Too many arguments.' 1>&2 && exit 1
+(( "$#" > 2)) && echo 'Too many arguments.' 1>&2 && getenter && exit 1
 if (( "$#" > 0 ));then
 	[[ "$1" =~ ^[0-9]+$ ]] && (( "$1" > 0 && "$1" <= "$TOTALSTEPS" )) && STEP="$1"
 	(( "$#" == 2 )) && [[ "$2" = "1" || "$2" = "0" ]] && UEFI="$2"
@@ -178,7 +178,7 @@ fi
 ##Check Columns and Lines for readability##
 if (( "$COLUMNS" <= "85" )); then
 	if (( "$COLUMNS" <= "60" )); then
-		echo "Terminal has not enough Columns for $NAME to display correctly." 1>&2 && exit 1
+		echo "Terminal has not enough Columns for $NAME to display correctly." 1>&2 && getenter && exit 1
 	else
 		let FMTCOL="$COLUMNS"-2
 	fi
@@ -199,7 +199,7 @@ if (( "$LINES" >= 50 )); then
 fi
 
 ##Lock file##
-[ -f /tmp/tmxgta_lock ] && echo "$NAME is already running." 1>&2 && exit 1
+[ -f /tmp/tmxgta_lock ] && echo "$NAME is already running." 1>&2 && getenter && exit 1
 touch /tmp/tmxgta_lock
 
 ##Invisible Cursor##
@@ -214,10 +214,10 @@ if (( "$#" == 0 )); then
 		STEP=1
 		TITLE='Step 0 - Tutorial'
 		goleft
-		de 'Please notice that the cursor moved to the terminal on the left, where you are automatically logged in as root.\nHit \Z3[control]\Zn-\Z3[a]\Zn twice to switch from the terminal on the left to the guide on the right. \nHit \Z3[enter]\Zn in the guide to go on to the next page.' 'Step 0 - Tutorial'
-		dq "$NAME will not install archlinux, or change your data or partition layout. Instead you are in full control, as changes are done via terminal commands. The goal of $NAME is to provide an interactive guide, that shows helpful information about your system on the screen where the terminal is found. There is no need to switch virtual consoles and remember what you have read, print out the installation guide or read the guide on another computer. This is achieved by splitting up a virtual console into two panes using tmux. You can still use the other ttys as usual with the key combination ctrl+alt+f2. All commands are marked \Z1# in red\Zn. Frequently changing the command is necessary for your individual installation. In that case the part that needs to be changed is marked \Z1\Zrlike so\Zn. Whenever you enter the pager less displaying a file in the guide, you can exit from it by pressing \Z3[q]\Zn. The same key is used to exit the browser elinks while viewing a web page. For editing text files nano is suggested in the guide, but feel free to use another editor instead of nano. On the bottom there is a status line that shows the current time and date.  The statusline also shows a progressbar on the left side. It is recommended to read the beginners' guide provided in the ArchWiki.\nhttps://wiki.archlinux.org/\nThe steps in this guide use the same numbering as the beginners' guide, that means you can easily look up each topic in the wiki.\nDo you want to read the beginners' guide now?"
+		de 'The cursor moved to the terminal on the left, where you are automatically logged in as root.\nHit \Z3[control]\Zn-\Z3[a]\Zn two times to switch from the terminal on the left to the guide on the right. \nSelect \Z3[OK]\Zn in the guide to go on to the next page.' 'Step 0 - Tutorial'
+		dq "$NAME will not install archlinux, or change your data or partition layout. Instead you are in full control, as changes are done via terminal commands. $NAME provides an interactive guide, that shows helpful information about your system on the screen where the terminal is found. There is no need to switch virtual consoles and remember what you have read, print out the installation guide or read it on another computer. This is achieved by splitting up the window into two parts with tmux. You can still use other terminals with the key combination ctrl+alt+f2. All commands are marked \Z1# in red\Zn. Frequently changing the command is necessary for your individual installation. In that case the part that needs to be changed is marked \Z1\Zrlike so\Zn. The status line shows the current time, date and a progressbar. \nIt is recommended to read the beginners' guide provided in the ArchWiki.\nhttps://wiki.archlinux.org/\nThe steps in this guide use the same numbering as the beginners' guide, that means you can easily look up each topic in the wiki.\nDo you want to read the beginners' guide now?"
 		(( $? == 0 )) && tmux new-window 'elinks https://wiki.archlinux.org/index.php/Beginners_Guide'; tput civis
-		de 'Going a step back in the guide is not possible, read and execute each step thoroughly before pressing enter. However you can still scroll back to previous output by entering tmux copy-mode with \Z3[control]\Zn-\Z3[a]\Zn, then use pageup or pagedown and the arrow keys to scroll around. Press \Z3[enter]\Zn, to go back to normal mode. Do the same to scroll in the terminal.'
+		de 'Going a step back in the guide is not possible, read and execute each step thoroughly before continuing. However you can still scroll back to a previous page by entering tmux copy-mode with \Z3[control]\Zn-\Z3[a]\Zn, and pressing pageup or pagedown. Press \Z3[enter]\Zn, to go back to normal mode. Do the same to scroll in the terminal.'
 	fi
 fi
 ## Main loop
