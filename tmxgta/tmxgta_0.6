@@ -93,9 +93,9 @@ done
 
 fail() {
 clear
-echo 'An error has occured.'
-echo "$1"
-echo '(Press enter.)'
+echo 'An error has occured.' 1>&2
+echo "$1" 1>&2
+echo '(Press enter.)' 1>&2
 getenter
 tput cnorm
 rm -f /tmp/tmxgta_lock
@@ -141,7 +141,7 @@ let rows-=5
 if [[ "$1" = "--select" ]]; then
 	dialog --no-shadow --default-item 'us' --title 'Select Keyboard Layout' --ok-label 'Load keymap' --menu '' $rows 0 $rows ${maps[@]} 2> $KEYMAP_FILE
 	if [[ $? -eq 0 ]]; then
-		loadkeys $(<$KEYMAP_FILE) || echo 'Error: Keymap was not loaded.' 1>&2 && exit 1
+		loadkeys $(<$KEYMAP_FILE)
 	fi
 else
 	if [ -e $KEYMAP_FILE ]; then
