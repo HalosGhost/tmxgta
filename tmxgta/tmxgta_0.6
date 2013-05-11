@@ -22,8 +22,11 @@ TOTALSTEPS=14
 UEFI=2
 EFISTUB=2
 GPT=2
-[ -e /tmp/tputout ] && TPUTOUT=$(</tmp/tputout) || TPUTOUT=$(tput cols)
-let COLUMNS=$TPUTOUT/2
+if [ -e /tmp/tputout ]; then
+	let COLUMNS=$(</tmp/tputout)/2
+else
+	COLUMNS=$(tput cols)
+fi
 LINES=$(tput lines)
 FMTCOL=75
 FMTLINE=75
@@ -140,8 +143,9 @@ rows=$(tput lines)
 let rows-=5
 if [[ "$1" = "--select" ]]; then
 	dialog --no-shadow --default-item 'us' --title 'Select Keyboard Layout' --ok-label 'Load keymap' --menu '' $rows 0 $rows ${maps[@]} 2> $KEYMAP_FILE
-	if [[ $? -eq 0 ]]; then
-		loadkeys $(<$KEYMAP_FILE)
+	if (( $? == 0 )); then
+		loadkeys $(<$KEYMAP_FILE) &> /tmp/loadkeysout
+		(( $? != 0 )) && dialog --no-shadow --title 'Loadkeys' --msgbox "$(</tmp/loadkeysout)" 7 $FMTCOL
 	fi
 else
 	if [ -e $KEYMAP_FILE ]; then
@@ -164,7 +168,7 @@ tput civis
 }
 
 ##Root check##
-(( "$EUID" != 0 )) && echo "$NAME must be run as root" 1>&2 && getenter && exit 1
+(( "$EUID" != 0 )) && dialog --no-shadow --title 'Warning' --yesno "$NAME should be run as root. Exit now?" 6 45 && exit 1
 
 ## Arguments ##
 # Accept numbers as first argument to go to the step you want.
@@ -178,7 +182,8 @@ fi
 ##Check Columns and Lines for readability##
 if (( "$COLUMNS" <= "85" )); then
 	if (( "$COLUMNS" <= "60" )); then
-		echo "Terminal has not enough Columns for $NAME to display correctly." 1>&2 && getenter && exit 1
+		dialog --no-shadow --title 'Warning' --yesno "Terminal has not enough Columns for $NAME to display correctly. Exit now?" 6 45 && exit 1
+		FMTCOL="$COLUMNS"
 	else
 		let FMTCOL="$COLUMNS"-2
 	fi
@@ -539,9 +544,9 @@ elif (( "$UEFI" == 0 )); then
 		goleft
 		FINDMNT=$(findmnt -o SOURCE -n /mnt | cut -c8-9)
 		if [[ "$FINDMNT" = '' ]]; then
-			de "Configure syslinux.cfg to point to the right root partition. This step is vital. If it points to the wrong partition, Arch Linux will not boot. Change /dev/sd\Z1xY\Zn to reflect your root partition. Do the same for the fallback entry. \n\nList of partitions: \n$(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT) \n\n\Z1# nano /boot/syslinux/syslinux.cfg\Zn \n\Z4----------------------------- \n   ... \nLABEL arch \n   \n... \n   APPEND root=/dev/sd\ZrxY\ZR ro \n   ...\Zn \n\nFor more information on configuring and using Syslinux, see wikipage \"Syslinux\"."
+			de "Configure syslinux.cfg to point to the right root partition. This step is vital. If it points to the wrong partition, Arch Linux will not boot. Change /dev/sd\Z1xY\Zn to reflect your root partition. Do the same for the fallback entry. \n\nList of partitions: \n$(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT) \n\n\Z1# nano /boot/syslinux/syslinux.cfg\Zn \n\Z4----------------------------- \n... \nLABEL arch \n   \n   ... \n   APPEND root=/dev/sd\ZrxY\ZR ro \n   ...\Zn \n\nFor more information on configuring and using Syslinux, see wikipage \"Syslinux\"."
 		else
-			de "Configure syslinux.cfg to point to the right root partition. This step is vital. If it points to the wrong partition, Arch Linux will not boot. Change /dev/sd\Z1xY\Zn to reflect your root partition. Do the same for the fallback entry. \n\nHint: You are using /dev/sd\Z1$FINDMNT\Zn as root partition. \n\n\Z1# nano /boot/syslinux/syslinux.cfg\Zn \n\Z4----------------------------- \n   ... \nLABEL arch \n   \n... \n   APPEND root=/dev/sd\ZrxY\ZR ro \n   ...\Zn \n\nFor more information on configuring and using Syslinux, see wikipage \"Syslinux\"."
+			de "Configure syslinux.cfg to point to the right root partition. This step is vital. If it points to the wrong partition, Arch Linux will not boot. Change /dev/sd\Z1xY\Zn to reflect your root partition. Do the same for the fallback entry. \n\nHint: You are using /dev/sd\Z1$FINDMNT\Zn as root partition. \n\n\Z1# nano /boot/syslinux/syslinux.cfg\Zn \n\Z4----------------------------- \n... \nLABEL arch \n   \n   ... \n   APPEND root=/dev/sd\ZrxY\ZR ro \n   ...\Zn \n\nFor more information on configuring and using Syslinux, see wikipage \"Syslinux\"."
 		fi
 	else
 		TITLE='Step 2.12.2.2 - Install and configure a bootloader: BIOS: GRUB'
@@ -561,6 +566,7 @@ fi;;
 14) TITLE='Step 2.13 - Unmount the partitions and reboot'
 goleft
 de 'Exit from the chroot environment: \n\Z1# exit\Zn'
+goleft
 de "List of partitions: \n$(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT) \n\nSince the partitions are mounted under /mnt, we use the following command to unmount them: \n\Z1# umount /mnt/{boot,home,}\Zn \n\nNote: There is no need to unmount /run/archiso."
 goleft
 de "List of partitions: \n$(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT) \n\nSince the partitions are mounted under /mnt, we use the following command to unmount them: \n\Z1# umount /mnt/{boot,home,}\Zn \n\nNote: There is no need to unmount /run/archiso."
