@@ -23,6 +23,7 @@ UEFI=2
 EFISTUB=2
 GPT=2
 if [ -e /tmp/tputout ]; then
+	TMUX=1
 	let COLUMNS=$(</tmp/tputout)/2
 else
 	COLUMNS=$(tput cols)
@@ -100,7 +101,6 @@ echo 'An error has occured.' 1>&2
 echo "$1" 1>&2
 echo '(Press enter.)' 1>&2
 getenter
-tput cnorm
 rm -f /tmp/tmxgta_lock
 exit 1
 }
@@ -125,7 +125,7 @@ echo -n ']'
 }
 
 goleft() {
-tmux select-pane -t 0 > /dev/null 2>&1
+(( $TMUX == 1 )) && tmux select-pane -t 0
 }
 
 lkmenu() {
@@ -140,7 +140,7 @@ done
 maps=($(printf '%s\n' "${maps[@]}"|sort))
 maps=($(printf '%s\n\010\n' "${maps[@]}"))
 rows=$(tput lines)
-let rows-=5
+let rows-=2
 if [[ "$1" = "--select" ]]; then
 	dialog --no-shadow --default-item 'us' --title 'Select Keyboard Layout' --ok-label 'Load keymap' --menu '' $rows 0 $rows ${maps[@]} 2> $KEYMAP_FILE
 	if (( $? == 0 )); then
@@ -154,7 +154,6 @@ else
 		dialog --no-shadow --default-item 'us' --title 'Keyboard Layouts:' --cancel-label 'Go back' --nook --menu '' $rows 0 $rows ${maps[@]}
 	fi
 fi
-tput civis
 }
 
 showtimezones() {
@@ -162,7 +161,7 @@ timezones=($(find /usr/share/zoneinfo/{Africa,America,Antarctica,Arctic,Asia,Atl
  -type f | cut -d\/ -f 5-6 | sort))
 timezones=($(printf '%s\n\010\n' "${timezones[@]}"))
 rows=$(tput lines)
-let rows-=5
+let rows-=2
 dialog --no-shadow --title 'Timezones:' --default-item 'Europe/Minsk' --cancel-label 'Go back' --nook --menu '' $rows 0 $rows ${timezones[@]}
 tput civis
 }
@@ -196,19 +195,18 @@ else
 fi
 
 if (( "$LINES" >= 50 )); then
-	if (( "$LINES" >= 100 )); then
+	if (( "$LINES" >= 90 )); then
 		FMTLINE=80
 	else
-		let FMTLINE-=20
+		let FMTLINE=$LINES-10
 	fi
+else
+	let FMTLINE=$LINES-2
 fi
 
 ##Lock file##
 [ -f /tmp/tmxgta_lock ] && echo "$NAME is already running." 1>&2 && getenter && exit 1
 touch /tmp/tmxgta_lock
-
-##Invisible Cursor##
-tput civis
 
 ##Intro##
 if (( "$#" == 0 )); then
@@ -221,7 +219,7 @@ if (( "$#" == 0 )); then
 		goleft
 		de 'The cursor moved to the terminal on the left, where you are automatically logged in as root.\nHit \Z3[control]\Zn-\Z3[a]\Zn two times to switch from the terminal on the left to the guide on the right. \nSelect \Z3[OK]\Zn in the guide to go on to the next page.' 'Step 0 - Tutorial'
 		dq "$NAME will not install archlinux, or change your data or partition layout. Instead you are in full control, as changes are done via terminal commands. $NAME provides an interactive guide, that shows helpful information about your system on the screen where the terminal is found. There is no need to switch virtual consoles and remember what you have read, print out the installation guide or read it on another computer. This is achieved by splitting up the window into two parts with tmux. You can still use other terminals with the key combination ctrl+alt+f2. All commands are marked \Z1# in red\Zn. Frequently changing the command is necessary for your individual installation. In that case the part that needs to be changed is marked \Z1\Zrlike so\Zn. The status line shows the current time, date and a progressbar. \nIt is recommended to read the beginners' guide provided in the ArchWiki.\nhttps://wiki.archlinux.org/\nThe steps in this guide use the same numbering as the beginners' guide, that means you can easily look up each topic in the wiki.\nDo you want to read the beginners' guide now?"
-		(( $? == 0 )) && tmux new-window 'elinks https://wiki.archlinux.org/index.php/Beginners_Guide'; tput civis
+		(( $? == 0 )) && tmux new-window 'elinks https://wiki.archlinux.org/index.php/Beginners_Guide'
 		de 'Going a step back in the guide is not possible, read and execute each step thoroughly before continuing. However you can still scroll back to a previous page by entering tmux copy-mode with \Z3[control]\Zn-\Z3[a]\Zn, and pressing pageup or pagedown. Press \Z3[enter]\Zn, to go back to normal mode. Do the same to scroll in the terminal.'
 	fi
 fi
@@ -286,7 +284,7 @@ if (( $? == 0 )); then
 		elif [[ "$(</tmp/selection)" = 'SKIP' ]]; then
 			break
 		else
-			tmux new-window 'elinks https://wiki.archlinux.org/index.php/Network'; tput civis
+			tmux new-window 'elinks https://wiki.archlinux.org/index.php/Network'
 		fi
 	done
 fi;;
@@ -474,7 +472,7 @@ if (( ! $? == 0 )); then
 	while : ;do
 		dialog --no-shadow --cr-wrap --colors --yes-label '"OK"' --defaultno --no-label '"HOOKS"' --title "$TITLE" --yesno 'Select "HOOKS" for a list of hooks and their usage. \nEdit /etc/mkinitcpio.conf as needed. \n\Z1# nano /etc/mkinitcpio.conf\Zn \n\nRe-generate the initramfs image. \n\Z1# mkinitcpio -p linux\Zn \n\nNote: Arch VPS installations on QEMU (e.g. when using virt-manager) may need virtio modules in mkinitcpio.conf to be able to boot. MODULES="virtio virtio_blk virtio_pci virtio_net"' $FMTLINE $FMTCOL
 		if (( ! $? == 0 )); then
-			tmux new-window 'elinks https://wiki.archlinux.org/index.php/Mkinitcpio#Common_hooks'; tput civis
+			tmux new-window 'elinks https://wiki.archlinux.org/index.php/Mkinitcpio#Common_hooks'
 		else
 			break
 		fi
@@ -581,6 +579,5 @@ esac
 ## Closing main loop
 done
 
-tput cnorm
 rm -f /tmp/tmxgta_lock
 exit 0
