@@ -18,28 +18,28 @@ screen_color = (CYAN,BLUE,ON)
 dialog_color = (BLACK,WHITE,OFF)
 
 # Dialog box title color
-title_color = (BLUE,WHITE,ON)
+title_color = (WHITE,GREEN,ON)
 
 # Dialog box border color
-border_color = (BLACK,WHITE,ON)
+border_color = (BLACK,WHITE,OFF)
 
 # Active button color
 button_active_color = (WHITE,BLUE,ON)
 
 # Inactive button color
-button_inactive_color = (BLACK,WHITE,ON)
+button_inactive_color = (BLACK,WHITE,OFF)
 
 # Active button key color
-button_key_active_color = button_active_color
+button_key_active_color = (WHITE,BLUE,ON)
 
 # Inactive button key color
-button_key_inactive_color = (BLACK,WHITE,ON)
+button_key_inactive_color = (BLACK,WHITE,OFF)
 
 # Active button label color
 button_label_active_color = (WHITE,BLUE,ON)
 
 # Inactive button label color
-button_label_inactive_color = (BLACK,WHITE,ON)
+button_label_inactive_color = (BLACK,WHITE,OFF)
 
 # Menu box color
 menubox_color = dialog_color
@@ -48,34 +48,34 @@ menubox_color = dialog_color
 menubox_border_color = border_color
 
 # Item color
-item_color = (BLACK,WHITE,ON)
+item_color = (BLACK,WHITE,OFF)
 
 # Selected item color
-item_selected_color = (WHITE,BLUE,OFF)
+item_selected_color = (WHITE,BLUE,ON)
 
 # Tag color
-tag_color = title_color
+tag_color = (BLACK,WHITE,OFF)
 
 # Selected tag color
-tag_selected_color = button_label_active_color
+tag_selected_color = (WHITE,BLUE,ON)
 
 # Tag key color
-tag_key_color = button_key_inactive_color
+tag_key_color = (BLACK,WHITE,OFF)
 
 # Selected tag key color
 tag_key_selected_color = (WHITE,BLUE,ON)
 
 # Up arrow color
-uarrow_color = (YELLOW,WHITE,ON)
+uarrow_color = (YELLOW,WHITE,OFF)
 
 # Down arrow color
 darrow_color = uarrow_color
 
 # Dialog box gauge color
-gauge_color = title_color
+gauge_color = (WHITE,BLUE,ON)
 
 # Dialog box border2 color
-border2_color = dialog_color
+border2_color = (BLACK,WHITE,OFF)
 
 # Menu box border2 color
-menubox_border2_color = dialog_color
+menubox_border2_color = (BLACK,WHITE,OFF)

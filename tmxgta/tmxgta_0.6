@@ -184,7 +184,7 @@ if (( "$COLUMNS" <= "85" )); then
 		dialog --no-shadow --title 'Warning' --yesno "Terminal has not enough Columns for $NAME to display correctly. Exit now?" 6 45 && exit 1
 		FMTCOL="$COLUMNS"
 	else
-		let FMTCOL="$COLUMNS"-2
+		let FMTCOL="$COLUMNS"-3
 	fi
 else
 	if (( "$COLUMNS" <= "100" )); then
