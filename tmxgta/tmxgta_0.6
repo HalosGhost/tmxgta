@@ -101,6 +101,7 @@ echo 'An error has occured.' 1>&2
 echo "$1" 1>&2
 echo '(Press enter.)' 1>&2
 getenter
+tput cnorm
 rm -f /tmp/tmxgta_lock
 exit 1
 }
@@ -163,7 +164,6 @@ timezones=($(printf '%s\n\010\n' "${timezones[@]}"))
 rows=$(tput lines)
 let rows-=2
 dialog --no-shadow --title 'Timezones:' --default-item 'Europe/Minsk' --cancel-label 'Go back' --nook --menu '' $rows 0 $rows ${timezones[@]}
-tput civis
 }
 
 ##Root check##
@@ -207,6 +207,9 @@ fi
 ##Lock file##
 [ -f /tmp/tmxgta_lock ] && echo "$NAME is already running." 1>&2 && getenter && exit 1
 touch /tmp/tmxgta_lock
+
+##Invisible Cursor##
+tput civis
 
 ##Intro##
 if (( "$#" == 0 )); then
@@ -579,5 +582,6 @@ esac
 ## Closing main loop
 done
 
+tput cnorm
 rm -f /tmp/tmxgta_lock
 exit 0
