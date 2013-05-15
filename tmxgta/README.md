@@ -13,6 +13,7 @@ Features:
 * complete content of Beginners' Guide/Installation
 * dialog for displaying text
 * progressbar
+* load keymap from menu
 * colorful markup of commands
 * reflector for sorting mirrors with one keypress
 * shows network interface names

@@ -1,4 +1,4 @@
-VERSION=0.6
+VERSION=0.7
 dialog --title tmxgta --nocancel --nook --pause "\nVersion: $VERSION \nBased on archiso: $(cat /proc/cmdline | cut -d\  -f 2 | cut -d\= -f 2) \nKernel: $(uname -r)" 9 40 4
 tput cols > /tmp/tputout
 clear
