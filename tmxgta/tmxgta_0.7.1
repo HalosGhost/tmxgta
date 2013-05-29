@@ -26,6 +26,7 @@ if [ -e /tmp/tputout ]; then
 	TMUX=1
 	let COLUMNS=$(</tmp/tputout)/2
 else
+	TMUX=0
 	COLUMNS=$(tput cols)
 fi
 LINES=$(tput lines)
@@ -72,7 +73,7 @@ done 2>/dev/null
 }
 
 interfacewarning() {
-echo 'Warning: udev no longer assigns network interface names according to the wlanX and ethX naming scheme. If you are coming from a different distribution or are reinstalling Arch and not aware of the new interface naming style, please do not assume that your wireless interface is named wlan0, or that your wired interface is named eth0.
+echo 'Warning: As of v197, udev no longer assigns network interface names according to the wlanX and ethX naming scheme. If you are coming from a different distribution or are reinstalling Arch and not aware of the new interface naming style, please do not assume that your wireless interface is named wlan0, or that your wired interface is named eth0.
 The names of your interfaces are as followed:'
 interfacenamefunction
 }
@@ -107,6 +108,8 @@ echo '(Press enter.)' 1>&2
 getenter
 tput cnorm
 rm -f /tmp/tmxgta_lock
+rm -f /tmp/loadkeysout
+rm -f /tmp/selection
 exit 1
 }
 
@@ -220,26 +223,35 @@ if (( "$#" == 0 )); then
 Do you want to read a tutorial about this guide?'
 	if (( $? == 0 )); then
 		STEP=0
-		tmux set-option -g status-left "$(echo "$NAME"; progressbar)" > /dev/null 2>&1
+		(( "$TMUX" == 1 )) && tmux set-option -g status-left "$(echo "$NAME"; progressbar)" > /dev/null 2>&1
 		STEP=1
 		TITLE='Step 0 - Tutorial'
-		goleft
-		de 'The cursor moved to the terminal on the left, where you are automatically logged in as root.
+		if (( "$TMUX" == 1 )); then
+			goleft
+			de 'The cursor moved to the terminal on the left, where you are automatically logged in as root.
 Hit \Z3[control]\Zn-\Z3[a]\Zn two times to switch from the terminal on the left to the guide on the right. 
 Select \Z3[OK]\Zn in the guide to go on to the next page.' 'Step 0 - Tutorial'
+		fi
 		dq "$NAME will not install archlinux, or change your data or partition layout. Instead you are in full control, as changes are done via terminal commands. $NAME provides an interactive guide, that shows helpful information about your system on the screen where the terminal is found. There is no need to switch virtual consoles and remember what you have read, print out the installation guide or read it on another computer. This is achieved by splitting up the window into two parts with tmux. You can still use other terminals with the key combination ctrl+alt+f2. All commands are marked \Z1# in red\Zn. Frequently changing the command is necessary for your individual installation. In that case the part that needs to be changed is marked \Z1\Zrlike so\Zn. The status line shows the current time, date and a progressbar. 
 It is recommended to read the beginners' guide provided in the ArchWiki.
 https://wiki.archlinux.org/
 The steps in this guide use the same numbering as the beginners' guide, that means you can easily look up each topic in the wiki.
 Do you want to read the beginners' guide now?"
-		(( $? == 0 )) && tmux new-window 'elinks https://wiki.archlinux.org/index.php/Beginners_Guide'
-		de 'Going a step back in the guide is not possible, read and execute each step thoroughly before continuing. However you can still scroll back to a previous page by entering tmux copy-mode with \Z3[control]\Zn-\Z3[a]\Zn, and pressing pageup or pagedown. Press \Z3[enter]\Zn, to go back to normal mode. Do the same to scroll in the terminal.'
+		if (( $? == 0 )); then
+			if (( "$TMUX" == 1 )); then
+				tmux new-window 'elinks https://wiki.archlinux.org/index.php/Beginners_Guide'
+			else
+				elinks https://wiki.archlinux.org/index.php/Beginners_Guide
+			fi
+		fi
+		if (( "$TMUX" == 1 )); then
+			de 'Going a step back in the guide is not possible, read and execute each step thoroughly before continuing. However you can still scroll back to a previous page by entering tmux copy-mode with \Z3[control]\Zn-\Z3[a]\Zn, and pressing pageup or pagedown. Press \Z3[enter]\Zn, to go back to normal mode. Do the same to scroll in the terminal.'
+		fi
 	fi
 fi
 ## Main loop
 while (( "$STEP" <= "$TOTALSTEPS" )); do
-
-tmux set-option -g status-left "$(echo "$NAME"; progressbar)"  > /dev/null 2>&1
+(( "$TMUX" == 1 )) && tmux set-option -g status-left "$(echo "$NAME"; progressbar)"  > /dev/null 2>&1
 
 ## Step selection
 case "$STEP" in
@@ -269,7 +281,6 @@ fi;;
 	dq 'In case you have a UEFI motherboard and UEFI Boot mode is enabled (and is preferred over BIOS/Legacy mode), the CD/USB will automatically launch Arch Linux kernel (EFISTUB via Gummiboot Boot Manager). To test if you have booted into UEFI mode check if directory /sys/firmware/efi has been created: 
 \Z1# ls -1 /sys/firmware/efi\Zn 
 
-Note: For several kernels now, CONFIG_EFI_VARS has been compiled into the kernel. Thus efivars no longer exists as a module and does not need to be loaded manually.
 Are you booted in UEFI mode?' --defaultno
 	(( $? == 0 )) && UEFI=1 || UEFI=0
 fi;;
@@ -277,16 +288,17 @@ fi;;
 ##3##
 3) TITLE='Step 2.2 - Establish an internet connection'
 goleft
-dq 'The dhcpcd network daemon is started automatically at boot and it will attempt to start a wired connection, if available. Try pinging a website to see if it was successful. And since Google is always on... 
-\Z1# ping -c 3 www.google.com\Zn 
+dq "The dhcpcd network daemon starts automatically during boot and it will attempt to start a wired connection. Try to ping a server to see if a connection was established. For example, Google's DNS servers:
+\Z1# ping -c 3 www.google.com\Zn
 
-If you get a ping: unknown host error, first check if there is any problem with your cable (or if you have enough wireless signal), otherwise you will need to set up the network manually. Do you want to set up the network manually?'
+If you get a ping: unknown host error, first check if there is an issue with your cable or wireless signal strength. If not, you will need to set up the network manually.
+Do you want to set up the network manually?"
 if (( $? == 0 )); then
 	while : ;do
 		TITLE='Step 2.2 - Establish an internet connection'
 		dialog --no-collapse --no-shadow --nocancel  --colors --title "$TITLE" --menu 'Do you want to configure wired or wireless networks?
 For xDSL, dial-up and ISDN connections, see wikipage "Direct Modem Connection".
-If you are behind a proxy server see wikipage "Proxy settings".' $FMTLINE $FMTCOL $FMTLINE 'Wired' 'wired connection via a static IP address' 'Wireless' 'wireless connectivity (Wi-Fi) for the installation process' 'View Wikipage' 'https://wiki.archlinux.org/index.php/Network' 'SKIP' 'Not recommended' 2> /tmp/selection
+If you are behind a proxy server see wikipage "Proxy settings".' $FMTLINE $FMTCOL $FMTLINE 'Wired' 'wired connection via a static IP address' 'Wireless' 'wireless connectivity (Wi-Fi)' 'View Wikipage' 'https://wiki.archlinux.org/index.php/Network' 'SKIP' 'Not recommended' 2> /tmp/selection
 		if [[ "$(</tmp/selection)" = 'Wired' ]]; then
 			TITLE='Step 2.2.1 - Establish an internet connection: Wired: Static IP'
 			goleft
@@ -312,8 +324,8 @@ $(interface_eth)
 
 Add the address: 
 \Z1# ip addr add \Zr<ip address>\ZR/\Zr<subnetmask>\ZR dev \Zr<interface>\Zn 
-For example: 
-\Z1# ip addr add \Zr192.168.1.2/24\ZR dev \Zr$ETH_NAME\Zn 
+For example:
+\Z1# ip addr add \Zr192.168.1.2/24\ZR dev enp2s0f0 
 
 For more options, run \Z1# man ip\Zn. 
 
@@ -375,7 +387,11 @@ If you do not, check the detailed wikipage "Wireless Setup".'
 		elif [[ "$(</tmp/selection)" = 'SKIP' ]]; then
 			break
 		else
-			tmux new-window 'elinks https://wiki.archlinux.org/index.php/Network'
+			if (( "$TMUX" == 1 )); then
+				tmux new-window 'elinks https://wiki.archlinux.org/index.php/Network'
+			else
+				elinks https://wiki.archlinux.org/index.php/Network
+			fi
 		fi
 	done
 fi;;
@@ -404,7 +420,7 @@ You have booted in UEFI mode and need to create an extra UEFI System Partition. 
 		GPT=1
 	elif (( "$UEFI" == 0 ));then
 		dialog --no-collapse --no-shadow  --colors --title "$TITLE" --yes-label 'MBR' --no-label 'GPT' --defaultno --yesno 'Note regarding GPT partitioning: 
-If you are not dual booting with Windows, then it is advisable to use GPT instead of MBR. Read wikipage "GPT" for a list of advantages. If you have a BIOS motherboard (or plan on booting in BIOS compatibility mode) and you want to setup GRUB on a GPT-partitioned drive, you will need to create an extra BIOS Boot Partition. Syslinux does not need one. Some BIOS systems may have issues with GPT. See wikipage "GPT#BIOS_Systems" for more info and possible workarounds. 
+If you are not dual booting with Windows, then it is advisable to use GPT instead of MBR. Read wikipage "GPT" for a list of advantages. If you have a BIOS motherboard (or plan on booting in BIOS compatibility mode) and you want to setup GRUB on a GPT-partitioned drive, you will need to create an extra BIOS Boot Partition of size 1007 KiB and EF02 type code. Syslinux does not need one. Some BIOS systems may have issues with GPT. See wikipage "GPT#BIOS_Systems" for more info and possible workarounds. 
 
 Choose either MBR or GPT. Do not choose both!' $FMTLINE $FMTCOL
 		(( $? == 0 )) && GPT=0 || GPT=1
@@ -794,10 +810,10 @@ For xDSL, dial-up and ISDN connections, see wikipage "Direct Modem Connection".
 
 If you are behind a proxy server see wikipage "Proxy settings". 
 
-Note: For more in-depth information on network configuration, visit wikipages "Network Configuration" and "Wireless Setup". 
+Warning: Though your interfaces may have used the conventional eth* and wlan* during install, udev no longer names interfaces in this way. So be sure that upon booting into your new system, you take note of the new interace names that are assigned. Listing all the detected network interfaces can be done with ip link.
+Note: If you would like to use the old interface naming scheme (ie. eth* and wlan*) you can accomplish this by creating an empty file at /etc/udev/rules.d/80-net-name-slot.rules which will mask the file of the same name located under /usr/lib/udev/rules.d (alternatively, instead of an empty file, using a symlink to /dev/null is also an acceptable masking method).
 
-Warning: A bug has been noted in the install ISO, in which the name your interface has during installation differs from the one it will have upon reboot. See FS#33923 for more details. 
-Use the command ip link (shows interface names) after rebooting into your installed system to find out if you are affected by this. If so, you will have to redo the configuration described below with the correct interface name.' $FMTLINE $FMTCOL $FMTLINE 'Wired' 'Static or Dynamic' 'Wireless' 'WIFI' 'SKIP' 'Not recommended' 2> /tmp/selection
+Note: For more in-depth information on network configuration, visit wikipages "Network Configuration" and "Wireless Setup". ' $FMTLINE $FMTCOL $FMTLINE 'Wired' 'Static or Dynamic' 'Wireless' 'WIFI' 'SKIP' 'Not recommended' 2> /tmp/selection
 
  
 if [[ "$(</tmp/selection)" = 'Wired' ]]; then
@@ -806,23 +822,35 @@ if [[ "$(</tmp/selection)" = 'Wired' ]]; then
 	if (( $? == 0 )); then
 		TITLE='Step 2.9.1 - Configure the network: Wired: Dynamic IP'
 		de "$(interfacewarning; interface_eth)"
-		dialog --no-collapse --no-shadow  --colors --yes-label '"SYSTEMD"' --no-label '"NETCTL"' --title "$TITLE" --yesno 'Do you want to use a single fixed wired network connection (systemd dhcpcd.service), or do you need a network management service (netctl-ifplugd), which gracefully handles dynamic connections to new networks?' $FMTLINE $FMTCOL
-		if (( $? == 0 )); then
-			TITLE='Step 2.9.1 - Configure the network: Wired: Dynamic IP: Dhcpcd service'
+		dialog --no-collapse --no-shadow  --colors --ok-label '"SYSTEMD"' --extra-button --extra-label '"NETCTL-IFPLUGD"' --cancel-label '"NETCTL"' --title "$TITLE" --yesno 'Do you want to use a single fixed wired network connection (systemd dhcpcd.service), or do you need a network management service (netctl-ifplugd), which gracefully handles dynamic connections to new networks?' $FMTLINE $FMTCOL
+		case $? in
+		0)	TITLE='Step 2.9.1 - Configure the network: Wired: Dynamic IP: Dhcpcd service'
 			goleft
 			de "Enable the dhcpcd service. 
 \Z1# systemctl enable dhcpcd@\Zrinterface\ZR.service\Zn 
-$(interface_eth)"
-		else	
-			TITLE='Step 2.9.1 - Configure the network: Wired: Dynamic IP: netctl-ifplugd'
+$(interface_eth)";;
+		1)	TITLE='Step 2.9.1 - Configure the network: Wired: Dynamic IP: netctl'
+			goleft
+			de "Copy a sample profile from /etc/netctl/examples to /etc/netctl/:
+\Z1# cd /etc/netctl
+# cp examples/ethernet-dhcp .\Zn
+
+Edit the profile as needed (modify \Z1Interface\Zn):
+\Z1# nano ethernet-dhcp\Zn
+$(interface_eth)
+
+Enable the ethernet-dhcp profile:
+\Z1# netctl enable ethernet-dhcp\Zn";;
+		3)	TITLE='Step 2.9.1 - Configure the network: Wired: Dynamic IP: netctl-ifplugd'
 			goleft
 			de "Install ifplugd, which is required for netctl-ifplugd: 
 \Z1# pacman -S ifplugd\Zn 
 
 Then enable netctl with your interface as argument: 
 \Z1# systemctl enable netctl-ifplugd@\Zrinterface\ZR.service\Zn 
-$(interface_eth)"
-		fi
+$(interface_eth)";;
+		*)	fail 'Dialog selection.';;
+	esac
 	else
 		TITLE='Step 2.9.1 - Configure the network: Wired: Static IP'
 		de "$(interfacewarning; interface_eth)"
@@ -833,7 +861,7 @@ $(interface_eth)"
 
 Edit the profile as needed, modify \Z1Interface\Zn, \Z1Address\Zn, \Z1Gateway\Zn and \Z1DNS\Zn. 
 \Z1# nano ethernet-static\Zn 
-$(interface_eth) 
+$(interface_eth)
 
 Then enable above created profile: 
 \Z1# netctl enable ethernet-static\Zn"
@@ -842,32 +870,25 @@ elif [[ "$(</tmp/selection)" = 'Wireless' ]]; then
 	TITLE='Step 2.9.2 - Configure the network: Wireless:'
 	de "$(interfacewarning; interface_wlan)"
 	goleft
-	de 'You will need to install additional programs to be able to configure and manage wireless network profiles for netcfg. "NetworkManager" and "Wicd" are other popular alternatives. 
+	de 'You will need to install additional programs to be able to configure and manage wireless network profiles for netctl. "NetworkManager" and "Wicd" are other popular alternatives. 
 
 Install the required packages: 
 \Z1# pacman -S wireless_tools wpa_supplicant wpa_actiond dialog\Zn 
 
-If your wireless adapter requires a firmware, (as described in the step Establish an internet connection) install the package containing your firmware. For example: 
+If your wireless adapter requires a firmware, (as described in the step Establish an internet connection) install the package containing your firmware. Most of the time, the linux-firmware package will contain the needed firmware. Though for some devices, the required firmware might be in its own package. For example: 
 \Z1# pacman -S \Zrzd1211-firmware\Zn 
 
-After finishing the rest of this installation and rebooting, you can connect to the network with wifi-menu interface_name (where interface_name is the interface of your wireless chipset), which will generate a profile file in /etc/network.d named after the SSID. There are also templates available in /etc/network.d/examples/ for manual configuration. 
-# wifi-menu interface_name 
+After finishing the rest of this installation and rebooting, you can connect to the network with wifi-menu interface_name (where interface_name is the interface of your wireless chipset). 
+# wifi-menu interface_name
+ 
 Warning: If you are using wifi-menu, this must be done *after* your reboot when no longer chrooted. The process spawned by this command will conflict with the one you have running outside of the chroot. Alternatively, you could just configure a network profile manually using the templates previously mentioned so that you do not have to worry about using wifi-menu at all.'
 	goleft
-	de "Enable the net-auto-wireless service, which will connect to known networks and gracefully handle roaming and disconnects: 
-\Z1# systemctl enable net-auto-wireless.service\Zn 
+	de "Enable the netctl-auto service, which will connect to known networks and gracefully handle roaming and disconnects: 
+\Z1# systemctl enable netctl-auto@interface_name.service\Zn
+$(interface_wlan)
 
-Note: wireless-wpa-config profiles do not work with net-auto-wireless. Convert them to wireless-wpa-configsection or wireless-wpa instead. 
+Note: Netctl also provides netctl-ifplugd, which can be used to handle wired profiles in conjunction with netctl-auto."
 
-Note: Netcfg also provides net-auto-wired, which can be used in conjunction with net-auto-wireless. 
-
-Make sure that the correct wireless interface is set in /etc/conf.d/netcfg: 
-\Z1# nano /etc/conf.d/netcfg\Zn 
-\Z4-------------------------------- 
-WIRELESS_INTERFACE=\"\Zr<interface>\ZR\"\Zn 
-$(interface_wlan) 
-
-It is also possible to define a list of network profiles that should be automatically connected, using the AUTO_PROFILES variable in /etc/conf.d/netcfg. If AUTO_PROFILES is not set, all known wireless networks will be tried."
 fi;;
 
 ##11##
@@ -887,7 +908,11 @@ Re-generate the initramfs image.
 
 Note: Arch VPS installations on QEMU (e.g. when using virt-manager) may need virtio modules in mkinitcpio.conf to be able to boot. MODULES="virtio virtio_blk virtio_pci virtio_net"' $FMTLINE $FMTCOL
 		if (( ! $? == 0 )); then
-			tmux new-window 'elinks https://wiki.archlinux.org/index.php/Mkinitcpio#Common_hooks'
+			if (( "$TMUX" == 1 )); then
+				tmux new-window 'elinks https://wiki.archlinux.org/index.php/Mkinitcpio#Common_hooks'
+			else
+				elinks https://wiki.archlinux.org/index.php/Mkinitcpio#Common_hooks
+			fi
 		else
 			break
 		fi
@@ -1048,7 +1073,7 @@ Note: If you have a GPT-partitioned drive GRUB needs a "BIOS Boot Partition". If
 You have partitioned the drive as GPT, therefore install the gptfdisk package, because it contains sgdisk, which will be used to set the GPT-specific boot flag. 
 \Z1# pacman -S gptfdisk\Zn 
 
-Use the syslinux-install_update script to automatically install the files (-i), mark the partition active by setting the boot flag (-a), and install the MBR boot code (-m): 
+Use the syslinux-install_update script to automatically install the bootloader (-i), mark the partition active by setting the boot flag (-a), and install the MBR boot code (-m): 
 \Z1# syslinux-install_update -i -a -m\Zn'
 		elif (( "$GPT" == 2 )); then
 			de 'Install the syslinux package. 
@@ -1169,12 +1194,12 @@ Since the partitions are mounted under /mnt, we use the following command to unm
 \Z1# umount /mnt/{boot,home,}\Zn 
 
 Note: There is no need to unmount /run/archiso."
-tmux set-option -g status-left 'COMPLETE' > /dev/null 2>&1
+(( "$TMUX" == 1 )) && tmux set-option -g status-left 'COMPLETE' > /dev/null 2>&1
 dialog --no-collapse --sleep 3 --no-shadow  --colors --title "$TITLE" --infobox "Reboot the computer: 
 \Z1# reboot\Zn 
 
 Tip: Be sure to remove the installation media, otherwise you will boot back into it." $FMTLINE $FMTCOL --and-widget --ok-label 'EXIT' --msgbox "Thank you for following $NAME." 5 35
-tmux set-option -g status-left 'reboot' > /dev/null 2>&1
+(( "$TMUX" == 1 )) && tmux set-option -g status-left 'reboot' > /dev/null 2>&1
 ;;
 
 ## Closing step selection
