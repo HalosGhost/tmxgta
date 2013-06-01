@@ -37,16 +37,12 @@ WLAN_NAME=$(ls /sys/class/net | grep wl)
 KEYMAP_FILE=/tmp/selected_keymap
 [ -e $KEYMAP_FILE ] && rm -rf $KEYMAP_FILE
 
-IWCONFIG_OUTPUT='enp2s0f0  no wireless extensions.
-wlp3s0    IEEE 802.1 Z1gn  ESSID:"NETGEAR97"  
-          Mode:Managed  Frequency:2.427 GHz  Access Point: 2C:B0:5D:9C:72:BF   
-          Bit Rate=65 Mb/s   Tx-Power=16 dBm   
-          Retry  long limit:7   RTS thr:off   Fragment thr:off
-          Power Management:on
-          Link Quality=61/70  Signal level=-49 dBm  
-          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
-          Tx excessive retries:0  Invalid misc:430   Missed beacon:0
-lo        no wireless extensions.'
+IWDEV_OUTPUT='phy#0
+        Interface wlp3s0
+                ifindex 3
+                wdev 0x1
+                addr 00:21:6a:5e:52:bc
+                type managed'
 
 ## Functions ##
 
@@ -74,7 +70,8 @@ done 2>/dev/null
 
 interfacewarning() {
 echo 'Warning: As of v197, udev no longer assigns network interface names according to the wlanX and ethX naming scheme. If you are coming from a different distribution or are reinstalling Arch and not aware of the new interface naming style, please do not assume that your wireless interface is named wlan0, or that your wired interface is named eth0.
-The names of your interfaces are as followed:'
+The names of your interfaces are as followed:
+'
 interfacenamefunction
 }
 
@@ -258,12 +255,12 @@ case "$STEP" in
 
 ##1##
 1) TITLE='Step 2.1 - Change the language'
-dq 'This is optional for the majority of users. Useful only if you plan on writing in your own language in any of the configuration files, if you use diacritical marks in the Wi-Fi password, or if you would like to receive system messages (e.g. possible errors) in your own language.
+dq 'Tip: These are optional for the majority of users. Useful only if you plan on writing in your own language in any of the configuration files, if you use diacritical marks in the Wi-Fi password, or if you would like to receive system messages (e.g. possible errors) in your own language.
 Do you want to skip this step.?' --defaultno
 if (( ! $? == 0 )); then
 	lkmenu --select
 	goleft
-	de 'The font should also be changed, because most languages use more glyphs than the 26 letter English alphabet. Otherwise some foreign characters may show up as white squares or as other symbols. Note that the name is case-sensitive, so please type it exactly as you see it. 
+	de 'The font should also be changed, because most languages use more glyphs than the 26 letter English alphabet. Otherwise some foreign characters may show up as white squares or as other symbols. Note that the name is case-sensitive, so please type it exactly as you see it: 
 \Z1# setfont Lat2-Terminus16\Zn'
 	goleft
 	de 'By default, the language is set to English (US). If you would like to change the language for the install process (German, in this example), remove the # in front of the locale you want from /etc/locale.gen, along with English (US). Please choose the UTF-8 entry. 
@@ -298,7 +295,7 @@ if (( $? == 0 )); then
 		TITLE='Step 2.2 - Establish an internet connection'
 		dialog --no-collapse --no-shadow --nocancel  --colors --title "$TITLE" --menu 'Do you want to configure wired or wireless networks?
 For xDSL, dial-up and ISDN connections, see wikipage "Direct Modem Connection".
-If you are behind a proxy server see wikipage "Proxy settings".' $FMTLINE $FMTCOL $FMTLINE 'Wired' 'wired connection via a static IP address' 'Wireless' 'wireless connectivity (Wi-Fi)' 'View Wikipage' 'https://wiki.archlinux.org/index.php/Network' 'SKIP' 'Not recommended' 2> /tmp/selection
+If you are behind a proxy server see wikipage "Proxy settings".' $FMTLINE $FMTCOL $FMTLINE 'Wired' 'wired connection via a static IP address' 'Wireless' 'wireless connectivity (Wi-Fi)' 'View Wikipage' 'https://wiki.archlinux.org/index.php/Network' 'Next step' 'Once a connection is established' 2> /tmp/selection
 		if [[ "$(</tmp/selection)" = 'Wired' ]]; then
 			TITLE='Step 2.2.1 - Establish an internet connection: Wired: Static IP'
 			goleft
@@ -344,23 +341,22 @@ search \Zrexample.com\Zn
 Note: Currently, you may include a maximum of 3 nameserver lines."
 			goleft
 			de 'You should now have a working network connection. 
-again:\Z1# ping -c 3 www.google.com\Zn 
+\Z1# ping -c 3 www.google.com\Zn 
 
 If you do not, check the detailed wikipage "Network Configuration".'
 		elif [[ "$(</tmp/selection)" = 'Wireless' ]];then
 			TITLE='Step 2.2.2 - Establish an internet connection: Wireless'
 			de "$(interfacewarning; interface_wlan)" 
 			goleft
-			de "Alternatively you can use iwconfig and check for interfaces, that have wireless extensions manually: 
-\Z1# iwconfig\Zn 
-$IWCONFIG_OUTPUT 
+			de "Alternatively you can identify the name of your wireless interface manually:
+\Z1# iw dev\Zn 
+$IWDEV_OUTPUT 
 
-In this example, wlp3s0 is the available wireless interface. 
-If you are unsure, your wireless interface is likely to start with the letter "w", and unlikely to be "lo" or start with the letter "e". 
+In this example, wlp3s0 is the available wireless interface. If you are unsure, your wireless interface is likely to start with the letter "w", and unlikely to be "lo" or start with the letter "e".
 
 Note: If you do not see output similar to this, then your wireless driver has not been loaded. If this is the case, you must load the driver yourself. Please see wikipage \"Wireless Setup\" for more detailed information."
 			goleft
-			de "Bring the interface up with: 
+			de "Bring the interface up with:
 \Z1# ip link set \Zr<interface>\ZR up\Zn 
 $(interface_wlan) 
 
@@ -377,14 +373,14 @@ If there is no output, it may be concluded that the system's wireless chipset do
 Warning: Wireless chipset firmware packages (for cards which require them) are pre-installed under /usr/lib/firmware in the live environment (on CD/USB stick) but must be explicitly installed to your actual system to provide wireless functionality after you reboot into it! Package installation is covered later in this guide. Ensure installation of both your wireless module and firmware before rebooting! See wikipage \"Wireless Setup\" if you are unsure about the requirement of corresponding firmware installation for your particular chipset."
 			goleft
 			de "Next, use netctl's wifi-menu to connect to a network. 
-\Z1# wifi-menu \Zr<interface>\Zn 
+\Z1# wifi-menu \Zr<interface>\Zn
 $(interface_wlan)"
 			goleft
 			de 'You should now have a working network connection. 
-again:\Z1# ping -c 3 www.google.com\Zn 
+\Z1# ping -c 3 www.google.com\Zn 
 
 If you do not, check the detailed wikipage "Wireless Setup".'
-		elif [[ "$(</tmp/selection)" = 'SKIP' ]]; then
+		elif [[ "$(</tmp/selection)" = 'Next step' ]]; then
 			break
 		else
 			if (( "$TMUX" == 1 )); then
@@ -398,15 +394,17 @@ fi;;
 
 ##4##
 4) TITLE='Step 2.3 - Prepare the storage drive'
-dq '\Z1\ZrWarning: Partitioning can destroy data. You are strongly cautioned and advised to backup any critical data before proceeding.\Zn 
-The Arch Linux install media includes the following partitioning tools: 
-fdisk, gdisk, cfdisk, cgdisk, parted. 
+dq '\Z1\ZrWarning: Partitioning can destroy data. You are strongly cautioned and advised to backup any critical data before proceeding.\Zn
+
+The Arch Linux install media includes the following partitioning tools: fdisk, gdisk, cfdisk, cgdisk, parted.
+
 Absolute beginners are encouraged to use a graphical partitioning tool. GParted is a good example, and is provided as a "live" CD. It is also included on live CDs of most Linux distributions such as Ubuntu and Linux Mint. A drive should first be partitioned and the partitions should be formatted with a file system before rebooting.
 The recommendation for a system that will boot via UEFI rather than MBR legacy boot is to format the drive using a GPT partition table. This means that if the drive was previously already partitioned with an MBR (MSDOS) partition table it will now have a new partition table created which will destroy all other data on the drive. Once the new partition table has been created on a drive, only then can individual partitions be created with any chosen format type. When using Gparted, selecting the option to create a new partition table gives an "msdos" partition table by default. If you are intending to follow the advice to create a GPT partition table then you need to choose "Advanced" and then select "gpt" from the drop-down menu. This cannot be done if you have a pre-existing Windows installation on the drive which you wish not to destroy. It is therefore extremely important to not change the partition table to GPT if you intend on having a dual boot system. Leave the Windows install untouched and try to get the Linux install working with UEFI on a drive that contains an MBR (legacy) partition table.
-In addition, some newer computers come pre-installed with Windows 8 which will be using Secure Boot. Arch Linux currently does not support Secure Boot, but some Windows 8 installations have been seen not to boot if Secure Boot is turned off in the BIOS. In some cases it is necessary to turn off both Secure Boot as well as Fastboot in the BIOS options in order to allow Windows 8 to boot without Secure Boot. However there are potential security risks in turning off Secure Boot for booting up Windows 8. Therefore, it may be a better option to keep the Windows 8 install intact and have an independent hard drive for the Linux install - which can then be partitioned from scratch using a GPT partition table. Once that is done, creating several ext4/FAT32/swap partitions on the second drive may be a better way forward if the computer has two drives available. This is often not easy or possible on a small laptop. Currently, Secure Boot is still not in a fully stable state for reliable operation, even for Linux distributions that support it. 
+In addition, some newer computers come pre-installed with Windows 8 which will be using Secure Boot. Arch Linux currently does not support Secure Boot, but some Windows 8 installations have been seen not to boot if Secure Boot is turned off in the BIOS. In some cases it is necessary to turn off both Secure Boot as well as Fastboot in the BIOS options in order to allow Windows 8 to boot without Secure Boot. However there are potential security risks in turning off Secure Boot for booting up Windows 8. Therefore, it may be a better option to keep the Windows 8 install intact and have an independent hard drive for the Linux install - which can then be partitioned from scratch using a GPT partition table. Once that is done, creating several ext4/FAT32/swap partitions on the second drive may be a better way forward if the computer has two drives available. This is often not easy or possible on a small laptop. Currently, Secure Boot is still not in a fully stable state for reliable operation, even for Linux distributions that support it.
+
 See wikipage "Swap" for details if you wish to set up a swap partition or swap file. A swap file is easier to resize than a partition and can be created at any point after installation, but cannot be used with a Btrfs filesystem. 
 
-Note: If you are installing to a USB flash key, see wikipage "Installing Arch Linux on a USB key". 
+Note: If you are installing to a USB flash key, see wikipage "Installing Arch Linux on a USB key".
 
 If you have already created the partitions and filesystems for archlinux, proceed to Mount the partitions. 
 
@@ -414,13 +412,20 @@ Do you want to skip this section?' --defaultno
 if (( ! $? == 0 )); then
 	TITLE='Step 2.3 - Prepare the storage drive'
 	if (( "$UEFI" == 1 ));then
-		de 'Note regarding UEFI boot: 
-You have booted in UEFI mode and need to create an extra UEFI System Partition. It is recommended to always use GPT for UEFI boot, as some UEFI firmwares do not allow UEFI-MBR boot. 
-"UEFI System Partition" has been shortened to "ESP" in this guide.'
+		de 'Notes regarding UEFI boot:
+* If you have a UEFI motherboard, you will need to create an extra UEFI System Partition.
+
+* It is recommended to always use GPT for UEFI boot, as some UEFI firmwares do not allow UEFI-MBR boot.
+
+* "UEFI System Partition" has been shortened to "ESP" in this guide.'
 		GPT=1
 	elif (( "$UEFI" == 0 ));then
 		dialog --no-collapse --no-shadow  --colors --title "$TITLE" --yes-label 'MBR' --no-label 'GPT' --defaultno --yesno 'Note regarding GPT partitioning: 
-If you are not dual booting with Windows, then it is advisable to use GPT instead of MBR. Read wikipage "GPT" for a list of advantages. If you have a BIOS motherboard (or plan on booting in BIOS compatibility mode) and you want to setup GRUB on a GPT-partitioned drive, you will need to create an extra BIOS Boot Partition of size 1007 KiB and EF02 type code. Syslinux does not need one. Some BIOS systems may have issues with GPT. See wikipage "GPT#BIOS_Systems" for more info and possible workarounds. 
+* If you are not dual booting with Windows, then it is advisable to use GPT instead of MBR. Read wikipage "GPT" for a list of advantages.
+
+* If you have a BIOS motherboard (or plan on booting in BIOS compatibility mode) and you want to setup GRUB on a GPT-partitioned drive, you will need to create an extra BIOS Boot Partition of size 1007 KiB and EF02 type code. Syslinux does not need one.
+
+* Some BIOS systems may have issues with GPT. See wikipage "GPT#BIOS_Systems" for more info and possible workarounds. 
 
 Choose either MBR or GPT. Do not choose both!' $FMTLINE $FMTCOL
 		(( $? == 0 )) && GPT=0 || GPT=1
@@ -432,6 +437,8 @@ Choose either MBR or GPT. Do not choose both!' $FMTLINE $FMTCOL
 		goleft
 		de "List of devices: 
 $(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT,MODEL,RM,SIZE,FSTYPE) 
+
+Each partition is identified with a number suffix. For example, sda1 specifies the first partition of the first drive, while sda designates the entire drive.
 
 See the following example: 
 
@@ -466,6 +473,8 @@ $(partition_final_message)"
 			goleft
 			de "List of devices: 
 $(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT,MODEL,RM,SIZE,FSTYPE) 
+
+Each partition is identified with a number suffix. For example, sda1 specifies the first partition of the first drive, while sda designates the entire drive.
 
 See the following example: 
 
@@ -517,6 +526,8 @@ $(partition_final_message)"
 			goleft
 			de "List of devices: 
 $(lsblk -e 7 -o NAME,TYPE,MOUNTPOINT,MODEL,RM,SIZE,FSTYPE) 
+
+Each partition is identified with a number suffix. For example, sda1 specifies the first partition of the first drive, while sda designates the entire drive.
 
 See the following example: 
 
@@ -613,7 +624,11 @@ Then mount the home partition and any other separate partition (/boot, /var, etc
 \Z1# mkdir /mnt/home 
 # mount /dev/sd\ZrxY\ZR /mnt/home\Zn"
 if (( "$UEFI" == 1 )); then
-	dialog --no-collapse --no-shadow  --colors --title "$TITLE" --yes-label 'EFISTUB' --no-label 'GRUB' --defaultno --yesno 'The ESP needs to be mounted to different locations depending on which bootloader is used. You can choose from GRUB and EFISTUB for your bootloader, EFISTUB is the UEFI boot method recommended by developers and simpler than grub. Your choice will be remembered until you install the bootloader in the end.' $FMTLINE $FMTCOL
+	dialog --no-collapse --no-shadow  --colors --title "$TITLE" --yes-label 'EFISTUB' --no-label 'GRUB' --yesno 'The ESP needs to be mounted to different locations depending on which bootloader is used. While there are other UEFI bootloaders available, using EFISTUB is recommended. Below are instructions for setting up EFISTUB and GRUB (of course you choose only one of them).
+
+Note: Syslinux does not yet support UEFI.
+
+Your choice will be remembered until you install the bootloader in the end.' $FMTLINE $FMTCOL
 	if (( $? == 0 )); then
 		EFISTUB=1
 		goleft
@@ -764,20 +779,20 @@ TITLE='Step 2.8 - Configuration [4/6]: Hardware clock'
 while : ;do
 	dialog --no-collapse --no-shadow  --colors --no-label 'NEXT' --title "$TITLE" --yesno 'Set the hardware clock mode uniformly between your operating systems. Otherwise, they may overwrite the hardware clock and cause time shifts. You can generate /etc/adjtime automatically by using one of the following commands: 
 
-*First option: UTC (recommended) 
+* First option: UTC (recommended) 
 \Z1# hwclock --systohc --utc\Zn 
 
 Note: Using UTC for the hardware clock does not mean that software will display time in UTC. 
 
-*Second option: localtime (discouraged; used by default in Windows) 
+* Second option: localtime (discouraged; used by default in Windows) 
 \Z1# hwclock --systohc --localtime\Zn 
 
 Warning: Using localtime may lead to several known and unfixable bugs. However, there are no plans to drop support for localtime. 
 
-Do you want to view information about dual boot setup with Windows?' $FMTLINE $FMTCOL --ok-label 'Go back' --msgbox 'Recommended: 
+Do you want to view information about dual boot setup with Windows?' $FMTLINE $FMTCOL --ok-label 'Go back' --msgbox '* Recommended: 
 Set both Arch Linux and Windows to use UTC. A quick registry fix is needed. Also, be sure to prevent Windows from synchronizing the time on-line, because the hardware clock will default back to localtime. 
 
-Not recommended: 
+* Not recommended: 
 Set Arch Linux to localtime and disable any time-related services, like NTPd. This will let Windows take care of hardware clock corrections and you will need to remember to boot into Windows at least two times a year (in Spring and Autumn) when DST kicks in. So please do not ask on the forums why the clock is one hour behind or ahead if you usually go for days or weeks without booting into Windows.' 0 0 || break
 done
 
@@ -810,18 +825,15 @@ For xDSL, dial-up and ISDN connections, see wikipage "Direct Modem Connection".
 
 If you are behind a proxy server see wikipage "Proxy settings". 
 
-Warning: Though your interfaces may have used the conventional eth* and wlan* during install, udev no longer names interfaces in this way. So be sure that upon booting into your new system, you take note of the new interace names that are assigned. Listing all the detected network interfaces can be done with ip link.
 Note: If you would like to use the old interface naming scheme (ie. eth* and wlan*) you can accomplish this by creating an empty file at /etc/udev/rules.d/80-net-name-slot.rules which will mask the file of the same name located under /usr/lib/udev/rules.d (alternatively, instead of an empty file, using a symlink to /dev/null is also an acceptable masking method).
 
 Note: For more in-depth information on network configuration, visit wikipages "Network Configuration" and "Wireless Setup". ' $FMTLINE $FMTCOL $FMTLINE 'Wired' 'Static or Dynamic' 'Wireless' 'WIFI' 'SKIP' 'Not recommended' 2> /tmp/selection
-
  
 if [[ "$(</tmp/selection)" = 'Wired' ]]; then
 	TITLE='Step 2.9.1 - Configure the network: Wired'
 	dialog --no-collapse --no-shadow  --colors --yes-label '"DYNAMIC"' --no-label '"STATIC"' --title "$TITLE" --yesno 'Do you want to you use dynamic (dhcp) or static ip adresses?' $FMTLINE $FMTCOL
 	if (( $? == 0 )); then
 		TITLE='Step 2.9.1 - Configure the network: Wired: Dynamic IP'
-		de "$(interfacewarning; interface_eth)"
 		dialog --no-collapse --no-shadow  --colors --ok-label '"SYSTEMD"' --extra-button --extra-label '"NETCTL-IFPLUGD"' --cancel-label '"NETCTL"' --title "$TITLE" --yesno 'Do you want to use a single fixed wired network connection (systemd dhcpcd.service), or do you need a network management service (netctl-ifplugd), which gracefully handles dynamic connections to new networks?' $FMTLINE $FMTCOL
 		case $? in
 		0)	TITLE='Step 2.9.1 - Configure the network: Wired: Dynamic IP: Dhcpcd service'
@@ -833,14 +845,14 @@ $(interface_eth)";;
 			goleft
 			de "Copy a sample profile from /etc/netctl/examples to /etc/netctl/:
 \Z1# cd /etc/netctl
-# cp examples/ethernet-dhcp .\Zn
+# cp examples/ethernet-dhcp \Zrmy-network\Zn
 
 Edit the profile as needed (modify \Z1Interface\Zn):
-\Z1# nano ethernet-dhcp\Zn
+\Z1# nano \Zrmy-network\Zn
 $(interface_eth)
 
-Enable the ethernet-dhcp profile:
-\Z1# netctl enable ethernet-dhcp\Zn";;
+Enable the my-network profile:
+\Z1# netctl enable \Zrmy-network\Zn";;
 		3)	TITLE='Step 2.9.1 - Configure the network: Wired: Dynamic IP: netctl-ifplugd'
 			goleft
 			de "Install ifplugd, which is required for netctl-ifplugd: 
@@ -848,47 +860,65 @@ Enable the ethernet-dhcp profile:
 
 Then enable netctl with your interface as argument: 
 \Z1# systemctl enable netctl-ifplugd@\Zrinterface\ZR.service\Zn 
-$(interface_eth)";;
+$(interface_eth)
+
+Tip: Netctl also provides netctl-auto, which can be used to handle wired profiles in conjunction with netctl-ifplugd.";;
 		*)	fail 'Dialog selection.';;
 	esac
 	else
 		TITLE='Step 2.9.1 - Configure the network: Wired: Static IP'
-		de "$(interfacewarning; interface_eth)"
-		goleft
 		de "Copy a sample profile from /etc/netctl/examples to /etc/netctl: 
 \Z1# cd /etc/netctl 
-# cp examples/ethernet-static .\Zn 
+# cp examples/ethernet-static \Zrmy-network\Zn 
 
 Edit the profile as needed, modify \Z1Interface\Zn, \Z1Address\Zn, \Z1Gateway\Zn and \Z1DNS\Zn. 
-\Z1# nano ethernet-static\Zn 
+\Z1# nano \Zrmy-network\Zn 
 $(interface_eth)
 
 Then enable above created profile: 
-\Z1# netctl enable ethernet-static\Zn"
+\Z1# netctl enable \Zrmy-network\Zn"
 	fi
 elif [[ "$(</tmp/selection)" = 'Wireless' ]]; then
 	TITLE='Step 2.9.2 - Configure the network: Wireless:'
-	de "$(interfacewarning; interface_wlan)"
 	goleft
-	de 'You will need to install additional programs to be able to configure and manage wireless network profiles for netctl. "NetworkManager" and "Wicd" are other popular alternatives. 
+	de 'Note: If your wireless adapter requires a firmware, (as described in the step Establish an internet connection) install the package containing your firmware. Most of the time, the linux-firmware package will contain the needed firmware. Though for some devices, the required firmware might be in its own package. For example: 
+\Z1# pacman -S \Zrzd1211-firmware\Zn
 
-Install the required packages: 
-\Z1# pacman -S wireless_tools wpa_supplicant wpa_actiond dialog\Zn 
+See wikipage "Wireless Setup" for more info.
 
-If your wireless adapter requires a firmware, (as described in the step Establish an internet connection) install the package containing your firmware. Most of the time, the linux-firmware package will contain the needed firmware. Though for some devices, the required firmware might be in its own package. For example: 
-\Z1# pacman -S \Zrzd1211-firmware\Zn 
+Install iw, wpa_supplicant and wpa_actiond which you will need to connect to a network:
+\Z1# pacman -S iw wpa_supplicant wpa_actiond\Zn'
+	while : ;do
+		dialog --no-collapse --no-shadow --nocancel  --colors --title "$TITLE" --menu 'There are different options for adding wireless networks:' $FMTLINE $FMTCOL $FMTLINE 'wifi-menu' 'Select interactively from a menu of available networks.' 'manual netctl profiles' 'A fixed network profile.' 'netctl-auto' 'Connect automaticly to known networks.' 'Next step' '' 2> /tmp/selection
 
-After finishing the rest of this installation and rebooting, you can connect to the network with wifi-menu interface_name (where interface_name is the interface of your wireless chipset). 
-# wifi-menu interface_name
- 
+		if [[ "$(</tmp/selection)" = 'wifi-menu' ]]; then
+			de 'Install dialog, which is required for wifi-menu:
+\Z1# pacman -S dialog\Zn
+
+After finishing the rest of this installation and rebooting, you can connect to the network with wifi-menu interface (where interface is the interface of your wireless chipset). 
+(# wifi-menu interface)
+
 Warning: If you are using wifi-menu, this must be done *after* your reboot when no longer chrooted. The process spawned by this command will conflict with the one you have running outside of the chroot. Alternatively, you could just configure a network profile manually using the templates previously mentioned so that you do not have to worry about using wifi-menu at all.'
-	goleft
-	de "Enable the netctl-auto service, which will connect to known networks and gracefully handle roaming and disconnects: 
-\Z1# systemctl enable netctl-auto@interface_name.service\Zn
+		elif [[ "$(</tmp/selection)" = 'manual netctl profiles' ]]; then
+			goleft
+			de "Copy a network profile from /etc/netctl/examples to /etc/netctl:
+\Z1# cd /etc/netctl
+# cp examples/wireless-wpa \Zrmy-network\Zn
+
+Edit the profile as needed (modify \Z1Interface\Zn, \Z1ESSID\Zn and \Z1Key\Zn):
+\Z1# nano \Zrmy-network\Zn
+$(interface_wlan)"
+		elif [[ "$(</tmp/selection)" = 'netctl-auto' ]]; then
+			goleft
+			de "Enable the netctl-auto service, which will connect to known networks and gracefully handle roaming and disconnects: 
+\Z1# systemctl enable netctl-auto@\Zrinterface\ZR.service\Zn
 $(interface_wlan)
 
 Note: Netctl also provides netctl-ifplugd, which can be used to handle wired profiles in conjunction with netctl-auto."
-
+		elif [[ "$(</tmp/selection)" = 'Next step' ]]; then
+			break
+		fi
+	done
 fi;;
 
 ##11##
@@ -929,8 +959,11 @@ de 'Set the root password with:
 13)if (( "$UEFI" == 1 )); then
 	TITLE='Step 2.12 - Install and configure a bootloader: UEFI'
 	if (( "$EFISTUB" == 2 )); then
-		dialog --no-collapse --no-shadow  --colors --yes-label '"EFISTUB"' --no-label '"GRUB"' --title "$TITLE" --yesno 'For UEFI boot, the drive needs to be GPT-partitioned, and a ESP must be present and mounted. If you have followed this guide from the beginning, you have already done all of these. 
-You can choose from GRUB and EFISTUB for your bootloader, EFISTUB is recommended. 
+		dialog --no-collapse --no-shadow  --colors --yes-label '"EFISTUB"' --no-label '"GRUB"' --title "$TITLE" --yesno 'For UEFI boot, the drive needs to be GPT-partitioned, and a ESP must be present and mounted. If you have followed this guide from the beginning, you have already done all of these.
+While there are other UEFI bootloaders available, using EFISTUB is recommended. Below are instructions for setting up EFISTUB and GRUB (of course you choose only one of them).
+
+Note: Syslinux does not yet support UEFI.
+
 If you select GRUB, the ESP must be mounted at /boot/efi, whilst for EFISTUB the ESP must be mounted at /boot.' $FMTLINE $FMTCOL
 		(( $? == 0 )) && EFISTUB=1 || EFISTUB=0
 	else
@@ -1050,17 +1083,17 @@ Note: On some systems, the above command will not work properly. It will execute
 elif (( "$UEFI" == 0 )); then
 	TITLE='Step 2.12.1 - Install and configure a bootloader: BIOS'
 	if (( "$GPT" == 1 )); then
-		dialog --no-collapse --no-shadow  --colors --yes-label '"Syslinux"' --no-label '"GRUB"' --title "$TITLE" --yesno 'For BIOS systems, there are three bootloaders - Syslinux, GRUB, and LILO. Choose the bootloader as per your convenience. Below only Syslinux and GRUB are explained. 
+		dialog --no-collapse --no-shadow  --colors --yes-label '"Syslinux"' --no-label '"GRUB"' --title "$TITLE" --yesno 'For BIOS systems, two bootloaders are available: Syslinux and GRUB. Choose the bootloader as per your convenience.
+* Syslinux is (currently) limited to loading only files from the partition where it was installed. Its configuration file is considered to be easier to understand. An example configuration can be found here.
 
-Syslinux is (currently) limited to loading only files from the partition where it was installed. Its configuration file is considered to be easier to understand. 
-GRUB is more feature-rich and supports more complex scenarios. Its configuration file(s) is more similar to a scripting language, which may be difficult for beginners to manually write. It is recommended that they automatically generate one. 
+* GRUB is more feature-rich and supports more complex scenarios. Its configuration file(s) is more similar to a scripting language, which may be difficult for beginners to manually write. It is recommended that they automatically generate one.
 
 Note: Your drive is GPT-partitioned, therefore GRUB needs a "BIOS Boot Partition". If the partition is not present choose Syslinux instead!' $FMTLINE $FMTCOL
 	elif (( "$GPT" == 2 )); then
-		dialog --no-collapse --no-shadow  --colors --yes-label '"Syslinux"' --no-label '"GRUB"' --title "$TITLE" --yesno 'For BIOS systems, there are three bootloaders - Syslinux, GRUB, and LILO. Choose the bootloader as per your convenience. Below only Syslinux and GRUB are explained. 
+		dialog --no-collapse --no-shadow  --colors --yes-label '"Syslinux"' --no-label '"GRUB"' --title "$TITLE" --yesno 'For BIOS systems, two bootloaders are available: Syslinux and GRUB. Choose the bootloader as per your convenience.
+* Syslinux is (currently) limited to loading only files from the partition where it was installed. Its configuration file is considered to be easier to understand. An example configuration can be found here.
 
-Syslinux is (currently) limited to loading only files from the partition where it was installed. Its configuration file is considered to be easier to understand. 
-GRUB is more feature-rich and supports more complex scenarios. Its configuration file(s) is more similar to a scripting language, which may be difficult for beginners to manually write. It is recommended that they automatically generate one. 
+* GRUB is more feature-rich and supports more complex scenarios. Its configuration file(s) is more similar to a scripting language, which may be difficult for beginners to manually write. It is recommended that they automatically generate one.
 
 Note: If you have a GPT-partitioned drive GRUB needs a "BIOS Boot Partition". If the partition is not present and your drive is GPT-partitioned choose Syslinux instead!' $FMTLINE $FMTCOL
 	fi

@@ -6,10 +6,10 @@ The included guide covers the complete archwiki page "Beginners' Guide/Installat
 Everything is written in bash, and is licensed under GNU Free Documentation License.
 Instead of showing a wall-of-text information is split up into sections. Read helpful information about your setup like partition layout and mountpoints. There is no 
 need to switch virtual consoles and remember long commands. This is achieved by splitting up a virtual console into two windows using tmux. If you are familiar with 
-tiling window managers you will feel right at home, although there is only one keyboard shortcut you need to know.
+tiling window managers you will feel right at home.
 
 Features:
-* non-destructive, does not write anything
+* non-destructive, does not overwrite anything
 * complete content of Beginners' Guide/Installation
 * dialog for displaying text
 * progressbar
