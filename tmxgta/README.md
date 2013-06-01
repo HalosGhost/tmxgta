@@ -36,7 +36,7 @@ tmxgta.iso is now working on x86_64 and i686 architecture.
 ## Use tmxgta:
 There are two possibilities to run tmxgta, it is recommended to download the .iso file.
 
-*.iso: The image can be burned to a CD, mounted as an ISO file, or be directly written to a USB stick using a utility like `dd`.
+* .iso: The image can be burned to a CD, mounted as an ISO file, or be directly written to a USB stick using a utility like `dd`.
 See the following links.
 https://wiki.archlinux.org/index.php/Beginners%27_Guide#Burn_or_write_the_latest_installation_medium
 https://wiki.archlinux.org/index.php/USB_Installation_Media
