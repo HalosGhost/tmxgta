@@ -1,0 +1,913 @@
+<html lang="en" dir="ltr" class="client-js"><head>
+<title>Beginners' Guide/Installation - ArchWiki</title>
+<meta charset="UTF-8">
+<meta name="generator" content="MediaWiki 1.20.6">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+<link rel="stylesheet" href="https://wiki.archlinux.org/load.php?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.archlinux&amp;only=styles&amp;skin=archlinux&amp;*">
+<!--[if IE 6]><link rel="stylesheet" href="/skins/archlinux/IE60Fixes.css?303" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="/skins/archlinux/IE70Fixes.css?303" media="screen" /><![endif]--><style>.mw-collapsible-toggle{float:right} li .mw-collapsible-toggle{float:none} .mw-collapsible-toggle-li{list-style:none}
+/* cache key: archwiki:resourceloader:filter:minify-css:7:4250852ed2349a0d4d0fc6509a3e7d4c */.suggestions{overflow:hidden;position:absolute;top:0;left:0;width:0;border:none;z-index:1099;padding:0;margin:-1px -1px 0 0} html > body .suggestions{margin:-1px 0 0 0}.suggestions-special{position:relative;background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0;margin-top:-2px;display:none;padding:0.25em 0.25em;line-height:1.25em}.suggestions-results{background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0}.suggestions-result{color:black;margin:0;line-height:1.5em;padding:0.01em 0.25em;text-align:left}.suggestions-result-current{background-color:#4C59A6;color:white}.suggestions-special .special-label{color:gray;text-align:left}.suggestions-special .special-query{color:black;font-style:italic;text-align:left}.suggestions-special .special-hover{background-color:silver}.suggestions-result-current .special-label,.suggestions-result-current .special-query{color:white}.autoellipsis-matched,.highlight{font-weight:bold}
+/* cache key: archwiki:resourceloader:filter:minify-css:7:9780324491b653a3780e2d029bdc140c */</style><meta name="ResourceLoaderDynamicStyles" content="">
+
+<script src="https://wiki.archlinux.org/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=archlinux&amp;*"></script><script src="/load.php?debug=false&amp;lang=en&amp;modules=jquery%2Cmediawiki&amp;only=scripts&amp;skin=archlinux&amp;version=20130501T065946Z"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Beginners\'_Guide/Installation","wgTitle":"Beginners\' Guide/Installation","wgCurRevisionId":263230,"wgArticleId":14839,"wgIsArticle":true,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Getting and installing Arch","About Arch"],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"Beginners\'_Guide/Installation","wgRestrictionEdit":[],"wgRestrictionMove":[]});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function(){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"archlinux","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,"watchlistdays":3,
+"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;},{},{});mw.loader.implement("user.tokens",function(){mw.user.tokens.set({"editToken":"+\\","watchToken":false});;},{},{});
+/* cache key: archwiki:resourceloader:filter:minify-js:7:d7d958b158f747a1a27187c8dfe3b417 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax"]);
+}</script><script type="text/javascript" src="/load.php?debug=false&amp;lang=en&amp;modules=jquery.client%2Ccookie%2CmwExtension%7Cmediawiki.legacy.ajax%2Cwikibits%7Cmediawiki.notify%2Cutil%7Cmediawiki.page.startup&amp;skin=archlinux&amp;version=20130616T191838Z&amp;*"></script>
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Beginners_Guide_Installation skin-archlinux action-view">
+
+<div id="archnavbar"><!-- Arch Linux global navigation bar -->
+	<div id="archnavbarlogo">
+		<p><a id="logo" href="http://www.archlinux.org/"></a></p>
+	</div>
+	<div id="archnavbarmenu">
+		<ul id="archnavbarlist">
+			<li id="anb-home"><a href="http://www.archlinux.org/">Home</a></li><li id="anb-packages"><a href="http://www.archlinux.org/packages/">Packages</a></li><li id="anb-forums"><a href="https://bbs.archlinux.org/">Forums</a></li><li id="anb-wiki" class="anb-selected"><a href="https://wiki.archlinux.org/">Wiki</a></li><li id="anb-bugs"><a href="https://bugs.archlinux.org/">Bugs</a></li><li id="anb-aur"><a href="https://aur.archlinux.org/">AUR</a></li><li id="anb-download"><a href="http://www.archlinux.org/download/">Download</a></li>		</ul>
+	</div>
+</div><!-- #archnavbar -->
+
+<div id="globalWrapper">
+<div id="column-content"><div id="content" class="mw-body-primary">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading"><span dir="auto">Beginners' Guide/Installation</span></h1>
+	<div id="bodyContent" class="mw-body">
+		<div id="siteSub">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="jump-to-nav" class="mw-jump">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>
+		<!-- start content -->
+<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong>This is part of a multi-page article for The Beginners' Guide. <b><a href="/index.php/Beginners%27_Guide" title="Beginners' Guide">Click here</a></b> if you would rather read the guide in its entirety.</div>
+<table id="toc" class="toc"><tbody><tr><td><div id="toctitle"><h2>Contents</h2><span class="toctoggle">&nbsp;[<a href="#" class="internal" id="togglelink">hide</a>]&nbsp;</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Installation"><span class="tocnumber">1</span> <span class="toctext">Installation</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Change_the_language"><span class="tocnumber">1.1</span> <span class="toctext">Change the language</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Establish_an_internet_connection"><span class="tocnumber">1.2</span> <span class="toctext">Establish an internet connection</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#Wired"><span class="tocnumber">1.2.1</span> <span class="toctext">Wired</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#Wireless"><span class="tocnumber">1.2.2</span> <span class="toctext">Wireless</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#Analog_modem.2C_ISDN_or_PPoE_DSL"><span class="tocnumber">1.2.3</span> <span class="toctext">Analog modem, ISDN or PPoE DSL</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#Behind_a_proxy_server"><span class="tocnumber">1.2.4</span> <span class="toctext">Behind a proxy server</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-8"><a href="#Prepare_the_storage_drive"><span class="tocnumber">1.3</span> <span class="toctext">Prepare the storage drive</span></a>
+<ul>
+<li class="toclevel-3 tocsection-9"><a href="#Example"><span class="tocnumber">1.3.1</span> <span class="toctext">Example</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-10"><a href="#Mount_the_partitions"><span class="tocnumber">1.4</span> <span class="toctext">Mount the partitions</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Select_a_mirror"><span class="tocnumber">1.5</span> <span class="toctext">Select a mirror</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Install_the_base_system"><span class="tocnumber">1.6</span> <span class="toctext">Install the base system</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Generate_an_fstab"><span class="tocnumber">1.7</span> <span class="toctext">Generate an fstab</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Chroot_and_configure_the_base_system"><span class="tocnumber">1.8</span> <span class="toctext">Chroot and configure the base system</span></a>
+<ul>
+<li class="toclevel-3 tocsection-15"><a href="#Locale"><span class="tocnumber">1.8.1</span> <span class="toctext">Locale</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="#Console_font_and_keymap"><span class="tocnumber">1.8.2</span> <span class="toctext">Console font and keymap</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#Time_zone"><span class="tocnumber">1.8.3</span> <span class="toctext">Time zone</span></a></li>
+<li class="toclevel-3 tocsection-18"><a href="#Hardware_clock"><span class="tocnumber">1.8.4</span> <span class="toctext">Hardware clock</span></a></li>
+<li class="toclevel-3 tocsection-19"><a href="#Kernel_modules"><span class="tocnumber">1.8.5</span> <span class="toctext">Kernel modules</span></a></li>
+<li class="toclevel-3 tocsection-20"><a href="#Hostname"><span class="tocnumber">1.8.6</span> <span class="toctext">Hostname</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-21"><a href="#Configure_the_network"><span class="tocnumber">1.9</span> <span class="toctext">Configure the network</span></a>
+<ul>
+<li class="toclevel-3 tocsection-22"><a href="#Wired_2"><span class="tocnumber">1.9.1</span> <span class="toctext">Wired</span></a>
+<ul>
+<li class="toclevel-4 tocsection-23"><a href="#Dynamic_IP"><span class="tocnumber">1.9.1.1</span> <span class="toctext">Dynamic IP</span></a></li>
+<li class="toclevel-4 tocsection-24"><a href="#Static_IP"><span class="tocnumber">1.9.1.2</span> <span class="toctext">Static IP</span></a></li>
+</ul>
+</li>
+<li class="toclevel-3 tocsection-25"><a href="#Wireless_2"><span class="tocnumber">1.9.2</span> <span class="toctext">Wireless</span></a>
+<ul>
+<li class="toclevel-4 tocsection-26"><a href="#Adding_wireless_networks"><span class="tocnumber">1.9.2.1</span> <span class="toctext">Adding wireless networks</span></a></li>
+<li class="toclevel-4 tocsection-27"><a href="#Connect_automaticly_to_known_networks"><span class="tocnumber">1.9.2.2</span> <span class="toctext">Connect automaticly to known networks</span></a></li>
+</ul>
+</li>
+<li class="toclevel-3 tocsection-28"><a href="#Analog_modem.2C_ISDN_or_PPoE_DSL_2"><span class="tocnumber">1.9.3</span> <span class="toctext">Analog modem, ISDN or PPoE DSL</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-29"><a href="#Create_an_initial_ramdisk_environment"><span class="tocnumber">1.10</span> <span class="toctext">Create an initial ramdisk environment</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#Set_the_root_password"><span class="tocnumber">1.11</span> <span class="toctext">Set the root password</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#Install_and_configure_a_bootloader"><span class="tocnumber">1.12</span> <span class="toctext">Install and configure a bootloader</span></a>
+<ul>
+<li class="toclevel-3 tocsection-32"><a href="#For_BIOS_motherboards"><span class="tocnumber">1.12.1</span> <span class="toctext">For BIOS motherboards</span></a>
+<ul>
+<li class="toclevel-4 tocsection-33"><a href="#Syslinux"><span class="tocnumber">1.12.1.1</span> <span class="toctext">Syslinux</span></a></li>
+<li class="toclevel-4 tocsection-34"><a href="#GRUB"><span class="tocnumber">1.12.1.2</span> <span class="toctext">GRUB</span></a></li>
+</ul>
+</li>
+<li class="toclevel-3 tocsection-35"><a href="#For_UEFI_motherboards"><span class="tocnumber">1.12.2</span> <span class="toctext">For UEFI motherboards</span></a>
+<ul>
+<li class="toclevel-4 tocsection-36"><a href="#EFISTUB"><span class="tocnumber">1.12.2.1</span> <span class="toctext">EFISTUB</span></a></li>
+<li class="toclevel-4 tocsection-37"><a href="#GRUB_2"><span class="tocnumber">1.12.2.2</span> <span class="toctext">GRUB</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-38"><a href="#Unmount_the_partitions_and_reboot"><span class="tocnumber">1.13</span> <span class="toctext">Unmount the partitions and reboot</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></tbody></table>
+<h2> <span class="mw-headline" id="Installation"> Installation </span></h2>
+<p>You are now presented with a shell prompt, automatically logged in as root.
+</p>
+<h3> <span class="mw-headline" id="Change_the_language"> Change the language </span></h3>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong>These are optional for the majority of users. Useful only if you plan on writing in your own language in any of the configuration files, if you use diacritical marks in the Wi-Fi password, or if you would like to receive system messages (e.g. possible errors) in your own language.</div>
+<p>By default, the keyboard layout is set to <code style="display:inline-block; padding: 0.1em 0.3em;">us</code>. If you have a non-<a href="http://en.wikipedia.org/wiki/File:KB_United_States-NoAltGr.svg" class="extiw" title="wikipedia:File:KB United States-NoAltGr.svg">US</a> keyboard layout, run:
+</p>
+<pre># loadkeys <i>layout</i>
+</pre>
+<p>...where <i>layout</i> can be <code style="display:inline-block; padding: 0.1em 0.3em;">fr</code>, <code style="display:inline-block; padding: 0.1em 0.3em;">uk</code>, <code style="display:inline-block; padding: 0.1em 0.3em;">dvorak</code>, <code style="display:inline-block; padding: 0.1em 0.3em;">be-latin1</code>, etc. See <a href="/index.php/KEYMAP#Keyboard_layouts" title="KEYMAP">here</a> for a comprehensive list.
+</p><p>The font should also be changed, because most languages use more glyphs than the 26 letter <a href="http://en.wikipedia.org/wiki/English_alphabet" class="extiw" title="wikipedia:English alphabet">English alphabet</a>. Otherwise some foreign characters may show up as white squares or as other symbols. Note that the name is case-sensitive, so please type it <i>exactly</i> as you see it:
+</p>
+<pre># setfont Lat2-Terminus16
+</pre>
+<p>By default, the language is set to English (US). If you would like to change the language for the install process <i>(German, in this example)</i>, remove the <code style="display:inline-block; padding: 0.1em 0.3em;">#</code> in front of the <a rel="nofollow" class="external text" href="http://www.greendesktiny.com/support/knowledgebase_detail.php?ref=EUH-483">locale</a> you want from <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/locale.gen</code>, along with English (US). Please choose the <code style="display:inline-block; padding: 0.1em 0.3em;">UTF-8</code> entry.
+</p><p>Use <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Ctrl+X</code> to exit, and when prompted to save changes, press <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Y</code> and <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> to use the same filename.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># nano /etc/locale.gen</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">en_US.UTF-8 UTF-8
+de_DE.UTF-8 UTF-8</pre>
+<pre># locale-gen
+# export LANG=de_DE.UTF-8
+</pre>
+<p>Remember, <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">LAlt+LShift</code> activates and deactivates the keymap.
+</p>
+<h3> <span class="mw-headline" id="Establish_an_internet_connection"> Establish an internet connection </span></h3>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #FFDDDD; border: thin solid #DDBBBB; overflow: hidden;"><strong> Warning: </strong>As of v197, udev no longer assigns network interface names according to the wlanX and ethX naming scheme. If you are coming from a different distribution or are reinstalling Arch and not aware of the new interface naming style, please do not assume that your wireless interface is named wlan0, or that your wired interface is named eth0. You can use the command <code style="display:inline-block; padding: 0.1em 0.3em;">ip link</code> to discover the names of your interfaces.</div>
+<p>The <code style="display:inline-block; padding: 0.1em 0.3em;">dhcpcd</code> network daemon starts automatically during boot and it will attempt to start a wired connection. Try to ping a server to see if a connection was established. For example, Google's DNS servers:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># ping -c 3 www.google.com</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">PING www.l.google.com (74.125.132.105) 56(84) bytes of data.
+64 bytes from wb-in-f105.1e100.net (74.125.132.105): icmp_req=1 ttl=50 time=17.0 ms
+64 bytes from wb-in-f105.1e100.net (74.125.132.105): icmp_req=2 ttl=50 time=18.2 ms
+64 bytes from wb-in-f105.1e100.net (74.125.132.105): icmp_req=3 ttl=50 time=16.6 ms
+
+--- www.l.google.com ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 16.660/17.320/18.254/0.678 ms</pre>
+<p>If you get a <code style="display:inline-block; padding: 0.1em 0.3em;">ping: unknown host</code> error, first check if there is an issue with your cable or wireless signal strength. If not, you will need to set up the network manually, as explained below. Once a connection is established move on to <a href="#Prepare_the_storage_drive">Prepare the storage drive</a>.
+</p>
+<h4> <span class="mw-headline" id="Wired"> Wired </span></h4>
+<p>Follow this procedure if you need to set up a wired connection via a static IP address.
+</p><p>First, disable the dhcpcd service which was started automatically at boot:
+</p>
+<pre># systemctl stop dhcpcd.service
+</pre>
+<p>Identify the name of your Ethernet interface.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># ip link</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: enp2s0f0: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN mode DEFAULT qlen 1000
+    link/ether 00:11:25:31:69:20 brd ff:ff:ff:ff:ff:ff
+3: wlp3s0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP mode DORMANT qlen 1000
+    link/ether 01:02:03:04:05:06 brd ff:ff:ff:ff:ff:ff</pre>
+<p>In this example, the Ethernet interface is <code style="display:inline-block; padding: 0.1em 0.3em;">enp2s0f0</code>. If you are unsure, your Ethernet interface is likely to start with the letter "e", and unlikely to be "lo" or start with the letter "w". You can also use <code style="display:inline-block; padding: 0.1em 0.3em;">iwconfig</code> and see which interfaces are not wireless:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># iwconfig</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">enp2s0f0  no wireless extensions.
+wlp3s0    IEEE 802.11bgn  ESSID:"NETGEAR97"
+          Mode:Managed  Frequency:2.427 GHz  Access Point: 2C:B0:5D:9C:72:BF
+          Bit Rate=65 Mb/s   Tx-Power=16 dBm
+          Retry  long limit:7   RTS thr:off   Fragment thr:off
+          Power Management:on
+          Link Quality=61/70  Signal level=-49 dBm
+          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
+          Tx excessive retries:0  Invalid misc:430   Missed beacon:0
+lo        no wireless extensions.</pre>
+<p>In this example, neither <code style="display:inline-block; padding: 0.1em 0.3em;">enp2s0f0</code> nor the loopback device have wireless extensions, meaning <code style="display:inline-block; padding: 0.1em 0.3em;">enp2s0f0</code> is our Ethernet interface.
+</p><p>You also need to know these settings:
+</p>
+<ul><li> Static IP address.
+</li><li> Subnet mask.
+</li><li> Gateway's IP address.
+</li><li> Name servers' (DNS) IP addresses.
+</li><li> Domain name (unless you are on a local LAN, in which case you can make it up).
+</li></ul>
+<p>Activate the connected Ethernet interface (e.g. <code style="display:inline-block; padding: 0.1em 0.3em;">enp2s0f0</code>):
+</p>
+<pre># ip link set enp2s0f0 up
+</pre>
+<p>Add the address:
+</p>
+<pre># ip addr add <i>ip_address</i>/<i>subnetmask</i> dev <i>interface_name</i>
+</pre>
+<p>For example:
+</p>
+<pre># ip addr add 192.168.1.2/24 dev enp2s0f0
+</pre>
+<p>For more options, run <code style="display:inline-block; padding: 0.1em 0.3em;">man ip</code>.
+</p><p>Add your gateway like this, substituting your own gateway's IP address:
+</p>
+<pre># ip route add default via <i>ip_address</i>
+</pre>
+<p>For example:
+</p>
+<pre># ip route add default via 192.168.1.1
+</pre>
+<p>Edit <code style="display:inline-block; padding: 0.1em 0.3em;">resolv.conf</code>, substituting your name servers' IP addresses and your local domain name:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># nano /etc/resolv.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">nameserver 61.23.173.5
+nameserver 61.95.849.8
+search example.com</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>Currently, you may include a maximum of three <code style="display:inline-block; padding: 0.1em 0.3em;">nameserver</code> lines.</div>
+<p>You should now have a working network connection. If you do not, check the detailed <a href="/index.php/Network_Configuration" title="Network Configuration">Network Configuration</a> page.
+</p>
+<h4> <span class="mw-headline" id="Wireless"> Wireless </span></h4>
+<p>Follow this procedure if you need wireless connectivity (Wi-Fi) during the installation process.
+</p><p>First, identify the name of your wireless interface.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># iw dev</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">phy#0
+        Interface wlp3s0
+                ifindex 3
+                wdev 0x1
+                addr 00:21:6a:5e:52:bc
+                type managed</pre>
+<p>In this example, <code style="display:inline-block; padding: 0.1em 0.3em;">wlp3s0</code> is the available wireless interface. If you are unsure, your wireless interface is likely to start with the letter "w", and unlikely to be "lo" or start with the letter "e". 
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>If you do not see output similar to this, then your wireless driver has not been loaded. If this is the case, you must load the driver yourself. Please see <a href="/index.php/Wireless_Setup" title="Wireless Setup">Wireless Setup</a> for more detailed information.</div>
+<p>Bring the interface up with:
+</p>
+<pre># ip link set wlp3s0 up
+</pre>
+<p>A small percentage of wireless chipsets also require firmware, in addition to a corresponding driver. If you get output like <code style="display:inline-block; padding: 0.1em 0.3em;">SIOCSIFFLAGS: No such file or directory</code>, this means you will need to manually load the firmware. If unsure, invoke <code style="display:inline-block; padding: 0.1em 0.3em;">dmesg</code> to query the kernel log for a firmware request from the wireless chipset. For example, if you have an Intel chipset which requires and has requested firmware from the kernel at boot:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep firmware</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">firmware: requesting iwlwifi-5000-1.ucode</pre>
+<p>If there is no output, it may be concluded that the system's wireless chipset does not require firmware.
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #FFDDDD; border: thin solid #DDBBBB; overflow: hidden;"><strong> Warning: </strong>Wireless chipset firmware packages (for cards which require them) are pre-installed under <code style="display:inline-block; padding: 0.1em 0.3em;">/usr/lib/firmware</code> in the live environment (on CD/USB stick) <b>but must be explicitly installed to your actual system to provide wireless functionality after you reboot into it!</b> Package installation is covered later in this guide. Ensure installation of both your wireless module and firmware before rebooting! See <a href="/index.php/Wireless_Setup" title="Wireless Setup">Wireless Setup</a> if you are unsure about the requirement of corresponding firmware installation for your particular chipset.</div>
+<p>Next, use <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=netctl">netctl</a></span>'s <code style="display:inline-block; padding: 0.1em 0.3em;">wifi-menu</code> to connect to a network:
+</p>
+<pre># wifi-menu wlp3s0
+</pre>
+<p>You should now have a working network connection. If you do not, check the detailed <a href="/index.php/Wireless_Setup" title="Wireless Setup">Wireless Setup</a> page.
+</p><p>Alternatively, use <code style="display:inline-block; padding: 0.1em 0.3em;">iw dev wlp3s0 scan | grep SSID</code> to scan for available networks, then connect to a network with:
+</p>
+<pre># wpa_supplicant -B -i wlp3s0 -c &lt;(wpa_passphrase "<i>ssid</i>" "<i>psk</i>")
+</pre>
+<p>You need to replace <i>ssid</i> with the name of your network (e.g. "Linksys etc...") and <i>psk</i> with your wireless password, <b>leaving the quotes around the network name and password.</b>
+</p><p>Finally, you have to give your interface an IP address. This can be set manually or using the dhcp:
+</p>
+<pre># dhcpd wlp3s0
+</pre>
+<h4> <span class="mw-headline" id="Analog_modem.2C_ISDN_or_PPoE_DSL"> Analog modem, ISDN or PPoE DSL </span></h4>
+<p>For xDSL, dial-up and ISDN connections, see <a href="/index.php/Direct_Modem_Connection" title="Direct Modem Connection">Direct Modem Connection</a>.
+</p>
+<h4> <span class="mw-headline" id="Behind_a_proxy_server"> Behind a proxy server </span></h4>
+<p>If you are behind a proxy server, you will need to export the <code style="display:inline-block; padding: 0.1em 0.3em;">http_proxy</code> and <code style="display:inline-block; padding: 0.1em 0.3em;">ftp_proxy</code> environment variables. See <a href="/index.php/Proxy_settings" title="Proxy settings">Proxy settings</a> for more information.
+</p>
+<h3> <span class="mw-headline" id="Prepare_the_storage_drive"> Prepare the storage drive </span></h3>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #FFDDDD; border: thin solid #DDBBBB; overflow: hidden;"><strong> Warning: </strong>Partitioning can destroy data. You are <b>strongly</b> cautioned and advised to backup any critical data before proceeding.</div>
+<p>Absolute beginners are encouraged to use a graphical partitioning tool. <a rel="nofollow" class="external text" href="http://gparted.sourceforge.net/download.php">GParted</a> is a good example, and is <a rel="nofollow" class="external text" href="http://gparted.sourceforge.net/livecd.php">provided as a "live" CD</a>. It is also included on live CDs of most Linux distributions such as <a href="http://en.wikipedia.org/wiki/Ubuntu_(operating_system)" class="extiw" title="wikipedia:Ubuntu (operating system)">Ubuntu</a> and <a href="http://en.wikipedia.org/wiki/Linux_Mint" class="extiw" title="wikipedia:Linux Mint">Linux Mint</a>. A drive should first be <a href="/index.php/Partitioning" title="Partitioning">partitioned</a> and the partitions should be formatted with a <a href="/index.php/File_Systems" title="File Systems">file system</a> before rebooting.
+</p><p>The recommendation for a system that will boot via UEFI rather than MBR legacy boot is to format the drive using a GPT partition table. This means that if the drive was previously already partitioned with an MBR (MSDOS) partition table it will now have a new partition table created which will destroy all other data on the drive. Once the new partition table has been created on a drive, only then can individual partitions be created with any chosen format type. When using Gparted, selecting the option to create a new partition table gives an "msdos" partition table by default. If you are intending to follow the advice to create a GPT partition table then you need to choose "Advanced" and then select "gpt" from the drop-down menu. This cannot be done if you have a pre-existing Windows installation on the drive which you wish not to destroy. It is therefore extremely important to not change the partition table to GPT if you intend on having a dual boot system. Leave the Windows install untouched and try to get the Linux install working with UEFI on a drive that contains an MBR (legacy) partition table.  
+</p><p>In addition, some newer computers come pre-installed with Windows 8 which will be using Secure Boot. Arch Linux currently does not support Secure Boot, but some Windows 8 installations have been seen not to boot if Secure Boot is turned off in the BIOS. In some cases it is necessary to turn off both Secure Boot as well as Fastboot in the BIOS options in order to allow Windows 8 to boot without Secure Boot. However there are potential security risks in turning off Secure Boot for booting up Windows 8. Therefore, it may be a better option to keep the Windows 8 install intact and have an independent hard drive for the Linux install - which can then be partitioned from scratch using a GPT partition table. Once that is done, creating several ext4/FAT32/swap partitions on the second drive may be a better way forward if the computer has two drives available. This is often not easy or possible on a small laptop. Currently, Secure Boot is still not in a fully stable state for reliable operation, even for Linux distributions that support it.
+</p><p>See <a href="/index.php/Swap" title="Swap">Swap</a> for details if you wish to set up a swap partition or swap file. A swap file is easier to resize than a partition and can be created at any point after installation, but cannot be used with a Btrfs filesystem.
+</p><p>If you have already done so, proceed to <a href="#Mount_the_partitions">Mount the partitions</a>.
+</p><p>Otherwise, see the following example.
+</p>
+<h4> <span class="mw-headline" id="Example"> Example </span></h4>
+<p>The Arch Linux install media includes the following partitioning tools: <code style="display:inline-block; padding: 0.1em 0.3em;">fdisk</code>, <code style="display:inline-block; padding: 0.1em 0.3em;">gdisk</code>, <code style="display:inline-block; padding: 0.1em 0.3em;">cfdisk</code>, <code style="display:inline-block; padding: 0.1em 0.3em;">cgdisk</code>, <code style="display:inline-block; padding: 0.1em 0.3em;">parted</code>.
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong>Use the <code style="display:inline-block; padding: 0.1em 0.3em;">lsblk</code> command to list the hard disks attached to your system, along with the sizes of their existing partitions. This will help you to be confident you are partitioning the right disk.</div>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Notes regarding <a href="/index.php/UEFI" title="UEFI" class="mw-redirect">UEFI</a> boot: </strong>
+<ul><li> If you have a UEFI motherboard, you will need to create an extra <a href="/index.php/Unified_Extensible_Firmware_Interface#EFI_System_Partition" title="Unified Extensible Firmware Interface">UEFI System Partition</a>.
+</li><li> It is recommended to always use GPT for UEFI boot, as some UEFI firmwares do not allow UEFI-MBR boot.</li></ul></div>
+
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Notes regarding <a href="/index.php/GPT" title="GPT" class="mw-redirect">GPT</a> partitioning: </strong>
+<ul><li> If you are not dual booting with Windows, then it is advisable to use GPT instead of MBR. Read <a href="/index.php/GPT" title="GPT" class="mw-redirect">GPT</a> for a list of advantages.
+</li><li> If you have a BIOS motherboard (or plan on booting in BIOS compatibility mode) and you want to setup GRUB on a GPT-partitioned drive, you will need to create an extra <a href="/index.php/GRUB#GUID_Partition_Table_.28GPT.29_specific_instructions" title="GRUB">BIOS Boot Partition</a> of size 1007 KiB and <code style="display:inline-block; padding: 0.1em 0.3em;">EF02</code> type code. Syslinux does not need one.
+</li><li> Some BIOS systems may have issues with GPT. See <a rel="nofollow" class="external free" href="http://mjg59.dreamwidth.org/8035.html">http://mjg59.dreamwidth.org/8035.html</a> and <a rel="nofollow" class="external free" href="http://rodsbooks.com/gdisk/bios.html">http://rodsbooks.com/gdisk/bios.html</a> for more info and possible workarounds.</li></ul></div>
+
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>If you are installing to a USB flash key, see <a href="/index.php/Installing_Arch_Linux_on_a_USB_key" title="Installing Arch Linux on a USB key">Installing Arch Linux on a USB key</a>.</div>
+<p>The example system will contain a 15 GB root partition, and a <a href="/index.php/Partitioning#.2Fhome" title="Partitioning">home</a> partition for the remaining space. Choose either <a href="/index.php/MBR" title="MBR" class="mw-redirect">MBR</a> or <a href="/index.php/GPT" title="GPT" class="mw-redirect">GPT</a>. Do not choose both!
+</p><p>It should be emphasized that partitioning is a personal choice and that this example is only for illustrative purposes. See <a href="/index.php/Partitioning" title="Partitioning">Partitioning</a>.
+</p>
+<table class="wikitable">
+
+<tbody><tr>
+<td rowspan="2"> <b>MBR</b>
+</td>
+<td rowspan="2"> <code style="display:inline-block; padding: 0.1em 0.3em;">cfdisk&nbsp;/dev/sda</code>
+</td>
+<td> <b>Root:</b>
+<ul><li> Choose New (or press <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">N</code>) – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> for Primary – type in "15360" – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> for Beginning – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> for Bootable.
+</li></ul>
+</td></tr>
+<tr>
+<td>
+<p><b>Home:</b>
+</p>
+<ul><li> Press the down arrow to move to the free space area.
+</li><li> Choose New (or press <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">N</code>) – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> for Primary – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> to use the rest of the drive (or you could type in the desired size).
+</li></ul>
+</td></tr>
+<tr>
+<td rowspan="2"> <b>GPT</b>
+</td>
+<td rowspan="2"> <code style="display:inline-block; padding: 0.1em 0.3em;">cgdisk&nbsp;/dev/sda</code>
+</td>
+<td> <b>Root:</b>
+<ul><li> Choose New (or press <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">N</code>) – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> for the first sector (2048) – type in "15G" – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> for the default hex code (8300) – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> for a blank partition name.
+</li></ul>
+</td></tr>
+<tr>
+<td> <b>Home:</b>
+<ul><li> Press the down arrow a couple of times to move to the larger free space area.
+</li><li> Choose New (or press <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">N</code>) – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> for the first sector – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> to use the rest of the drive (or you could type in the desired size; for example "30G") – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> for the default hex code (8300) – <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> for a blank partition name.
+</li></ul>
+</td></tr></tbody></table>
+<p>If you chose MBR, here is what it should look like:
+</p>
+<pre>Name    Flags     Part Type    FS Type          [Label]       Size (MB)
+-----------------------------------------------------------------------
+sda1    Boot       Primary     Linux                             15360
+sda2               Primary     Linux                             133000*
+</pre>
+<p>If you chose GPT, here is what it should look like:
+</p>
+<pre>Part. #     Size        Partition Type            Partition Name
+----------------------------------------------------------------
+            1007.0 KiB  free space
+   1        15.0 GiB    Linux filesystem
+   2        123.45 GiB  Linux filesystem
+</pre>
+<p>Double check and make sure that you are happy with the partition sizes as well as the partition table layout before continuing.
+</p><p>If you would like to start over, you can simply select Quit (or press <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Q</code>) to exit without saving changes and then restart cfdisk (or cgdisk).
+</p><p>If you are satisfied, choose Write (or press <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Shift+W</code>) to finalize and to write the partition table to the drive. Type "yes" and choose Quit (or press <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Q</code>) to exit without making any more changes.
+</p><p>Simply partitioning is not enough; the partitions also need a <a href="/index.php/File_Systems" title="File Systems">filesystem</a>. To format the partitions with an ext4 filesystem:
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #FFDDDD; border: thin solid #DDBBBB; overflow: hidden;"><strong> Warning: </strong>Double check and triple check that it is actually <code style="display:inline-block; padding: 0.1em 0.3em;">/dev/sda1</code> and <code style="display:inline-block; padding: 0.1em 0.3em;">/dev/sda2</code> that you want to format. You can use <code style="display:inline-block; padding: 0.1em 0.3em;">lsblk</code> to help with this.</div>
+<pre># mkfs.ext4 /dev/sda1
+# mkfs.ext4 /dev/sda2
+</pre>
+<p>If you have made a partition dedicated to swap (code 82), do not forget to format and activate it with:
+</p>
+<pre># mkswap /dev/sda<i>X</i>
+# swapon /dev/sda<i>X</i>
+</pre>
+<h3> <span class="mw-headline" id="Mount_the_partitions"> Mount the partitions </span></h3>
+<p>Each partition is identified with a number suffix. For example, <code style="display:inline-block; padding: 0.1em 0.3em;">sda1</code> specifies the first partition of the first drive, while <code style="display:inline-block; padding: 0.1em 0.3em;">sda</code> designates the entire drive.
+</p><p>To display the current partition layout:
+</p>
+<pre># lsblk /dev/sda
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>Do not mount more than one partition to the same directory. And pay attention, because the mounting order is important.</div>
+<p>First, mount the root partition on <code style="display:inline-block; padding: 0.1em 0.3em;">/mnt</code>. Following the example when using <code style="display:inline-block; padding: 0.1em 0.3em;">cfdisk</code> above (yours may be different), it would be:
+</p>
+<pre># mount /dev/sda1 /mnt
+</pre>
+<p>Then mount the home partition and any other separate partition (<code style="display:inline-block; padding: 0.1em 0.3em;">/boot</code>, <code style="display:inline-block; padding: 0.1em 0.3em;">/var</code>, etc), if you have any:
+</p>
+<pre># mkdir /mnt/home
+# mount /dev/sda2 /mnt/home
+</pre>
+<p>In case you have a UEFI motherboard, mount the UEFI partition:
+</p>
+<pre># mkdir -p /mnt/boot/efi
+# mount /dev/sda<i>X</i> /mnt/boot/efi
+</pre>
+<h3> <span class="mw-headline" id="Select_a_mirror"> Select a mirror </span></h3>
+<p>Before installing, you may want to edit the <code style="display:inline-block; padding: 0.1em 0.3em;">mirrorlist</code> file and place your preferred mirror first. A copy of this file will be installed on your new system by <code style="display:inline-block; padding: 0.1em 0.3em;">pacstrap</code> as well, so it is worth getting it right.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># nano /etc/pacman.d/mirrorlist</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">##
+## Arch Linux repository mirrorlist
+## Sorted by mirror score from mirror status page
+## Generated on 2012-MM-DD
+##
+
+Server = http://mirror.example.xyz/archlinux/$repo/os/$arch
+...</pre>
+<ul><li> <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Alt+6</code> to copy a <code style="display:inline-block; padding: 0.1em 0.3em;">Server</code> line.
+</li><li> <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">PageUp</code> key to scroll up.
+</li><li> <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Ctrl+U</code> to paste it at the top of the list.
+</li><li> <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Ctrl+X</code> to exit, and when prompted to save changes, press <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Y</code> and <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Enter</code> to use the same filename.
+</li></ul>
+<p>If you want, you can make it the <i>only</i> mirror available by getting rid of everything else (using <code style="display:inline-block; background-color: #ebf1f5; padding: 0.1em 0.3em;">Ctrl+K</code>), but it is usually a good idea to have a few more, in case the first one goes offline.
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong>
+<ul><li> Use the <a rel="nofollow" class="external text" href="https://www.archlinux.org/mirrorlist/">Mirrorlist Generator</a> to get an updated list for your country. HTTP mirrors are faster than FTP, because of something called <a href="http://en.wikipedia.org/wiki/Keepalive" class="extiw" title="wikipedia:Keepalive">keepalive</a>. With FTP, pacman has to send out a signal each time it downloads a package, resulting in a brief pause. For other ways to generate a mirror list, see <a href="/index.php/Mirrors#Sorting_mirrors" title="Mirrors">Sorting mirrors</a> and <a href="/index.php/Reflector" title="Reflector">Reflector</a>.
+</li><li> <a rel="nofollow" class="external text" href="https://archlinux.org/mirrors/status/">Arch Linux MirrorStatus</a> reports various aspects about the mirrors such as network problems with mirrors, data collection problems, the last time mirrors have been synced, etc.</li></ul></div>
+
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>
+<ul><li> Whenever in the future you change your list of mirrors, always remember to force pacman to refresh all package lists with <code style="display:inline-block; padding: 0.1em 0.3em;">pacman -Syy</code>. This is considered to be good practice and will avoid possible headaches. See <a href="/index.php/Mirrors" title="Mirrors">Mirrors</a> for more information.
+</li><li> If you are using an older installation medium, your mirrorlist might be outdated, which might lead to problems when updating Arch Linux (see <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/22510">FS#22510</a>). Therefore it is advised to obtain the latest mirror information as described above.
+</li><li> Some issues have been reported in the <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/">Arch Linux forums</a> regarding network problems that prevent pacman from updating/synchronizing repositories (see <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=68944">[1]</a> and <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=65728">[2]</a>). When installing Arch Linux natively, these issues have been resolved by replacing the default pacman file downloader with an alternative (see <a href="/index.php/Improve_Pacman_Performance" title="Improve Pacman Performance">Improve Pacman Performance</a> for more details). When installing Arch Linux as a guest OS in <a href="/index.php/VirtualBox" title="VirtualBox">VirtualBox</a>, this issue has also been addressed by using "Host interface" instead of "NAT" in the machine properties.</li></ul></div>
+
+<h3> <span class="mw-headline" id="Install_the_base_system"> Install the base system </span></h3>
+<p>The base system is installed using the <a rel="nofollow" class="external text" href="https://github.com/falconindy/arch-install-scripts/blob/master/pacstrap.in">pacstrap</a> script.
+</p><p>The <code style="display:inline-block; padding: 0.1em 0.3em;">-i</code> switch can be omitted if you wish to install every package from the <i>base</i> group without prompting.
+</p>
+<pre># pacstrap -i /mnt base
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>If pacman fails to verify your packages, check the system time with <code style="display:inline-block; padding: 0.1em 0.3em;">cal</code>. If the system date is invalid (e.g. it shows the year 2010), signing keys will be considered expired (or invalid), signature checks on packages will fail and installation will be interrupted. Make sure to correct the system time, either by doing so manually or with the <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=ntp">ntp</a></span> client, and retry running the pacstrap command. Refer to <a href="/index.php/Time" title="Time">Time</a> page for more information on correcting system time.</div>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>If pacman complains that <code style="display:inline-block; padding: 0.1em 0.3em;">error: failed to commit transaction (invalid or corrupted package)</code>, run the following command:
+<pre># pacman-key --init &amp;&amp; pacman-key --populate archlinux
+</pre>
+</div>
+<p>This will give you a basic Arch system. Other packages can be installed later using <a href="/index.php/Pacman" title="Pacman">pacman</a>.
+</p>
+<h3> <span class="mw-headline" id="Generate_an_fstab"> Generate an fstab </span></h3>
+<p>Generate an <a href="/index.php/Fstab" title="Fstab">fstab</a> file with the following command. UUIDs will be used because they have certain advantages (see <a href="/index.php/Fstab#Identifying_filesystems" title="Fstab">fstab#Identifying filesystems</a>). If you would prefer to use labels instead, replace the <code style="display:inline-block; padding: 0.1em 0.3em;">-U</code> option with <code style="display:inline-block; padding: 0.1em 0.3em;">-L</code>.
+</p>
+<pre># genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab
+# nano /mnt/etc/fstab
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #FFDDDD; border: thin solid #DDBBBB; overflow: hidden;"><strong> Warning: </strong>The fstab file should always be checked after generating it. If you encounter errors running genfstab or later in the install process, do <b>not</b> run genfstab again; just edit the fstab file.</div>
+<p>A few considerations:
+</p>
+<ul><li> Only the root (<code style="display:inline-block; padding: 0.1em 0.3em;">/</code>) partition needs <code style="display:inline-block; padding: 0.1em 0.3em;">1</code> for the last field. Everything else should have either <code style="display:inline-block; padding: 0.1em 0.3em;">2</code> or <code style="display:inline-block; padding: 0.1em 0.3em;">0</code> (see <a href="/index.php/Fstab#Field_definitions" title="Fstab">fstab#Field definitions</a>).
+</li></ul>
+<h3> <span class="mw-headline" id="Chroot_and_configure_the_base_system"> Chroot and configure the base system </span></h3>
+<p>Next, we <a href="/index.php/Chroot" title="Chroot" class="mw-redirect">chroot</a> into our newly installed system:
+</p>
+<pre># arch-chroot /mnt
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>Use <code style="display:inline-block; padding: 0.1em 0.3em;">arch-chroot /mnt /bin/bash</code> to chroot into a bash shell.</div>
+<p>At this stage of the installation, you will configure the primary configuration files of your Arch Linux base system. These can either be created if they do not exist, or edited if you wish to change the defaults.
+</p><p>Closely following and understanding these steps is of key importance to ensure a properly configured system.
+</p>
+<h4> <span class="mw-headline" id="Locale"> Locale </span></h4>
+<p>Locales are used by <b>glibc</b> and other locale-aware programs or libraries for rendering text, correctly displaying regional monetary values, time and date formats, alphabetic idiosyncrasies, and other locale-specific standards.
+</p><p>There are two files that need editing: <code style="display:inline-block; padding: 0.1em 0.3em;">locale.gen</code> and <code style="display:inline-block; padding: 0.1em 0.3em;">locale.conf</code>.
+</p>
+<ul><li> The <code style="display:inline-block; padding: 0.1em 0.3em;">locale.gen</code> file is empty by default (everything is commented out) and you need to remove the <code style="display:inline-block; padding: 0.1em 0.3em;">#</code> in front of the line(s) you want. You may uncomment more lines than just English (US), as long as you choose their <code style="display:inline-block; padding: 0.1em 0.3em;">UTF-8</code> encoding:
+</li></ul>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># nano /etc/locale.gen</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">en_US.UTF-8 UTF-8
+de_DE.UTF-8 UTF-8</pre>
+<pre># locale-gen
+</pre>
+<p>This will run on every <b>glibc</b> upgrade, generating all the locales specified in <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/locale.gen</code>.
+</p>
+<ul><li> The <code style="display:inline-block; padding: 0.1em 0.3em;">locale.conf</code> file does not exist by default. Setting only <code style="display:inline-block; padding: 0.1em 0.3em;">LANG</code> should be enough. It will act as the default value for all other variables.
+</li></ul>
+<pre># echo LANG=en_US.UTF-8 &gt; /etc/locale.conf
+# export LANG=en_US.UTF-8
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>If you set some other language than English (US) at the beginning of the install, the above commands would be something like:
+<pre># echo LANG=de_DE.UTF-8 &gt; /etc/locale.conf
+# export LANG=de_DE.UTF-8
+</pre>
+</div>
+<p>To use other locales for other <code style="display:inline-block; padding: 0.1em 0.3em;">LC_*</code> variables, run <code style="display:inline-block; padding: 0.1em 0.3em;">locale</code> to see the available options and add them to <code style="display:inline-block; padding: 0.1em 0.3em;">locale.conf</code>. It is not recommended to set the <code style="display:inline-block; padding: 0.1em 0.3em;">LC_ALL</code> variable. An advanced example can be found <a href="/index.php/Locale#Setting_system-wide_locale" title="Locale">here</a>.
+</p>
+<h4> <span class="mw-headline" id="Console_font_and_keymap"> Console font and keymap </span></h4>
+<p>If you set a keymap at <a href="#Change_the_language">the beginning</a> of the install process, load it now, as well, because the environment has changed. For example:
+</p>
+<pre># loadkeys <i>de-latin1</i>
+# setfont Lat2-Terminus16
+</pre>
+<p>To make them available after reboot, edit <code style="display:inline-block; padding: 0.1em 0.3em;">vconsole.conf</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># nano /etc/vconsole.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">KEYMAP=de-latin1
+FONT=Lat2-Terminus16</pre>
+<ul><li> <code style="display:inline-block; padding: 0.1em 0.3em;">KEYMAP</code> – Please note that this setting is only valid for your TTYs, not any graphical window managers or Xorg.
+</li></ul>
+<ul><li> <code style="display:inline-block; padding: 0.1em 0.3em;">FONT</code> – Available alternate console fonts reside in <code style="display:inline-block; padding: 0.1em 0.3em;">/usr/share/kbd/consolefonts/</code>. The default (blank) is safe, but some foreign characters may show up as white squares or as other symbols. It is recommended that you change it to <code style="display:inline-block; padding: 0.1em 0.3em;">Lat2-Terminus16</code>, because according to <code style="display:inline-block; padding: 0.1em 0.3em;">/usr/share/kbd/consolefonts/README.Lat2-Terminus16</code>, it claims to support "about 110 language sets".
+</li></ul>
+<ul><li> Possible option <code style="display:inline-block; padding: 0.1em 0.3em;">FONT_MAP</code> – Defines the console map to load at boot. Read <code style="display:inline-block; padding: 0.1em 0.3em;">man setfont</code>. Removing it or leaving it blank is safe.
+</li></ul>
+<p>See <a href="/index.php/Fonts#Console_fonts" title="Fonts">Console fonts</a> and <code style="display:inline-block; padding: 0.1em 0.3em;">man vconsole.conf</code> for more information.
+</p>
+<h4> <span class="mw-headline" id="Time_zone"> Time zone </span></h4>
+<p>Available time zones and subzones can be found in the <code style="display:inline-block; padding: 0.1em 0.3em;">/usr/share/zoneinfo/&lt;Zone&gt;/&lt;SubZone&gt;</code> directories.
+</p><p>To view the available &lt;Zone&gt;, check the directory <code style="display:inline-block; padding: 0.1em 0.3em;">/usr/share/zoneinfo/</code>:
+</p>
+<pre># ls /usr/share/zoneinfo/
+</pre>
+<p>Similarly, you can check the contents of directories belonging to a &lt;SubZone&gt;:
+</p>
+<pre># ls /usr/share/zoneinfo/Europe
+</pre>
+<p>Create a symbolic link <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/localtime</code> to your zone file <code style="display:inline-block; padding: 0.1em 0.3em;">/usr/share/zoneinfo/&lt;Zone&gt;/&lt;SubZone&gt;</code> using this command:
+</p>
+<pre># ln -s /usr/share/zoneinfo/&lt;Zone&gt;/&lt;SubZone&gt; /etc/localtime
+</pre>
+<p><b>Example:</b>
+</p>
+<pre># ln -s /usr/share/zoneinfo/Europe/Minsk /etc/localtime
+</pre>
+<h4> <span class="mw-headline" id="Hardware_clock"> Hardware clock </span></h4>
+<p>Set the hardware clock mode uniformly between your operating systems. Otherwise, they may overwrite the hardware clock and cause time shifts.
+</p><p>You can generate <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/adjtime</code> automatically by using one of the following commands:
+</p>
+<ul><li> <b>UTC</b> (recommended)
+</li></ul>
+<dl><dd> <div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>Using <a href="http://en.wikipedia.org/wiki/Coordinated_Universal_Time" class="extiw" title="wikipedia:Coordinated Universal Time">UTC</a> for the hardware clock does not mean that software will display time in UTC.</div>
+</dd></dl>
+<dl><dd> <pre># hwclock --systohc --utc</pre>
+</dd></dl>
+<p>To synchronize your "UTC" time over the internet, see <a href="/index.php/Network_Time_Protocol_daemon" title="Network Time Protocol daemon">NTPd</a>.
+</p>
+<ul><li> <b>localtime</b> (discouraged; used by default in Windows)
+</li></ul>
+<dl><dd> <div style="padding: 5px; margin: 0.50em 0; background-color: #FFDDDD; border: thin solid #DDBBBB; overflow: hidden;"><strong> Warning: </strong>Using <i>localtime</i> may lead to several known and unfixable bugs. However, there are no plans to drop support for <i>localtime</i>.</div>
+</dd></dl>
+<dl><dd> <pre># hwclock --systohc --localtime</pre>
+</dd></dl>
+<p>If you have (or planning on having) a dual boot setup with Windows:
+</p>
+<ul><li> Recommended: Set both Arch Linux and Windows to use UTC. A quick <a href="/index.php/Time#UTC_in_Windows" title="Time">registry fix</a> is needed. Also, be sure to prevent Windows from synchronizing the time on-line, because the hardware clock will default back to <i>localtime</i>.
+</li></ul>
+<ul><li> Not recommended: Set Arch Linux to <i>localtime</i> and disable any time-related services, like <a href="/index.php/Network_Time_Protocol_daemon" title="Network Time Protocol daemon">NTPd</a> . This will let Windows take care of hardware clock corrections and you will need to remember to boot into Windows at least two times a year (in Spring and Autumn) when <a href="http://en.wikipedia.org/wiki/Daylight_saving_time" class="extiw" title="wikipedia:Daylight saving time">DST</a> kicks in. So please do not ask on the forums why the clock is one hour behind or ahead if you usually go for days or weeks without booting into Windows.
+</li></ul>
+<h4> <span class="mw-headline" id="Kernel_modules"> Kernel modules </span></h4>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong>This is just an example, you do not need to set it. All needed modules are automatically loaded by udev, so you will rarely need to add something here. Only add modules that you know are missing.</div>
+<p>For kernel modules to load during boot, place a <code style="display:inline-block; padding: 0.1em 0.3em;">*.conf</code> file in <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/modules-load.d/</code>, with a name based on the program that uses them.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># nano /etc/modules-load.d/virtio-net.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># Load 'virtio-net.ko' at boot.
+
+virtio-net</pre>
+<p>If there are more modules to load per <code style="display:inline-block; padding: 0.1em 0.3em;">*.conf</code>, the module names can be separated by newlines. A good example are the <a href="/index.php/VirtualBox#Arch_Linux_guests" title="VirtualBox">VirtualBox Guest Additions</a>.
+</p><p>Empty lines and lines starting with <code style="display:inline-block; padding: 0.1em 0.3em;">#</code> or <code style="display:inline-block; padding: 0.1em 0.3em;">;</code> are ignored.
+</p>
+<h4> <span class="mw-headline" id="Hostname"> Hostname </span></h4>
+<p>Set the <a href="http://en.wikipedia.org/wiki/hostname" class="extiw" title="wikipedia:hostname">hostname</a> to your liking (e.g. <i>arch</i>):
+</p>
+<pre># echo <i>myhostname</i> &gt; /etc/hostname
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>There is no need to edit <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/hosts</code>.</div>
+<h3> <span class="mw-headline" id="Configure_the_network"> Configure the network </span></h3>
+<p>You need to configure the network again, but this time for your newly installed environment. The procedure and prerequisites are very similar to the one described <a href="#Establish_an_internet_connection">above</a>, except we are going to make it persistent and automatically run at boot.
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>For more in-depth information on network configration, visit <a href="/index.php/Network_Configuration" title="Network Configuration">Network Configuration</a> and <a href="/index.php/Wireless_Setup" title="Wireless Setup">Wireless Setup</a>.</div>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>If you would like to use the old interface naming scheme (ie. eth* and wlan*) you can accomplish this by creating an empty file at <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/udev/rules.d/80-net-name-slot.rules</code> which will mask the file of the same name located under <code style="display:inline-block; padding: 0.1em 0.3em;">/usr/lib/udev/rules.d</code> (alternatively, instead of an empty file, using a symlink to <code style="display:inline-block; padding: 0.1em 0.3em;">/dev/null</code> is also an acceptable masking method).</div>
+<h4> <span class="mw-headline" id="Wired_2"> Wired </span></h4>
+<h5> <span class="mw-headline" id="Dynamic_IP"> Dynamic IP </span></h5>
+<dl><dt> Using dhcpcd
+</dt></dl>
+<p>If you only use a single fixed wired network connection, you do not need a network management service and can simply enable the <code style="display:inline-block; padding: 0.1em 0.3em;">dhcpcd</code> service. Here, <code style="display:inline-block; padding: 0.1em 0.3em;"><i>interface_name</i></code> is your wired interface:
+</p>
+<pre># systemctl enable dhcpcd@<i>interface_name</i>.service
+</pre>
+<dl><dt> Using netctl
+</dt></dl>
+<p>Copy a sample profile from <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/netctl/examples</code> to <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/netctl</code>:
+</p>
+<pre># cd /etc/netctl
+# cp examples/ethernet-dhcp my-network
+</pre>
+<p>Edit the profile as needed (modify <code style="display:inline-block; padding: 0.1em 0.3em;">Interface</code>):
+</p>
+<pre># nano my-network
+</pre>
+<p>Enable the <code style="display:inline-block; padding: 0.1em 0.3em;">my-network</code> profile:
+</p>
+<pre># netctl enable my-network
+</pre>
+<dl><dt> Using netctl-ifplugd
+</dt></dl>
+<p>Alternatively, you can use <code style="display:inline-block; padding: 0.1em 0.3em;">netctl-ifplugd</code>, which gracefully handles dynamic connections to new networks:
+</p><p>Install <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=ifplugd">ifplugd</a></span>, which is required for <code style="display:inline-block; padding: 0.1em 0.3em;">netctl-ifplugd</code>:
+</p>
+<pre># pacman -S ifplugd
+</pre>
+<p>Then enable for interface that you want:
+</p>
+<pre># systemctl enable netctl-ifplugd@&lt;interface&gt;.service
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong><a href="/index.php/Netctl" title="Netctl">Netctl</a> also provides <code style="display:inline-block; padding: 0.1em 0.3em;">netctl-auto</code>, which can be used to handle wired profiles in conjunction with <code style="display:inline-block; padding: 0.1em 0.3em;">netctl-ifplugd</code>.</div>
+<h5> <span class="mw-headline" id="Static_IP"> Static IP </span></h5>
+<dl><dt> Using netctl
+</dt></dl>
+<p>Copy a sample profile from <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/netctl/examples</code> to <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/netctl</code>:
+</p>
+<pre># cd /etc/netctl
+# cp examples/ethernet-static my-network
+</pre>
+<p>Edit the profile as needed (modify <code style="display:inline-block; padding: 0.1em 0.3em;">Interface</code>, <code style="display:inline-block; padding: 0.1em 0.3em;">Address</code>, <code style="display:inline-block; padding: 0.1em 0.3em;">Gateway</code> and <code style="display:inline-block; padding: 0.1em 0.3em;">DNS</code>):
+</p>
+<pre># nano my-network
+</pre>
+<ul><li> Notice the <code style="display:inline-block; padding: 0.1em 0.3em;">/24</code> in <code style="display:inline-block; padding: 0.1em 0.3em;">Address</code> which is the <a href="http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation" class="extiw" title="wikipedia:Classless Inter-Domain Routing">CIDR notation</a> of a <code style="display:inline-block; padding: 0.1em 0.3em;">255.255.255.0</code> netmask
+</li></ul>
+<p>Enable above created profile to start it at every boot:
+</p>
+<pre># netctl enable my-network
+</pre>
+<h4> <span class="mw-headline" id="Wireless_2"> Wireless </span></h4>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>If your wireless adapter requires a firmware (as described in the above <a href="#Wireless">Establish an internet connection</a> section and also <a href="/index.php/Wireless_Setup#Drivers_and_firmware" title="Wireless Setup">here</a>), install the package containing your firmware. Most of the time, the <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=linux-firmware">linux-firmware</a></span> package will contain the needed firmware. Though for some devices, the required firmware might be in its own package. For example:
+<pre># pacman -S zd1211-firmware</pre>
+See <a href="/index.php/Wireless_Setup" title="Wireless Setup">Wireless Setup</a> for more info.</div>
+<p>Install <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=iw">iw</a></span>, <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=wpa_supplicant">wpa_supplicant</a></span> and <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=wpa_actiond">wpa_actiond</a></span> which you will need to connect to a network:
+</p>
+<pre># pacman -S iw wpa_supplicant wpa_actiond
+</pre>
+<h5> <span class="mw-headline" id="Adding_wireless_networks"> Adding wireless networks </span></h5>
+<dl><dt> Using wifi-menu
+</dt></dl>
+<p>Install <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=dialog">dialog</a></span>, which is required for <code style="display:inline-block; padding: 0.1em 0.3em;">wifi-menu</code>:
+</p>
+<pre># pacman -S dialog
+</pre>
+<p>After finishing the rest of this installation and rebooting, you can connect to the network with <code style="display:inline-block; padding: 0.1em 0.3em;">wifi-menu <i>interface_name</i></code> (where <code style="display:inline-block; padding: 0.1em 0.3em;"><i>interface_name</i></code> is the interface of your wireless chipset).
+</p>
+<pre># wifi-menu <i>interface_name</i>
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #FFDDDD; border: thin solid #DDBBBB; overflow: hidden;"><strong> Warning: </strong>This must be done *after* your reboot when you are no longer chrooted. The process spawned by this command will conflict with the one you have running outside of the chroot. Alternatively, you could just configure a network profile manually using the following templates so that you do not have to worry about using <code style="display:inline-block; padding: 0.1em 0.3em;">wifi-menu</code> at all.</div>
+<dl><dt> Using manual netctl profiles
+</dt></dl>
+<p>Copy a network profile from <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/netctl/examples</code> to <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/netctl</code>:
+</p>
+<pre># cd /etc/netctl
+# cp examples/wireless-wpa my-network
+</pre>
+<p>Edit the profile as needed (modify <code style="display:inline-block; padding: 0.1em 0.3em;">Interface</code>, <code style="display:inline-block; padding: 0.1em 0.3em;">ESSID</code> and <code style="display:inline-block; padding: 0.1em 0.3em;">Key</code>):
+</p>
+<pre># nano my-network
+</pre>
+<h5> <span class="mw-headline" id="Connect_automaticly_to_known_networks"> Connect automaticly to known networks </span></h5>
+<p>Enable the <code style="display:inline-block; padding: 0.1em 0.3em;">netctl-auto</code> service, which will connect to known networks and gracefully handle roaming and disconnects:
+</p>
+<pre># systemctl enable netctl-auto@<i>interface_name</i>.service
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong><a href="/index.php/Netctl" title="Netctl">Netctl</a> also provides <code style="display:inline-block; padding: 0.1em 0.3em;">netctl-ifplugd</code>, which can be used to handle wired profiles in conjunction with <code style="display:inline-block; padding: 0.1em 0.3em;">netctl-auto</code>.</div>
+<h4> <span class="mw-headline" id="Analog_modem.2C_ISDN_or_PPoE_DSL_2"> Analog modem, ISDN or PPoE DSL </span></h4>
+<p>For xDSL, dial-up and ISDN connections, see <a href="/index.php/Direct_Modem_Connection" title="Direct Modem Connection">Direct Modem Connection</a>.
+</p>
+<h3> <span class="mw-headline" id="Create_an_initial_ramdisk_environment"> Create an initial ramdisk environment </span></h3>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong>Most users can skip this step and use the defaults provided in <code style="display:inline-block; padding: 0.1em 0.3em;">mkinitcpio.conf</code>. The initramfs image (from the <code style="display:inline-block; padding: 0.1em 0.3em;">/boot</code> folder) has already been generated based on this file when the <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=linux">linux</a></span> package (the Linux kernel) was installed earlier with <code style="display:inline-block; padding: 0.1em 0.3em;">pacstrap</code>.</div>
+<p>Here you need to set the right <a href="/index.php/Mkinitcpio#HOOKS" title="Mkinitcpio">hooks</a> if the root is on a USB drive, if you use RAID, LVM, or if <code style="display:inline-block; padding: 0.1em 0.3em;">/usr</code> is on a separate partition.
+</p><p>Edit <code style="display:inline-block; padding: 0.1em 0.3em;">/etc/mkinitcpio.conf</code> as needed and re-generate the initramfs image with:
+</p>
+<pre># mkinitcpio -p linux
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>Arch VPS installations on QEMU (e.g. when using <code style="display:inline-block; padding: 0.1em 0.3em;">virt-manager</code>) may need <code style="display:inline-block; padding: 0.1em 0.3em;">virtio</code> modules in <code style="display:inline-block; padding: 0.1em 0.3em;">mkinitcpio.conf</code> to be able to boot.
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># nano /etc/mkinitcpio.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">MODULES="virtio virtio_blk virtio_pci virtio_net"</pre></div>
+<h3> <span class="mw-headline" id="Set_the_root_password"> Set the root password </span></h3>
+<p>Set the root password with:
+</p>
+<pre># passwd
+</pre>
+<h3> <span class="mw-headline" id="Install_and_configure_a_bootloader"> Install and configure a bootloader </span></h3>
+<h4> <span class="mw-headline" id="For_BIOS_motherboards"> For BIOS motherboards </span></h4>
+<p>For BIOS systems, two bootloaders are available: Syslinux and GRUB. Choose the bootloader as per your convenience.
+</p>
+<ul><li> Syslinux is (currently) limited to loading only files from the partition where it was installed. Its configuration file is considered to be easier to understand. An example configuration can be found <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=1109328#p1109328">here</a>.
+</li></ul>
+<ul><li> GRUB is more feature-rich and supports more complex scenarios. Its configuration file(s) is more similar to a scripting language, which may be difficult for beginners to manually write. It is recommended that they automatically generate one.
+</li></ul>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>Some BIOS systems may have issues with GPT. See <a rel="nofollow" class="external free" href="http://mjg59.dreamwidth.org/8035.html">http://mjg59.dreamwidth.org/8035.html</a> and <a rel="nofollow" class="external free" href="http://rodsbooks.com/gdisk/bios.html">http://rodsbooks.com/gdisk/bios.html</a> for more info and possible workarounds.</div>
+<h5> <span class="mw-headline" id="Syslinux"> Syslinux </span></h5>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>If you opted for a GUID partition table for your hard drive earlier, you need to install the <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=gptfdisk">gptfdisk</a></span> package now for this next step to work, assuming you haven't installed it already.</div>
+<p>Install the <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=syslinux">syslinux</a></span> package and then use the <code style="display:inline-block; padding: 0.1em 0.3em;">syslinux-install_update</code> script to automatically <i>install</i> the bootloader (<code style="display:inline-block; padding: 0.1em 0.3em;">-i</code>), mark the partition <i>active</i> by setting the boot flag (<code style="display:inline-block; padding: 0.1em 0.3em;">-a</code>), and install the <i>MBR</i> boot code (<code style="display:inline-block; padding: 0.1em 0.3em;">-m</code>):
+</p>
+<pre># pacman -S syslinux
+# syslinux-install_update -i -a -m
+</pre>
+<p>Configure <code style="display:inline-block; padding: 0.1em 0.3em;">syslinux.cfg</code> to point to the right root partition. This step is vital. If it points to the wrong partition, Arch Linux will not boot. Change <code style="display:inline-block; padding: 0.1em 0.3em;">/dev/sda3</code> to reflect your root partition <i>(if you partitioned your drive as in <a href="#Prepare_the_storage_drive">the example</a>, your root partition is sda1)</i>. Do the same for the fallback entry.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># nano /boot/syslinux/syslinux.cfg</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
+LABEL arch
+        ...
+        APPEND root=/dev/sda3 ro
+        ...</pre>
+<p>For more information on configuring and using Syslinux, see <a href="/index.php/Syslinux" title="Syslinux">Syslinux</a>.
+</p>
+<h5> <span class="mw-headline" id="GRUB"> GRUB </span></h5>
+<p>Install the <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=grub-bios">grub-bios</a></span> package and then run <code style="display:inline-block; padding: 0.1em 0.3em;">grub-install</code> to install the bootloader:
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>Change <code style="display:inline-block; padding: 0.1em 0.3em;">/dev/sda</code> to reflect the drive you installed Arch on. Do not append a partition number (do not use <code style="display:inline-block; padding: 0.1em 0.3em;">sda<i>X</i></code>).</div>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>For GPT-partitioned drives on BIOS motherboards, you also need a "BIOS Boot Partition". See <a href="/index.php/GRUB#GUID_Partition_Table_.28GPT.29_specific_instructions" title="GRUB">GPT-specific instructions</a> and <a href="/index.php/GRUB#Install_to_GPT_BIOS_boot_partition" title="GRUB">Install to GPT BIOS boot partition</a> in the GRUB page.</div>
+<pre># pacman -S grub-bios
+# grub-install --recheck /dev/sda
+# cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong> If it is an installation on virtualbox as guest, while running grub-install command as in above, you might get an error like "/usr/sbin/grub-bios-setup: warning: this GPT partition label contains no BIOS Boot Partition; embedding won't be possible". Executing <code style="display:inline-block; padding: 0.1em 0.3em;">parted -s /dev/sda set 1 bios_grub on</code> and then retrying <i>grub-install</i> should solve the problem.</div>
+<p>While using a manually created <code style="display:inline-block; padding: 0.1em 0.3em;">grub.cfg</code> is absolutely fine, it is recommended that beginners automatically generate one:
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong>To automatically search for other operating systems on your computer, install <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=os-prober">os-prober</a></span> (<code style="display:inline-block; padding: 0.1em 0.3em;">pacman -S os-prober</code>) before running the next command.</div>
+<pre># grub-mkconfig -o /boot/grub/grub.cfg
+</pre>
+<p>For more information on configuring and using GRUB, see <a href="/index.php/GRUB" title="GRUB">GRUB</a>.
+</p>
+<h4> <span class="mw-headline" id="For_UEFI_motherboards"> For UEFI motherboards </span></h4>
+<p>For UEFI boot, the drive needs to be GPT-partitioned and an "<a href="/index.php/Unified_Extensible_Firmware_Interface#EFI_System_Partition" title="Unified Extensible Firmware Interface">UEFI System Partition</a>" (512 MiB or larger, type <code style="display:inline-block; padding: 0.1em 0.3em;">EF00</code>, formatted with FAT32) must be present and mounted on <code style="display:inline-block; padding: 0.1em 0.3em;">/boot/efi</code>. If you have followed this guide from the beginning, you have already done all of these.
+</p><p>While there are other <a href="/index.php/UEFI_Bootloaders" title="UEFI Bootloaders">UEFI bootloaders</a> available, using EFISTUB is recommended. Below are instructions for setting up EFISTUB and GRUB (of course you choose only one of them).
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>Syslinux does not yet support UEFI.</div>
+<h5> <span class="mw-headline" id="EFISTUB"> EFISTUB </span></h5>
+<p>The Linux kernel can act as its own bootloader using EFISTUB. This is the UEFI boot method recommended by developers and simpler compared to <code style="display:inline-block; padding: 0.1em 0.3em;">grub-efi-x86_64</code>. The steps below set up rEFInd to provide a menu for EFISTUB kernels, as well as for booting other UEFI bootloaders. Alternative EFISTUB boot managers can be found on the page <a href="/index.php/UEFI_Bootloaders#Booting_EFISTUB" title="UEFI Bootloaders">UEFI Bootloaders#Booting EFISTUB</a>. Both rEFInd and <a href="/index.php/Gummiboot" title="Gummiboot">gummiboot</a> can detect Windows UEFI bootloaders in case of dual-boot.
+</p><p>1. Mount the UEFI System Partition on <code style="display:inline-block; padding: 0.1em 0.3em;">/mnt/boot/efi</code> and chroot back into <code style="display:inline-block; padding: 0.1em 0.3em;">/mnt</code>.
+</p><p>2. <a href="/index.php/UEFI_Bootloaders#Setting_up_EFISTUB" title="UEFI Bootloaders">Copy the kernel and initramfs files</a> to <code style="display:inline-block; padding: 0.1em 0.3em;">/mnt/boot/efi</code>:
+</p>
+<pre># mkdir -p /boot/efi/EFI/arch/
+# cp /boot/vmlinu<b>z</b>-linux /boot/efi/EFI/arch/vmlinuz-arch<b>.efi</b>
+# cp /boot/initramfs-linux.img /boot/efi/EFI/arch/initramfs-arch.img
+# cp /boot/initramfs-linux-fallback.img /boot/efi/EFI/arch/initramfs-arch-fallback.img
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong> If you are going to use rEFInd and you want it to detect kernels in <code style="display:inline-block; padding: 0.1em 0.3em;">/boot</code> automatically, you can skip this step</div>
+<p>Every time the kernel and initramfs files are updated in <code style="display:inline-block; padding: 0.1em 0.3em;">/boot</code>, they need to be updated in <code style="display:inline-block; padding: 0.1em 0.3em;">/boot/efi/EFI/arch</code>. This can be automated <a href="/index.php/UEFI_Bootloaders#Systemd" title="UEFI Bootloaders">using systemd</a>.
+</p><p>3. For the rEFInd boot manager, install the <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=refind-efi">refind-efi</a></span> and <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=efibootmgr">efibootmgr</a></span> packages:
+</p>
+<pre># pacman -S refind-efi
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong> efibootmgr gets installed as a dependency</div>
+<p>4. Install rEFInd to the UEFI System Partition (summarized from <a href="/index.php/UEFI_Bootloaders#Using_rEFInd" title="UEFI Bootloaders">UEFI Bootloaders#Using rEFInd</a>):
+</p>
+<pre># mkdir -p /boot/efi/EFI/refind
+# cp /usr/lib/refind/refind_x64.efi /boot/efi/EFI/refind/refind_x64.efi
+# cp /usr/lib/refind/config/refind.conf /boot/efi/EFI/refind/refind.conf
+# cp -r /usr/share/refind/icons /boot/efi/EFI/refind/icons
+# cp -r /usr/lib/refind/drivers_x64 /boot/efi/EFI/refind/drivers
+</pre>
+<p>5. Create a <code style="display:inline-block; padding: 0.1em 0.3em;">refind_linux.conf</code> file with the kernel parameters to be used by rEFInd:
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong> If you don't want rEFInd to automatically detect the kernel, you have to place <code style="display:inline-block; padding: 0.1em 0.3em;">refind_linux.conf</code> where you copied the kernel and initramfs files.</div>
+<pre># cp /usr/lib/refind/config/refind_linux.conf /boot/refind_linux.conf
+# nano /boot/refind_linux.conf
+</pre>
+<p>Edit the <code style="display:inline-block; padding: 0.1em 0.3em;">PARTUUID</code> value to match the UUID of your root partition. You can find out what the UUID is by using <code style="display:inline-block; padding: 0.1em 0.3em;">$ ls -l /dev/disk/by-partuuid/</code>.  
+If you don't want to use the UUID, you can set <code style="display:inline-block; padding: 0.1em 0.3em;">root=/dev/sdXY</code>. This refers to the root partition, not the boot partition, if you created them separately.  
+You also need to set the <code style="display:inline-block; padding: 0.1em 0.3em;">rootfstype</code>. If you use ext4 on the root partition, it looks like this: <code style="display:inline-block; padding: 0.1em 0.3em;">rootfstype=ext4</code>
+</p><p>6. Add rEFInd to UEFI boot menu using <a href="/index.php/UEFI#efibootmgr" title="UEFI" class="mw-redirect">efibootmgr</a>. Replace X and Y with the drive and partition of the UEFI System Partition. For example, in <code style="display:inline-block; padding: 0.1em 0.3em;">/dev/sdc5</code>, X is "c" and Y is "5".
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #FFDDDD; border: thin solid #DDBBBB; overflow: hidden;"><strong> Warning: </strong>Using <code style="display:inline-block; padding: 0.1em 0.3em;">efibootmgr</code> on Apple Macs may brick the firmware and may need reflash of the motherboard ROM. For Macs, use <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mactel-boot/">mactel-boot</a></span>, or "bless" from within OS X.</div>
+<pre># modprobe efivars
+# efibootmgr -c -d /dev/sdX -p Y -w -L "rEFInd" -l '\EFI\refind\refind_x64.efi'
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>On some systems, the above command will not work properly. It will execute without any visible error, but the UEFI boot menu will not have been correctly updated with a new entry. To determine whether the command executed properly, run <code style="display:inline-block; padding: 0.1em 0.3em;">efibootmgr</code> without any arguments and see if a new entry has appeared in the list displayed. If there is no new entry, then it will not be possible to enter rEFInd upon reboot, as the UEFI boot menu has been left unchanged. In this case, you will instead have to enter the UEFI shell and manually add an entry to the UEFI boot menu with the <code style="display:inline-block; padding: 0.1em 0.3em;">bcfg</code> command, as described <a href="/index.php/Unified_Extensible_Firmware_Interface#bcfg" title="Unified Extensible Firmware Interface">here</a>.</div>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>On some ASUS motherboards, there is an EFI bug that always reports <code style="display:inline-block; padding: 0.1em 0.3em;">MaxVariableSize=0</code>. Combined with a recent kernel that enforces checks on this value, this prevents <code style="display:inline-block; padding: 0.1em 0.3em;">efibootmgr</code> from setting new EFI variables. These motherboards do not support the UEFI Shell v2, so you cannot use the <code style="display:inline-block; padding: 0.1em 0.3em;">bcfg</code> method either. To work around this, add <code style="display:inline-block; padding: 0.1em 0.3em;">efi_no_storage_paranoia</code> to the kernel command line. You can do this by pressing "e" at the bootloader menu.</div>
+<h5> <span class="mw-headline" id="GRUB_2"> GRUB </span></h5>
+<p>Install the <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=grub-efi-x86_64">grub-efi-x86_64</a></span> and <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=efibootmgr">efibootmgr</a></span> packages and then run <code style="display:inline-block; padding: 0.1em 0.3em;">grub-install</code> to install the bootloader:
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong>In case you have a system with 32-bit EFI, like pre-2008 Apple Macs, install <code style="display:inline-block; padding: 0.1em 0.3em;">grub-efi-i386</code> instead of <code style="display:inline-block; padding: 0.1em 0.3em;">grub-efi-x86_64</code>.</div>
+<pre># pacman -S grub-efi-x86_64 efibootmgr
+# grub-install --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck
+# cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
+</pre>
+<p>Next, while using a manually created <code style="display:inline-block; padding: 0.1em 0.3em;">grub.cfg</code> is absolutely fine, it is recommended that beginners automatically generate one:
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong>To automatically search for other operating systems on your computer, install <span style="font-family: monospace"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=os-prober">os-prober</a></span> (<code style="display:inline-block; padding: 0.1em 0.3em;">pacman -S os-prober</code>) before running the next command.</div>
+<pre># grub-mkconfig -o /boot/grub/grub.cfg
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Note: </strong><code style="display:inline-block; padding: 0.1em 0.3em;">grub-install</code> should create a new entry in the UEFI boot menu. If it does not, you will instead have to enter the UEFI shell and manually add an entry to the UEFI boot menu with the <code style="display:inline-block; padding: 0.1em 0.3em;">bcfg</code> command, as described <a href="/index.php/Unified_Extensible_Firmware_Interface#bcfg" title="Unified Extensible Firmware Interface">here</a>.</div>
+<p>For more information on configuring and using GRUB, see <a href="/index.php/GRUB" title="GRUB">GRUB</a>.
+</p>
+<h3> <span class="mw-headline" id="Unmount_the_partitions_and_reboot"> Unmount the partitions and reboot </span></h3>
+<p>Exit from the chroot environment:
+</p>
+<pre># exit
+</pre>
+<p>Since the partitions are mounted under <code style="display:inline-block; padding: 0.1em 0.3em;">/mnt</code>, we use the following command to unmount them:
+</p>
+<pre># umount /mnt/{boot,home,}
+</pre>
+<p>Reboot the computer:
+</p>
+<pre># reboot
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong>If you face error "/sbin/init does not exist" on next boot, look for systemd binary path and pass it as kernel argument while booting up. For example, "init = /usr/lib/systemd/systemd" </div>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong>Be sure to remove the installation media, otherwise you will boot back into it.</div>
+<div class="toc" style="text-align: center; margin:1em 0;"><b><a href="/index.php/Beginners%27_Guide" title="Beginners' Guide">Beginners' Guide</a></b>
+<hr>
+<p><a href="/index.php/Beginners%27_Guide/Preparation" title="Beginners' Guide/Preparation">Preparation</a> &gt;&gt; <strong class="selflink">Installation</strong> &gt;&gt; <a href="/index.php/Beginners%27_Guide/Post-installation" title="Beginners' Guide/Post-installation">Post-installation</a>
+</p>
+</div>
+
+<!-- 
+NewPP limit report
+Preprocessor visited node count: 3415/1000000
+Preprocessor generated node count: 6795/1000000
+Post‐expand include size: 95219/2097152 bytes
+Template argument size: 53984/2097152 bytes
+Highest expansion depth: 8/40
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key archwiki:pcache:idhash:14839-0!*!0!!en!*!* and timestamp 20130618095612 -->
+</div><div class="printfooter">
+Retrieved from "<a href="https://wiki.archlinux.org/index.php?title=Beginners%27_Guide/Installation&amp;oldid=263230">https://wiki.archlinux.org/index.php?title=Beginners%27_Guide/Installation&amp;oldid=263230</a>"</div>
+		<div id="catlinks" class="catlinks"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/index.php/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/index.php/Category:Getting_and_installing_Arch" title="Category:Getting and installing Arch">Getting and installing Arch</a></li><li><a href="/index.php/Category:About_Arch" title="Category:About Arch">About Arch</a></li></ul></div></div>		<!-- end content -->
+				<div class="visualClear"></div>
+	</div>
+</div></div>
+<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+				<li id="ca-nstab-main" class="selected"><a href="/index.php/Beginners%27_Guide/Installation" primary="1" context="subject" title="View the content page [alt-c]" accesskey="c">Page</a></li>
+				<li id="ca-talk"><a href="/index.php/Talk:Beginners%27_Guide/Installation" primary="1" context="talk" title="Discussion about the content page [alt-t]" accesskey="t">Discussion</a></li>
+				<li id="ca-viewsource"><a href="/index.php?title=Beginners%27_Guide/Installation&amp;action=edit" primary="1" title="This page is protected.
+You can view its source [alt-e]" accesskey="e">View source</a></li>
+				<li id="ca-history"><a href="/index.php?title=Beginners%27_Guide/Installation&amp;action=history" rel="archives" title="Past revisions of this page [alt-h]" accesskey="h">History</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-createaccount"><a href="/index.php?title=Special:UserLogin&amp;returnto=Beginners%27+Guide%2FInstallation&amp;type=signup">Create account</a></li>
+				<li id="pt-login"><a href="/index.php?title=Special:UserLogin&amp;returnto=Beginners%27+Guide%2FInstallation" title="You are encouraged to log in; however, it is not mandatory [alt-o]" accesskey="o">Log in</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+<a href="/index.php/Main_Page" style="background-image: url(/skins/archlinux/archlogo.png);" title="Visit the main page"></a>
+	</div>
+	<div class="generated-sidebar portlet" id="p-navigation">
+		<h5>Navigation</h5>
+		<div class="pBody">
+			<ul>
+				<li id="n-mainpage-description"><a href="/index.php/Main_Page" title="Visit the main page [alt-z]" accesskey="z">Main page</a></li>
+				<li id="n-categories"><a href="/index.php/Table_of_Contents">Categories</a></li>
+				<li id="n-portal"><a href="/index.php/Getting_Involved" title="Various ways Archers can contribute to the community">Getting Involved</a></li>
+				<li id="n-currentevents"><a href="/index.php/ArchWiki:News" title="The latest lowdown on the wiki">Wiki News</a></li>
+				<li id="n-recentchanges"><a href="/index.php/Special:RecentChanges" title="A list of recent changes in the wiki [alt-r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="/index.php/Special:Random" title="Load a random page [alt-x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="/index.php/Help:Contents" title="Wiki navigation, reading, and editing help">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="/index.php" id="searchform">
+				<input type="hidden" name="title" value="Special:Search">
+				<input type="search" name="search" title="Search ArchWiki [alt-f]" accesskey="f" id="searchInput" autocomplete="off" placeholder="Search">
+				<input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchGoButton" class="searchButton">&nbsp;
+				<input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton">
+			</form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="/index.php/Special:WhatLinksHere/Beginners%27_Guide/Installation" title="A list of all wiki pages that link here [alt-j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="/index.php/Special:RecentChangesLinked/Beginners%27_Guide/Installation" title="Recent changes in pages linked from this page [alt-k]" accesskey="k">Related changes</a></li>
+				<li id="t-specialpages"><a href="/index.php/Special:SpecialPages" title="A list of all special pages [alt-q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="/index.php?title=Beginners%27_Guide/Installation&amp;printable=yes" rel="alternate" title="Printable version of this page [alt-p]" accesskey="p">Printable version</a></li>
+				<li id="t-permalink"><a href="/index.php?title=Beginners%27_Guide/Installation&amp;oldid=263230" title="Permanent link to this revision of the page">Permanent link</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-lang" class="portlet">
+		<h5>In other languages</h5>
+		<div class="pBody">
+			<ul>
+				<li class="interwiki-ar"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9)" title="Beginners' Guide/Installation" lang="ar" hreflang="ar">العربية</a></li>
+				<li class="interwiki-da"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(Dansk)" title="Beginners' Guide/Installation" lang="da" hreflang="da">Dansk</a></li>
+				<li class="interwiki-es"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(Espa%C3%B1ol)" title="Beginners' Guide/Installation" lang="es" hreflang="es">Español</a></li>
+				<li class="interwiki-hr"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(Hrvatski)" title="Beginners' Guide/Installation" lang="hr" hreflang="hr">Hrvatski</a></li>
+				<li class="interwiki-hu"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(Magyar)" title="Beginners' Guide/Installation" lang="hu" hreflang="hu">Magyar</a></li>
+				<li class="interwiki-it"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(Italiano)" title="Beginners' Guide/Installation" lang="it" hreflang="it">Italiano</a></li>
+				<li class="interwiki-ja"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(%E6%97%A5%E6%9C%AC%E8%AA%9E)" title="Beginners' Guide/Installation" lang="ja" hreflang="ja">日本語</a></li>
+				<li class="interwiki-ko"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(%ED%95%9C%EA%B5%AD%EC%96%B4)" title="Beginners' Guide/Installation" lang="ko" hreflang="ko">한국어</a></li>
+				<li class="interwiki-nl"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installatie_(Nederlands)" title="Beginners' Guide/Installatie" lang="nl" hreflang="nl">Nederlands</a></li>
+				<li class="interwiki-pl"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(Polski)" title="Beginners' Guide/Installation" lang="pl" hreflang="pl">Polski</a></li>
+				<li class="interwiki-pt"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(Portugu%C3%AAs)" title="Beginners' Guide/Installation" lang="pt" hreflang="pt">Português</a></li>
+				<li class="interwiki-ro"><a href="http://wiki.archlinux.ro/index.php/Ghidul_%C3%AEncep%C4%83torilor/Instalare" title="Ghidul începătorilor/Instalare" lang="ro" hreflang="ro">Română</a></li>
+				<li class="interwiki-ru"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Beginners' Guide/Installation" lang="ru" hreflang="ru">Русский</a></li>
+				<li class="interwiki-sr"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(%D0%A1%D1%80%D0%BF%D1%81%D0%BA%D0%B8)" title="Beginners' Guide/Installation" lang="sr" hreflang="sr">Српски / srpski</a></li>
+				<li class="interwiki-zh-cn"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Beginners' Guide/Installation" lang="zh-cn" hreflang="zh-cn">‪中文（中国大陆）‬</a></li>
+				<li class="interwiki-zh-tw"><a href="https://wiki.archlinux.org/index.php/Beginners%27_Guide/Installation_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)" title="Beginners' Guide/Installation" lang="zh-tw" hreflang="zh-tw">‪中文（台灣）‬</a></li>
+			</ul>
+		</div>
+	</div>
+</div><!-- end of the left (by default at least) column -->
+<div class="visualClear"></div>
+<div id="footer">
+	<ul id="f-list">
+		<li id="lastmod"> This page was last modified on 18 June 2013, at 09:56.</li>
+		<li id="copyright">Content is available under <a class="external" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a>.</li>
+		<li id="privacy"><a href="/index.php/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="about"><a href="/index.php/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="disclaimer"><a href="/index.php/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+</div>
+</div>
+<script>if(window.mw){
+mw.loader.state({"site":"loading","user":"missing","user.groups":"ready"});
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.user","mediawiki.page.ready","mediawiki.searchSuggest"], null, true);
+}</script><script src="/load.php?debug=false&amp;lang=en&amp;modules=jquery.autoEllipsis%2CcheckboxShiftClick%2ChighlightText%2CmakeCollapsible%2Cmw-jump%2Cplaceholder%2Csuggestions%7Cmediawiki.api%2CsearchSuggest%2Cuser%7Cmediawiki.page.ready&amp;skin=archlinux&amp;version=20130616T192119Z&amp;*" type="text/javascript"></script>
+<script>if(window.mw){
+mw.loader.state({"site":"ready"});
+}</script>
+<!-- Served in 0.048 secs. -->
+<div style="display: none; font-size: 11px; " class="suggestions"><div class="suggestions-results"></div><div class="suggestions-special"></div></div></body><!-- Cached/compressed 20130618101127 --></html>
