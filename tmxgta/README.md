@@ -22,6 +22,7 @@ Offline versions of the following wikipages are included on the iso:
 * Beginners' Guide
 * Installation Guide
 * Network Configuration
+
 You can select the wikipage you want to read in a menu on tty2.
 
 ## Screenshots
@@ -29,6 +30,7 @@ https://sourceforge.net/projects/tmxgta/
 
 ## Download
 Download the latest iso release from Sourceforge:
+
 https://sourceforge.net/projects/tmxgta/files/?source=navbar
 
 ## Run tmxgta
@@ -56,7 +58,8 @@ Archlinux packages:
  * dialog
  * arch-install-scripts
  * reflector (optional)
-These packages are already installed on the iso image.
+
+The packages are already installed on the iso image.
 
 ## Keyboard shortcuts
 
