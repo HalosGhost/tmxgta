@@ -1,5 +1,5 @@
-version=0.7.3
-archiso=06-01
+version=0.7.4
+archiso=06-19
 dialog --title tmxgta --nocancel --nook --pause "\nVersion: $version \n\
 Based on archiso: $archiso\nKernel: $(uname -r)" 9 40 4
 tput cols > /tmp/tputout
