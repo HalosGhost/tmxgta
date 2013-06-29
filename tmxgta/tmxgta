@@ -1,10 +1,32 @@
-version=0.7.4
-archiso=06-19
-dialog --title tmxgta --nocancel --nook --pause "\nVersion: $version \n\
+version=0.7.5
+
+if [ -f /tmp/tmxgta_lock ]; then
+	dialog --title 'Warning' --msgbox "This script is already running." 0 0
+	exit 1
+fi
+if (( "$EUID" != 0 )); then
+	dialog --title 'Warning' --msgbox "This script should be run as 
+root." 0 0
+	exit 1
+fi
+if [ $archiso ]; then
+	dialog --title tmxgta --nocancel --nook --pause "\nVersion: $version \n\
 Based on archiso: $archiso\nKernel: $(uname -r)" 9 40 4
+else
+	if pgrep -c X; then
+		dialog --title 'Hint' --yesno "You are running this\
+ script from within the Xorg display server. It is more convinient to\
+ run tmxgta_$version instead. You can use your window manager for\
+ switching between windows.
+Exit now?" 0 0 && exit 0
+	fi
+	dialog --title tmxgta --nocancel --nook --pause "\nVersion: $version"\
+ 7 40 4
+fi
 tput cols > /tmp/tputout
+export tmux=1
 clear
-tmux new-session -d -s tmxgta "~/tmxgta_$version"
+tmux new-session -d -s tmxgta "./tmxgta_$version"
 tmux set-option -g prefix C-a
 tmux bind-key C-a select-pane -L
 tmux set-option -g pane-active-border-bg black
