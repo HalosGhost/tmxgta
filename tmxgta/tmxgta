@@ -1,5 +1,3 @@
-version=0.7.5.1
-
 if [ -f /tmp/tmxgta_lock ]; then
 	dialog --title 'Warning' --msgbox "This script is already running." 0 0
 	clear
@@ -11,22 +9,22 @@ if (( "$EUID" != 0 )); then
 	exit 1
 fi
 if [ $archiso ]; then
-	dialog --title tmxgta --nocancel --nook --pause "\nVersion: $version \n\
+	dialog --title tmxgta --nocancel --nook --pause "\n\
 Based on archiso: $archiso\nKernel: $(uname -r)" 9 40 4
 else
 	if pgrep -c X; then
 		dialog --title 'Hint' --yesno "You are running this\
- script from within Xorg. It is more convinient to run tmxgta_$version\
+ script from within Xorg. It is more convinient to run tmxgta-backend\
  instead. You can use your window manager for\
  switching between windows. Exit now?" 0 0 && clear && exit 0
 	fi
-	dialog --title tmxgta --nocancel --nook --pause "\nVersion: $version"\
+	dialog --title tmxgta --nocancel --nook --pause "\n"
  7 40 4
 fi
 tput cols > /tmp/tputout
 export tmux=1
 clear
-tmux -q new-session -d -s tmxgta "./tmxgta_$version"
+tmux -q new-session -d -s tmxgta "./tmxgta-backend"
 tmux set-option -g prefix C-a
 tmux bind-key C-a select-pane -L
 tmux bind-key -n 'C-Left' select-pane -L
